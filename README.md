@@ -23,3 +23,12 @@ npm run build
 ```
 
 `npm run build` produces a static export in `out/`.
+
+To preview that production export locally:
+
+```bash
+npm start
+```
+
+The preview server uses only Node.js built-ins. Set `STATIC_HOST` or
+`STATIC_PORT` to override its default `127.0.0.1:3000` address.
