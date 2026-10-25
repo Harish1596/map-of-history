@@ -162,6 +162,7 @@ button {
   cursor: pointer;
   height: 1.15rem;
   padding: 0;
+  position: relative;
   transition: box-shadow 160ms ease, transform 160ms ease;
   width: 1.15rem;
 }
@@ -172,6 +173,55 @@ button {
   box-shadow: 0 0 0 0.4rem rgb(213 170 95 / 22%), 0 4px 16px rgb(0 0 0 / 60%);
   outline: none;
   transform: scale(1.28);
+}
+
+.event-marker__label {
+  background: rgb(24 24 19 / 86%);
+  border: 1px solid rgb(213 170 95 / 46%);
+  border-radius: 0.2rem;
+  color: var(--text);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.78rem;
+  font-weight: bold;
+  left: 1.15rem;
+  letter-spacing: 0.02em;
+  padding: 0.25rem 0.4rem;
+  pointer-events: none;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+}
+
+.context-place-label {
+  color: rgb(224 216 198 / 82%);
+  font-family: system-ui, sans-serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  pointer-events: none;
+  text-shadow:
+    -1px -1px 0 #1b211d,
+    1px -1px 0 #1b211d,
+    -1px 1px 0 #1b211d,
+    1px 1px 0 #1b211d;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.map-attribution {
+  bottom: 0.25rem;
+  color: rgb(182 170 148 / 78%);
+  font-family: system-ui, sans-serif;
+  font-size: 0.64rem;
+  left: 50%;
+  margin: 0;
+  position: absolute;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.map-attribution a {
+  color: inherit;
 }
 
 .panel {

@@ -14,6 +14,12 @@ The application uses no database or runtime API. Historical records live in
 `public/data/antioch`, while geographic layers live in its `geometry` folder.
 All browser-loaded JSON passes through the Zod schemas in `src/data/schemas.ts`.
 
+The regional basemap under `public/data/antioch/basemap` is a cropped local
+copy of public-domain [Natural Earth](https://www.naturalearthdata.com/) data.
+It provides geographic context only; researched medieval features remain in
+the separate `geometry` files. The browser does not contact Natural Earth or a
+map-tile service at runtime.
+
 ## Checks
 
 ```bash

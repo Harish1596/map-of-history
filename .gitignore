@@ -9,6 +9,7 @@
 .DS_Store
 *.log
 *.tsbuildinfo
+/public/vendor/
 
 # environment files remain local
 .env*
