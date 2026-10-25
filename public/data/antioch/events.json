@@ -5,13 +5,203 @@
     "type": "arrival",
     "date": {
       "start": "1097-10-20",
-      "display": "20 October 1097",
+      "end": "1097-10-21",
+      "display": "20–21 October 1097",
+      "certainty": "medium"
+    },
+    "placeIds": [
+      "place-antioch"
+    ],
+    "summary": "The crusaders reached Antioch and blockaded several gates. The city's mountain defences prevented a complete encirclement.",
+    "phase": "First siege",
+    "citationIds": [
+      "cite-arrival",
+      "cite-capture"
+    ],
+    "evidenceNote": "The Gesta dates arrival to 20 October; Raymond's account places the siege's beginning around 21 October.",
+    "claimIds": [],
+    "participantIds": [],
+    "featured": true
+  },
+  {
+    "id": "event-winter-shortages",
+    "title": "Winter shortages strain the siege",
+    "type": "siege",
+    "date": {
+      "start": "1097-12-01",
+      "end": "1098-02-01",
+      "display": "Winter 1097–1098",
+      "certainty": "medium"
+    },
+    "placeIds": [
+      "place-antioch"
+    ],
+    "summary": "Food shortages drove foraging expeditions and desertions while the siege continued.",
+    "phase": "First siege",
+    "citationIds": [
+      "cite-winter"
+    ],
+    "evidenceNote": "A sustained crisis, not a single dated incident. The date bounds organize the timeline.",
+    "claimIds": [],
+    "participantIds": [],
+    "featured": true
+  },
+  {
+    "id": "event-lake-battle",
+    "title": "A relief army is defeated near the lake",
+    "type": "battle",
+    "date": {
+      "start": "1098-02-09",
+      "display": "9 February 1098",
+      "certainty": "medium"
+    },
+    "placeIds": [
+      "place-lake-battle"
+    ],
+    "summary": "Crusader cavalry defeated a relief force outside Antioch. Meanwhile, the soldiers left at the siege fought the city's garrison. Captured horses and supplies replenished the crusader army.",
+    "phase": "First siege",
+    "citationIds": [
+      "cite-lake"
+    ],
+    "evidenceNote": "This follows the date in Dickinson's annotated Gesta. The point marks the broader countryside, not a surveyed battlefield.",
+    "claimIds": [],
+    "participantIds": [],
+    "featured": true
+  },
+  {
+    "id": "event-port-supplies",
+    "title": "Workers are sought at St Symeon",
+    "type": "movement",
+    "date": {
+      "start": "1098-03-04",
+      "end": "1098-03-10",
+      "display": "Early March 1098",
+      "certainty": "medium"
+    },
+    "placeIds": [
+      "place-st-symeon",
+      "place-antioch"
+    ],
+    "summary": "Bohemond and Raymond went to the port of St Symeon to bring workers for a fort facing Antioch's Bridge Gate. An English fleet had arrived on 4 March; the garrison attacked the besiegers left behind.",
+    "phase": "First siege",
+    "citationIds": [
+      "cite-port"
+    ],
+    "evidenceNote": "The voyage's arrival has a specific date; the trip for workers is presented as an early-March episode. Map endpoints do not establish an exact route.",
+    "claimIds": [],
+    "participantIds": [],
+    "featured": true
+  },
+  {
+    "id": "event-capture",
+    "title": "Antioch falls; the citadel holds out",
+    "type": "siege",
+    "date": {
+      "start": "1098-06-03",
+      "display": "3 June 1098",
       "certainty": "high"
     },
-    "placeIds": ["place-antioch"],
-    "summary": "The main crusader army reached Antioch and began taking positions around the city.",
+    "placeIds": [
+      "place-antioch"
+    ],
+    "summary": "Firuz helped Bohemond's men enter Antioch. Killings followed the capture; the citadel remained in defenders' hands.",
+    "phase": "Capture",
+    "citationIds": [
+      "cite-capture"
+    ],
+    "evidenceNote": "The marker represents the city, not the entry tower.",
     "claimIds": [],
-    "participantIds": ["group-crusader-army"],
+    "participantIds": [],
+    "featured": true
+  },
+  {
+    "id": "event-counter-siege",
+    "title": "Kerbogha besieges the conquerors",
+    "type": "siege",
+    "date": {
+      "start": "1098-06-05",
+      "end": "1098-06-28",
+      "display": "Early–28 June 1098",
+      "certainty": "medium"
+    },
+    "placeIds": [
+      "place-antioch"
+    ],
+    "summary": "Kerbogha's army arrived, trapping the crusaders inside Antioch. The besiegers had become the besieged.",
+    "phase": "Counter-siege",
+    "citationIds": [
+      "cite-counter"
+    ],
+    "evidenceNote": "Arrival and encirclement unfolded over several days.",
+    "claimIds": [],
+    "participantIds": [],
+    "featured": true
+  },
+  {
+    "id": "event-holy-lance",
+    "title": "The claimed Holy Lance is found",
+    "type": "religious",
+    "date": {
+      "start": "1098-06-14",
+      "end": "1098-06-15",
+      "display": "14–15 June 1098",
+      "certainty": "medium"
+    },
+    "placeIds": [
+      "place-antioch"
+    ],
+    "summary": "Peter Bartholomew's reported discovery encouraged believers, while Bishop Adhemar doubted his claims.",
+    "phase": "Counter-siege",
+    "citationIds": [
+      "cite-lance"
+    ],
+    "evidenceNote": "A reported relic discovery; its sacred authenticity is not established.",
+    "claimIds": [],
+    "participantIds": [],
+    "featured": true
+  },
+  {
+    "id": "event-final-battle",
+    "title": "The crusaders defeat Kerbogha",
+    "type": "battle",
+    "date": {
+      "start": "1098-06-28",
+      "display": "28 June 1098",
+      "certainty": "high"
+    },
+    "placeIds": [
+      "place-june-battle"
+    ],
+    "summary": "The crusaders marched out to battle and defeated Kerbogha's army, ending the counter-siege.",
+    "phase": "Resolution",
+    "citationIds": [
+      "cite-battle"
+    ],
+    "evidenceNote": "The marker is a schematic anchor outside the city, not a precise battlefield boundary.",
+    "claimIds": [],
+    "participantIds": [],
+    "featured": true
+  },
+  {
+    "id": "event-citadel-surrender",
+    "title": "The citadel surrenders",
+    "type": "political",
+    "date": {
+      "start": "1098-06-28",
+      "display": "28 June 1098, after the battle",
+      "certainty": "high"
+    },
+    "placeIds": [
+      "place-antioch"
+    ],
+    "summary": "After Kerbogha's defeat, the citadel's commander negotiated surrender to Bohemond.",
+    "phase": "Resolution",
+    "citationIds": [
+      "cite-battle"
+    ],
+    "evidenceNote": "City-level placement; the citadel's footprint is not reconstructed here.",
+    "claimIds": [],
+    "participantIds": [],
     "featured": true
   }
 ]

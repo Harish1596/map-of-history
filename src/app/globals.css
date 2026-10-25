@@ -36,8 +36,9 @@ button {
 .experience {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(18rem, 24rem);
-  grid-template-rows: auto minmax(30rem, 1fr) auto;
-  min-height: 100vh;
+  grid-template-rows: auto minmax(24rem, 1fr) auto;
+  height: 100dvh;
+  min-height: 48rem;
 }
 
 .masthead {
@@ -65,7 +66,7 @@ button {
 
 .map-shell {
   background: #1f2b29;
-  min-height: 30rem;
+  min-height: 24rem;
   overflow: hidden;
   position: relative;
 }
@@ -155,27 +156,56 @@ button {
 }
 
 .event-marker {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  height: 2.75rem;
+  padding: 0;
+  /* MapLibre owns the outer element's screen position and transform. */
+  position: absolute;
+  width: 2.75rem;
+}
+
+.event-marker__dot {
   background: var(--accent);
   border: 3px solid #2b2116;
   border-radius: 50%;
   box-shadow: 0 4px 16px rgb(0 0 0 / 50%);
-  cursor: pointer;
+  display: block;
   height: 1.15rem;
-  padding: 0;
-  position: relative;
   transition: box-shadow 160ms ease, transform 160ms ease;
   width: 1.15rem;
 }
 
-.event-marker:hover,
-.event-marker:focus-visible,
-.event-marker.is-selected {
+.event-marker:hover .event-marker__dot,
+.event-marker:focus-visible .event-marker__dot,
+.event-marker.is-selected .event-marker__dot {
   box-shadow: 0 0 0 0.4rem rgb(213 170 95 / 22%), 0 4px 16px rgb(0 0 0 / 60%);
-  outline: none;
   transform: scale(1.28);
 }
 
+.event-marker:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+  border-radius: 50%;
+}
+
+.event-marker[data-certainty="reconstructed"] .event-marker__dot,
+.legend-symbol--schematic {
+  background: #b98567;
+  border: 2px dashed #f0d89d;
+  border-radius: 50%;
+}
+
+.legend-symbol--schematic {
+  height: 0.85rem;
+  width: 0.85rem;
+}
+
 .event-marker__label {
+  opacity: 0;
   background: rgb(24 24 19 / 86%);
   border: 1px solid rgb(213 170 95 / 46%);
   border-radius: 0.2rem;
@@ -183,7 +213,7 @@ button {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 0.78rem;
   font-weight: bold;
-  left: 1.15rem;
+  left: 2.25rem;
   letter-spacing: 0.02em;
   padding: 0.25rem 0.4rem;
   pointer-events: none;
@@ -191,6 +221,17 @@ button {
   top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;
+  max-width: 15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.event-marker.is-selected {
+  z-index: 2;
+}
+
+.event-marker:is(.is-selected, :hover, :focus-visible) .event-marker__label {
+  opacity: 1;
 }
 
 .context-place-label {
@@ -218,16 +259,22 @@ button {
   position: absolute;
   transform: translateX(-50%);
   z-index: 2;
+  width: calc(100% - 1rem);
+  text-align: center;
+  pointer-events: none;
 }
 
 .map-attribution a {
   color: inherit;
+  pointer-events: auto;
 }
 
 .panel {
   background: var(--panel);
   border-left: 1px solid var(--border);
   padding: 1.5rem;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .panel p,
@@ -296,6 +343,14 @@ button {
   margin-top: 0.9rem;
   overflow-x: auto;
   padding: 0.25rem 0.25rem 0.6rem;
+  list-style: none;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.timeline__track li {
+  flex: 0 0 17rem;
+  position: relative;
 }
 
 .timeline-event {
@@ -309,6 +364,8 @@ button {
   min-width: 14rem;
   padding: 0.75rem;
   text-align: left;
+  width: 100%;
+  height: 100%;
 }
 
 .timeline-event:hover,
@@ -331,6 +388,54 @@ button {
 .timeline-event strong {
   font-size: 0.92rem;
   font-weight: normal;
+}
+
+.timeline-controls, .chooser-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.timeline-controls button, .map-reset, .map-error button, .chooser-heading button {
+  border: 1px solid var(--border);
+  border-radius: 0.25rem;
+  background: var(--panel);
+  color: var(--text);
+  padding: 0.5rem 0.65rem;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.4; cursor: default; }
+button:focus-visible, a:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+}
+.timeline-event:focus-visible { outline: 2px solid var(--text); }
+.source-list { padding-left: 1.1rem; }
+.source-list li { margin: 0.8rem 0; font-size: 0.83rem; line-height: 1.5; }
+.source-list span { display: block; color: var(--muted); }
+.source-list a, .story-nav a { color: var(--accent); text-underline-offset: 3px; }
+.source-context, .evidence-note p, .relation-description { font-size: 0.82rem; }
+.evidence-note { border-left: 2px solid var(--accent); padding-left: 0.85rem; }
+.story-nav { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 0.5rem 0 1rem; margin-top: 1.5rem; }
+.story-nav > div > a { display: block; font-size: 1.1rem; line-height: 1.4; }
+.story-nav summary { cursor: pointer; color: var(--muted); font-size: 0.8rem; }
+.map-reset { position: absolute; top: 4.25rem; left: 1rem; z-index: 3; font-size: 0.75rem; }
+.map-error { position: absolute; top: 7rem; left: 1rem; right: 3rem; z-index: 3; background: var(--panel); padding: 1rem; }
+.map-event-chooser {
+  position: absolute; top: 7rem; left: 1rem; width: min(23rem, calc(100% - 2rem));
+  max-height: calc(100% - 11rem); overflow-y: auto; z-index: 4;
+  background: var(--panel); border: 1px solid var(--accent); border-radius: 0.35rem;
+  box-shadow: 0 8px 30px #0008; padding: 1rem;
+}
+.chooser-heading button { font-size: 1.2rem; }
+.chooser-event { display: block; width: 100%; text-align: left; padding: 0.65rem; background: transparent; border: 1px solid var(--border); border-radius: 0.2rem; margin-top: 0.4rem; cursor: pointer; }
+.chooser-event span { display: block; color: var(--muted); font-size: 0.75rem; margin-bottom: 0.25rem; }
+.chooser-event:hover, .chooser-event[aria-current="step"] { background: #d5aa5f18; border-color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .event-marker__dot { transition: none; }
 }
 
 .load-state {
@@ -368,7 +473,25 @@ button {
 
 @media (max-width: 760px) {
   .experience {
-    display: block;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 24rem auto auto;
+    height: auto;
+    min-height: 100dvh;
+  }
+
+  .masthead { grid-row: 1; }
+  .map-shell { grid-row: 2; }
+  .timeline { grid-row: 3; }
+  .panel { grid-row: 4; }
+
+  .event-marker__label {
+    left: 50%;
+    top: calc(100% + 0.2rem);
+    transform: translateX(-50%);
+    width: 16rem;
+    max-width: 80vw;
+    white-space: normal;
+    text-align: center;
   }
 
   .panel {
@@ -385,4 +508,11 @@ button {
     left: 0.75rem;
     right: auto;
   }
+
+  .masthead { align-items: start; }
+  .masthead h1 { font-size: 1.7rem; }
+  .masthead > span { white-space: nowrap; font-size: 0.8rem; }
+  .timeline__heading { align-items: start; flex-direction: column; gap: 0.75rem; }
+  .timeline-controls { width: 100%; }
+  .panel { max-height: none; }
 }

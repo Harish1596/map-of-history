@@ -9,7 +9,7 @@ import {
   type Map as MapLibreMap,
   type StyleSpecification,
 } from "maplibre-gl";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { HistoricalEvent, Place } from "@/types/history";
 
@@ -198,6 +198,21 @@ export function HistoricalMap({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<MapLibreMap | null>(null);
   const markerElementsRef = useRef(new Map<string, HTMLButtonElement>());
+  const [activePlaceId, setActivePlaceId] = useState<string | null>(null);
+  const [mapStatus, setMapStatus] = useState("Loading geography…");
+  const [mapError, setMapError] = useState<string | null>(null);
+  const selectedPlaceId = events.find((event) => event.id === selectedEventId)?.placeIds[0];
+  const activePlace = places.find((place) => place.id === activePlaceId);
+  const chooserRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (activePlaceId) chooserRef.current?.querySelector<HTMLButtonElement>("button")?.focus();
+  }, [activePlaceId]);
+
+  const closeChooser = () => {
+    setActivePlaceId(null);
+    if (activePlaceId) markerElementsRef.current.get(activePlaceId)?.focus();
+  };
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -210,7 +225,7 @@ export function HistoricalMap({
       container: containerRef.current,
       style: LOCAL_STYLE,
       center: ANTIOCH_CENTER,
-      zoom: 7.8,
+      zoom: 8.6,
       pitch: 0,
       bearing: 0,
       maxBounds: [
@@ -225,6 +240,14 @@ export function HistoricalMap({
       "top-right",
     );
     map.addControl(new ScaleControl({ unit: "metric" }), "bottom-left");
+    map.on("error", () => {
+      if (!disposed) setMapError("Some map data could not load. You can still explore the events below.");
+    });
+    map.on("idle", () => {
+      if (!disposed) setMapStatus("Siege locations");
+    });
+    const resizeObserver = new ResizeObserver(() => map.resize());
+    resizeObserver.observe(containerRef.current);
 
     map.on("load", () => {
       addLocalBasemap(map);
@@ -295,31 +318,37 @@ export function HistoricalMap({
         })
         .catch((labelError: unknown) => {
           console.warn("Local place labels could not be rendered.", labelError);
+          if (!disposed) setMapError("Place labels could not load. Event locations remain available.");
         });
     });
 
-    const placeById = new Map(places.map((place) => [place.id, place]));
     const markers: Marker[] = [];
 
-    for (const event of events) {
-      const place = placeById.get(event.placeIds[0]);
-      if (!place) continue;
+    for (const place of places) {
+      const placeEvents = events.filter((event) => event.placeIds[0] === place.id);
+      if (!placeEvents.length) continue;
 
       const markerElement = document.createElement("button");
       markerElement.type = "button";
       markerElement.className = "event-marker";
-      markerElement.setAttribute("aria-label", `${event.title}, ${event.date.display}`);
-      markerElement.title = event.title;
+      markerElement.setAttribute("aria-label", `${place.preferredName}: choose from ${placeEvents.length} events`);
+      markerElement.setAttribute("aria-controls", "map-event-chooser");
+      markerElement.title = `${place.preferredName} · ${placeEvents.length} event${placeEvents.length === 1 ? "" : "s"}`;
+      markerElement.dataset.certainty = place.coordinateCertainty;
+      const markerDot = document.createElement("span");
+      markerDot.className = "event-marker__dot";
+      markerDot.setAttribute("aria-hidden", "true");
       const markerLabel = document.createElement("span");
       markerLabel.className = "event-marker__label";
-      markerLabel.textContent = event.title;
-      markerElement.append(markerLabel);
-      markerElement.addEventListener("click", () => onSelectEvent(event.id));
-      markerElements.set(event.id, markerElement);
+      markerLabel.textContent = `${place.preferredName} · ${placeEvents.length}`;
+      markerElement.append(markerDot, markerLabel);
+      markerElement.addEventListener("click", () => setActivePlaceId(place.id));
+      markerElements.set(place.id, markerElement);
 
       const marker = new Marker({
         element: markerElement,
         anchor: "center",
+        subpixelPositioning: true,
       })
         .setLngLat(place.coordinates)
         .addTo(map);
@@ -331,47 +360,72 @@ export function HistoricalMap({
 
     return () => {
       disposed = true;
+      resizeObserver.disconnect();
       markers.forEach((marker) => marker.remove());
       contextMarkers.forEach((marker) => marker.remove());
       markerElements.clear();
       map.remove();
       mapRef.current = null;
     };
-  }, [events, onSelectEvent, places]);
+  }, [events, places]);
 
   useEffect(() => {
-    for (const [eventId, markerElement] of markerElementsRef.current) {
-      markerElement.classList.toggle("is-selected", eventId === selectedEventId);
-    }
-
     const selectedEvent = events.find((event) => event.id === selectedEventId);
-    const selectedPlace = places.find((place) =>
-      selectedEvent?.placeIds.includes(place.id),
-    );
+    const selectedPlace = places.find((place) => place.id === selectedEvent?.placeIds[0]);
+    for (const [placeId, markerElement] of markerElementsRef.current) {
+      const isSelected = placeId === selectedPlace?.id;
+      markerElement.classList.toggle("is-selected", isSelected);
+      if (isSelected) markerElement.setAttribute("aria-current", "location");
+      else markerElement.removeAttribute("aria-current");
+      const label = markerElement.querySelector(".event-marker__label");
+      if (label) label.textContent = isSelected ? selectedEvent!.title : markerElement.title;
+    }
 
     if (selectedPlace && mapRef.current) {
       mapRef.current.easeTo({
         center: selectedPlace.coordinates,
-        zoom: Math.max(mapRef.current.getZoom(), 8.15),
+        zoom: Math.max(mapRef.current.getZoom(), 9),
         duration: 700,
       });
     }
   }, [events, places, selectedEventId]);
 
+  useEffect(() => {
+    for (const [placeId, element] of markerElementsRef.current) {
+      element.setAttribute("aria-expanded", String(placeId === activePlaceId));
+    }
+  }, [activePlaceId]);
+
   return (
     <section className="map-shell" aria-label="Historical map">
       <div ref={containerRef} className="map-canvas" />
-      <div className="map-status" aria-hidden="true">
+      <div className="map-status" role="status">
         <span className="map-status__pulse" />
-        Local basemap
+        {mapError ? "Map partially unavailable" : mapStatus}
       </div>
+      <button className="map-reset" type="button" onClick={() => {
+        const place = places.find((item) => item.id === selectedPlaceId);
+        if (place) mapRef.current?.easeTo({ center: place.coordinates, zoom: 9, bearing: 0, pitch: 0 });
+      }}>Locate selected event</button>
+      {mapError && <div className="map-error" role="alert">{mapError} <button type="button" onClick={() => window.location.reload()}>Retry</button></div>}
+      {activePlace && <div className="map-event-chooser" id="map-event-chooser" ref={chooserRef}
+        role="region" aria-label={`Events at ${activePlace.preferredName}`}
+        onKeyDown={(event) => { if (event.key === "Escape") closeChooser(); }}>
+        <div className="chooser-heading"><strong>{activePlace.preferredName}</strong><button type="button" onClick={closeChooser} aria-label="Close event chooser">×</button></div>
+        <p className="eyebrow">{activePlace.coordinateCertainty} location</p>
+        {events.filter((event) => event.placeIds[0] === activePlace.id).map((event) => (
+          <button key={event.id} className="chooser-event" type="button" aria-current={event.id === selectedEventId ? "step" : undefined}
+            onClick={() => { onSelectEvent(event.id); closeChooser(); }}>
+            <span>{event.date.display}</span>{event.title}
+          </button>
+        ))}
+      </div>}
       <div className="map-legend">
         <span><i className="legend-symbol legend-symbol--event" /> Event</span>
-        <span><i className="legend-symbol legend-symbol--certain" /> Attested</span>
-        <span><i className="legend-symbol legend-symbol--uncertain" /> Reconstructed</span>
+        <span><i className="legend-symbol legend-symbol--schematic" /> Schematic site</span>
       </div>
       <p className="map-attribution">
-        Base geography: {" "}
+        Modern geography · approximate event locations · {" "}
         <a href="https://www.naturalearthdata.com/" target="_blank" rel="noreferrer">
           Natural Earth
         </a>

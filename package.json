@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "predev": "node scripts/sync-maplibre-worker.mjs",
     "dev": "next dev",
     "prebuild": "node scripts/sync-maplibre-worker.mjs",

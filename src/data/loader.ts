@@ -19,11 +19,13 @@ export async function loadAntiochData() {
     loadJson("citations.json"),
   ]);
 
-  return antiochDataSchema.parse({
+  const data = antiochDataSchema.parse({
     events,
     relations,
     places,
     sources,
     citations,
   });
+  data.events.sort((a, b) => a.date.start.localeCompare(b.date.start));
+  return data;
 }

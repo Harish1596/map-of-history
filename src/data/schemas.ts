@@ -17,6 +17,9 @@ export const eventSchema = z.object({
   claimIds: z.array(z.string()),
   participantIds: z.array(z.string()),
   featured: z.boolean(),
+  citationIds: z.array(z.string()).min(1),
+  evidenceNote: z.string().min(1),
+  phase: z.enum(["First siege", "Capture", "Counter-siege", "Resolution"]),
 });
 
 export const eventRelationSchema = z.object({
@@ -34,9 +37,10 @@ export const placeSchema = z.object({
   id: z.string().min(1),
   preferredName: z.string().min(1),
   modernName: z.string().optional(),
-  coordinates: z.tuple([z.number(), z.number()]),
+  coordinates: z.tuple([z.number().min(-180).max(180), z.number().min(-90).max(90)]),
   coordinateCertainty: z.enum(["attested", "approximate", "reconstructed"]),
   alternateNames: z.array(z.string()),
+  locationNote: z.string().min(1),
 });
 
 export const sourceSchema = z.object({
@@ -61,4 +65,27 @@ export const antiochDataSchema = z.object({
   places: z.array(placeSchema),
   sources: z.array(sourceSchema),
   citations: z.array(citationSchema),
+}).superRefine((data, context) => {
+  const issue = (message: string) => context.addIssue({ code: "custom", message });
+  for (const [name, records] of Object.entries(data)) {
+    if (new Set(records.map((record) => record.id)).size !== records.length) {
+      issue(`Duplicate IDs in ${name}.`);
+    }
+  }
+  const events = new Set(data.events.map((item) => item.id));
+  const places = new Set(data.places.map((item) => item.id));
+  const citations = new Set(data.citations.map((item) => item.id));
+  const sources = new Set(data.sources.map((item) => item.id));
+  for (const event of data.events) {
+    if (!event.placeIds.length || event.placeIds.some((id) => !places.has(id))) issue(`Invalid place for ${event.id}.`);
+    if (event.citationIds.some((id) => !citations.has(id))) issue(`Invalid citation for ${event.id}.`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(event.date.start) || (event.date.end && event.date.end < event.date.start)) issue(`Invalid date for ${event.id}.`);
+  }
+  for (const relation of data.relations) {
+    if (!events.has(relation.fromEventId) || !events.has(relation.toEventId) || relation.fromEventId === relation.toEventId) issue(`Invalid endpoints for ${relation.id}.`);
+    if (!relation.citationIds.length || relation.citationIds.some((id) => !citations.has(id))) issue(`Invalid citation for ${relation.id}.`);
+  }
+  for (const citation of data.citations) {
+    if (!sources.has(citation.sourceId)) issue(`Invalid source for ${citation.id}.`);
+  }
 });

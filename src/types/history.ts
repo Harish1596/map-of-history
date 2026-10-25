@@ -17,6 +17,9 @@ export type HistoricalEvent = {
   claimIds: string[];
   participantIds: string[];
   featured: boolean;
+  citationIds: string[];
+  evidenceNote: string;
+  phase: "First siege" | "Capture" | "Counter-siege" | "Resolution";
 };
 
 export type EventRelation = {
@@ -37,6 +40,7 @@ export type Place = {
   coordinates: [number, number];
   coordinateCertainty: "attested" | "approximate" | "reconstructed";
   alternateNames: string[];
+  locationNote: string;
 };
 
 export type Source = {

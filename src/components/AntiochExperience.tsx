@@ -6,6 +6,7 @@ import { EventPanel } from "@/components/EventPanel";
 import { HistoricalMap } from "@/components/HistoricalMap";
 import { Timeline } from "@/components/Timeline";
 import { loadAntiochData } from "@/data/loader";
+import { getOutgoingRelations } from "@/data/graph";
 
 type AntiochData = Awaited<ReturnType<typeof loadAntiochData>>;
 
@@ -52,8 +53,18 @@ export function AntiochExperience() {
 
     const url = new URL(window.location.href);
     url.searchParams.set("event", eventId);
-    window.history.replaceState({}, "", url);
+    if (url.href !== window.location.href) window.history.pushState(null, "", url);
   }, []);
+
+  useEffect(() => {
+    if (!data) return;
+    const restoreSelection = () => {
+      const requested = new URLSearchParams(window.location.search).get("event");
+      setSelectedEventId(data.events.find((event) => event.id === requested)?.id ?? data.events[0]?.id ?? null);
+    };
+    window.addEventListener("popstate", restoreSelection);
+    return () => window.removeEventListener("popstate", restoreSelection);
+  }, [data]);
 
   const selectedEvent = useMemo(
     () => data?.events.find((event) => event.id === selectedEventId) ?? null,
@@ -87,7 +98,10 @@ export function AntiochExperience() {
             selectedEventId={selectedEventId}
             onSelectEvent={selectEvent}
           />
-          <EventPanel event={selectedEvent} place={selectedPlace} />
+          <EventPanel event={selectedEvent} place={selectedPlace}
+            citations={data.citations} sources={data.sources}
+            relations={selectedEvent ? getOutgoingRelations(selectedEvent.id, data.relations) : []}
+            onSelect={selectEvent} />
           <Timeline
             events={data.events}
             selectedEventId={selectedEventId}
