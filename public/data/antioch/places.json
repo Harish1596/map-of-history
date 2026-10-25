@@ -1,0 +1,10 @@
+[
+  {
+    "id": "place-antioch",
+    "preferredName": "Antioch",
+    "modernName": "Antakya",
+    "coordinates": [36.1626, 36.2021],
+    "coordinateCertainty": "approximate",
+    "alternateNames": ["Antiochia", "Antakiya"]
+  }
+]

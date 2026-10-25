@@ -1,0 +1,17 @@
+[
+  {
+    "id": "event-arrival-antioch",
+    "title": "Crusader armies reach Antioch",
+    "type": "arrival",
+    "date": {
+      "start": "1097-10-20",
+      "display": "20 October 1097",
+      "certainty": "high"
+    },
+    "placeIds": ["place-antioch"],
+    "summary": "The main crusader army reached Antioch and began taking positions around the city.",
+    "claimIds": [],
+    "participantIds": ["group-crusader-army"],
+    "featured": true
+  }
+]
