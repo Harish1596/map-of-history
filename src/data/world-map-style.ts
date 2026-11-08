@@ -5,6 +5,7 @@ export function worldMapStyle(
   countries: FeatureCollection,
   labels: FeatureCollection,
   islands: FeatureCollection = { type: "FeatureCollection", features: [] },
+  oceans: FeatureCollection = { type: "FeatureCollection", features: [] },
 ): StyleSpecification {
   return {
     version: 8,
@@ -13,6 +14,7 @@ export function worldMapStyle(
       countries: { type: "geojson", data: countries },
       labels: { type: "geojson", data: labels },
       islands: { type: "geojson", data: islands },
+      oceans: { type: "geojson", data: oceans },
     },
     layers: [
       { id: "ocean", type: "background", paint: { "background-color": "#edf3f5" } },
@@ -23,6 +25,18 @@ export function worldMapStyle(
           "line-color": "#6b8184",
           "line-width": ["interpolate", ["linear"], ["zoom"], 0, 0.65, 4, 1, 8, 1.4],
         },
+      },
+      {
+        id: "ocean-labels", type: "symbol", source: "oceans",
+        layout: {
+          "text-field": ["get", "name"], "text-font": ["Noto Sans"],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 0, 12, 2, 15, 5, 22, 8, 28],
+          "text-max-width": 7, "text-line-height": 1.2,
+          "text-letter-spacing": 0.08, "text-padding": 4,
+          "text-anchor": "center", "text-allow-overlap": false,
+          "text-ignore-placement": false,
+        },
+        paint: { "text-color": "#476b7a", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },
       },
       {
         id: "island-labels", type: "symbol", source: "islands", minzoom: 3,

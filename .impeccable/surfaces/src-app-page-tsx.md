@@ -22,6 +22,9 @@ use favors a light surface that stays readable on shared screens.
 
 STORY: Open to the world; recognize continents and country names; pan and zoom
 for smaller places; reset to regain geographic context.
+Standard also labels the five oceans using seven sourced marine-region anchors,
+with North/South Atlantic and Pacific names. Muted blue ocean text yields to
+country labels and follows the same camera and continuous world wrap.
 Country labels follow geographic-area bands and descending-area collision
 priority, sourced from the local country-labels.json list. Small islands and
 territories become eligible later than larger countries.

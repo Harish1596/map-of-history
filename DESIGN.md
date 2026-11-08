@@ -3,6 +3,7 @@ name: Classroom World Map
 description: A quiet, readable geographic canvas for classroom exploration.
 colors:
   ocean: "#edf3f5"
+  ocean-ink: "#476b7a"
   land: "#d4dfd2"
   ink: "#283b42"
   island-ink: "#405c60"
@@ -135,6 +136,13 @@ at 11px at zoom 3, 14px at zoom 5 and 18px at zoom 8, with island ink and a 1px
 land-colored halo. Minimum zoom is at least 3 and follows source guidance and size.
 Country labels have collision priority. Archipelago labels disappear at closer
 zoom to make room for individual islands. Avoid duplicating existing country names.
+
+Standard ocean names use ocean ink (`#476b7a`) over an ocean-coloured 1.5px halo.
+Noto Sans grows from 12px at zoom 0 to 15px at zoom 2, 22px at zoom 5 and 28px at
+zoom 8, with 0.08em letter spacing, 1.2 line height and 4px collision padding.
+Country labels place ahead of ocean names. Seven sourced offshore anchors label
+the five oceans, retaining North/South Atlantic and Pacific distinctions. They
+are eligible from overview zoom onward; the layer is hidden in Physical Geography.
 
 ## Layout
 

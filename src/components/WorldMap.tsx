@@ -119,7 +119,7 @@ export function WorldMap() {
 
     async function initialize() {
       try {
-        const [maplibre, countries, labels, labelList, islands] = await Promise.all([
+        const [maplibre, countries, labels, labelList, islands, oceans] = await Promise.all([
           import("maplibre-gl"),
           loadGeography("/data/world/countries.geojson", controller.signal),
           loadGeography("/data/world/labels.geojson", controller.signal),
@@ -128,6 +128,7 @@ export function WorldMap() {
             return response.json();
           }),
           loadGeography("/data/world/island-labels.geojson", controller.signal),
+          loadGeography("/data/world/ocean-labels.geojson", controller.signal),
           document.fonts.load('500 16px "Noto Sans"').then((fonts) => {
             if (!fonts.length) throw new Error("Map font unavailable");
           }),
@@ -138,7 +139,7 @@ export function WorldMap() {
         maplibre.setWorkerUrl("/vendor/maplibre-gl-worker.mjs");
         map = new maplibre.Map({
           container: container.current,
-          style: worldMapStyle(countries, applyCountryLabelList(labels, labelList), islands),
+          style: worldMapStyle(countries, applyCountryLabelList(labels, labelList), islands, oceans),
           center: [0, 20], zoom: 1,
           maxZoom: maximumWorldZoom(), minZoom,
           fadeDuration: 0,

@@ -3,6 +3,12 @@
   "generatedAt": "2026-11-08T04:58:57.832606+00:00",
   "title": "Design System: Classroom World Map",
   "extensions": {
+    "oceanLabels": {
+      "provenance": "public/data/world/ocean-metadata.json",
+      "color": "#476b7a",
+      "sizeStops": [0, 12, 2, 15, 5, 22, 8, 28],
+      "purpose": "Standard-only ocean names with offshore sourced anchors and lower collision priority than country names."
+    },
     "geology": {
       "provenance": "public/data/world/geology/metadata.json",
       "palette": "public/data/world/geology/legend.json",
@@ -35,6 +41,7 @@
       "purpose": "Physical-mode terrain shading under water and feature names; transparent ocean; no 3D terrain or numeric elevation colour scale."
     },
     "colorMeta": {
+      "ocean-ink": { "role": "secondary", "displayName": "Ocean Ink" },
       "water": { "role": "secondary", "displayName": "Lake Water" },
       "river": { "role": "secondary", "displayName": "River Blue" },
       "water-ink": { "role": "secondary", "displayName": "Water Ink" },
