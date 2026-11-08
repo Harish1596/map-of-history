@@ -1,0 +1,2221 @@
+{
+  "description": "Countries and territories sorted by geographic area, largest first. Lower priority numbers place first. Zoom levels use MapLibre's 512px world convention.",
+  "areaMethod": "Approximate geodesic square kilometres measured from Natural Earth 1:50m polygons with Turf area. Includes holes and all polygon parts; not official country-area statistics.",
+  "bands": [
+    {
+      "minAreaKm2": 1000000,
+      "minZoom": 0,
+      "sizeTier": 0
+    },
+    {
+      "minAreaKm2": 250000,
+      "minZoom": 1,
+      "sizeTier": 1
+    },
+    {
+      "minAreaKm2": 50000,
+      "minZoom": 2,
+      "sizeTier": 2
+    },
+    {
+      "minAreaKm2": 10000,
+      "minZoom": 3,
+      "sizeTier": 3
+    },
+    {
+      "minAreaKm2": 2000,
+      "minZoom": 4,
+      "sizeTier": 4
+    },
+    {
+      "minAreaKm2": 200,
+      "minZoom": 5,
+      "sizeTier": 5
+    },
+    {
+      "minAreaKm2": 0,
+      "minZoom": 6,
+      "sizeTier": 6
+    }
+  ],
+  "countries": [
+    {
+      "id": "RUS",
+      "name": "Russia",
+      "label": "Russian Federation",
+      "areaKm2": 16879675.268,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 0
+    },
+    {
+      "id": "ATA",
+      "name": "Antarctica",
+      "label": "Antarctica",
+      "areaKm2": 12256671.284,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 1
+    },
+    {
+      "id": "CAN",
+      "name": "Canada",
+      "label": "Canada",
+      "areaKm2": 9872084.848,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 2
+    },
+    {
+      "id": "USA",
+      "name": "United States of America",
+      "label": "United States",
+      "areaKm2": 9439416.047,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 3
+    },
+    {
+      "id": "CHN",
+      "name": "People's Republic of China",
+      "label": "China",
+      "areaKm2": 9371214.802,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 4
+    },
+    {
+      "id": "BRA",
+      "name": "Brazil",
+      "label": "Brazil",
+      "areaKm2": 8499360.928,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 5
+    },
+    {
+      "id": "AUS",
+      "name": "Australia",
+      "label": "Australia",
+      "areaKm2": 7705989.669,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 6
+    },
+    {
+      "id": "IND",
+      "name": "India",
+      "label": "India",
+      "areaKm2": 3155829.983,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 7
+    },
+    {
+      "id": "ARG",
+      "name": "Argentina",
+      "label": "Argentina",
+      "areaKm2": 2782677.615,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 8
+    },
+    {
+      "id": "KAZ",
+      "name": "Kazakhstan",
+      "label": "Kazakhstan",
+      "areaKm2": 2712777.681,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 9
+    },
+    {
+      "id": "COD",
+      "name": "Democratic Republic of the Congo",
+      "label": "Democratic Republic of the Congo",
+      "areaKm2": 2334625.756,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 10
+    },
+    {
+      "id": "DZA",
+      "name": "Algeria",
+      "label": "Algeria",
+      "areaKm2": 2322755.234,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 11
+    },
+    {
+      "id": "GRL",
+      "name": "Greenland",
+      "label": "Greenland",
+      "areaKm2": 2154808.202,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 12
+    },
+    {
+      "id": "MEX",
+      "name": "Mexico",
+      "label": "Mexico",
+      "areaKm2": 1962277.374,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 13
+    },
+    {
+      "id": "SAU",
+      "name": "Saudi Arabia",
+      "label": "Saudi Arabia",
+      "areaKm2": 1925841.151,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 14
+    },
+    {
+      "id": "IDN",
+      "name": "Indonesia",
+      "label": "Indonesia",
+      "areaKm2": 1872159.564,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 15
+    },
+    {
+      "id": "SDN",
+      "name": "Sudan",
+      "label": "Sudan",
+      "areaKm2": 1863052.446,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 16
+    },
+    {
+      "id": "LBY",
+      "name": "Libya",
+      "label": "Libya",
+      "areaKm2": 1626511.47,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 17
+    },
+    {
+      "id": "IRN",
+      "name": "Iran",
+      "label": "Iran",
+      "areaKm2": 1622819.005,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 18
+    },
+    {
+      "id": "MNG",
+      "name": "Mongolia",
+      "label": "Mongolia",
+      "areaKm2": 1560410.688,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 19
+    },
+    {
+      "id": "PER",
+      "name": "Peru",
+      "label": "Peru",
+      "areaKm2": 1296283.39,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 20
+    },
+    {
+      "id": "TCD",
+      "name": "Chad",
+      "label": "Chad",
+      "areaKm2": 1270987.982,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 21
+    },
+    {
+      "id": "MLI",
+      "name": "Mali",
+      "label": "Mali",
+      "areaKm2": 1258204.868,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 22
+    },
+    {
+      "id": "AGO",
+      "name": "Angola",
+      "label": "Angola",
+      "areaKm2": 1249457.02,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 23
+    },
+    {
+      "id": "ZAF",
+      "name": "South Africa",
+      "label": "South Africa",
+      "areaKm2": 1221652.224,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 24
+    },
+    {
+      "id": "NER",
+      "name": "Niger",
+      "label": "Niger",
+      "areaKm2": 1185044.214,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 25
+    },
+    {
+      "id": "COL",
+      "name": "Colombia",
+      "label": "Colombia",
+      "areaKm2": 1139431.272,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 26
+    },
+    {
+      "id": "ETH",
+      "name": "Ethiopia",
+      "label": "Ethiopia",
+      "areaKm2": 1131785.349,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 27
+    },
+    {
+      "id": "BOL",
+      "name": "Bolivia",
+      "label": "Bolivia",
+      "areaKm2": 1090268.932,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 28
+    },
+    {
+      "id": "MRT",
+      "name": "Mauritania",
+      "label": "Mauritania",
+      "areaKm2": 1038343.461,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 29
+    },
+    {
+      "id": "EGY",
+      "name": "Egypt",
+      "label": "Egypt",
+      "areaKm2": 1003583.972,
+      "minZoom": 0,
+      "sizeTier": 0,
+      "priority": 30
+    },
+    {
+      "id": "TZA",
+      "name": "Tanzania",
+      "label": "Tanzania",
+      "areaKm2": 945785.875,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 31
+    },
+    {
+      "id": "VEN",
+      "name": "Venezuela",
+      "label": "Venezuela",
+      "areaKm2": 914317.375,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 32
+    },
+    {
+      "id": "NGA",
+      "name": "Nigeria",
+      "label": "Nigeria",
+      "areaKm2": 911552.644,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 33
+    },
+    {
+      "id": "PAK",
+      "name": "Pakistan",
+      "label": "Pakistan",
+      "areaKm2": 873772.717,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 34
+    },
+    {
+      "id": "NAM",
+      "name": "Namibia",
+      "label": "Namibia",
+      "areaKm2": 824633.353,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 35
+    },
+    {
+      "id": "MOZ",
+      "name": "Mozambique",
+      "label": "Mozambique",
+      "areaKm2": 790667.813,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 36
+    },
+    {
+      "id": "TUR",
+      "name": "Turkey",
+      "label": "Turkey",
+      "areaKm2": 779808.661,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 37
+    },
+    {
+      "id": "ZMB",
+      "name": "Zambia",
+      "label": "Zambia",
+      "areaKm2": 755592.089,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 38
+    },
+    {
+      "id": "CHL",
+      "name": "Chile",
+      "label": "Chile",
+      "areaKm2": 737447.72,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 39
+    },
+    {
+      "id": "MMR",
+      "name": "Myanmar",
+      "label": "Myanmar",
+      "areaKm2": 662765.977,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 40
+    },
+    {
+      "id": "AFG",
+      "name": "Afghanistan",
+      "label": "Afghanistan",
+      "areaKm2": 642054.094,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 41
+    },
+    {
+      "id": "FRA",
+      "name": "France",
+      "label": "France",
+      "areaKm2": 635044.869,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 42
+    },
+    {
+      "id": "SDS",
+      "name": "South Sudan",
+      "label": "South Sudan",
+      "areaKm2": 623964.833,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 43
+    },
+    {
+      "id": "CAF",
+      "name": "Central African Republic",
+      "label": "Central African Republic",
+      "areaKm2": 620984.426,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 44
+    },
+    {
+      "id": "KEN",
+      "name": "Kenya",
+      "label": "Kenya",
+      "areaKm2": 594835.042,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 45
+    },
+    {
+      "id": "MDG",
+      "name": "Madagascar",
+      "label": "Madagascar",
+      "areaKm2": 594597.184,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 46
+    },
+    {
+      "id": "MAR",
+      "name": "Morocco",
+      "label": "Morocco",
+      "areaKm2": 582388.16,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 47
+    },
+    {
+      "id": "BWA",
+      "name": "Botswana",
+      "label": "Botswana",
+      "areaKm2": 580623.35,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 48
+    },
+    {
+      "id": "UKR",
+      "name": "Ukraine",
+      "label": "Ukraine",
+      "areaKm2": 570156.584,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 49
+    },
+    {
+      "id": "THA",
+      "name": "Thailand",
+      "label": "Thailand",
+      "areaKm2": 515728.822,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 50
+    },
+    {
+      "id": "ESP",
+      "name": "Spain",
+      "label": "Spain",
+      "areaKm2": 506174.274,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 51
+    },
+    {
+      "id": "SOM",
+      "name": "Somalia",
+      "label": "Somalia",
+      "areaKm2": 473607.365,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 52
+    },
+    {
+      "id": "TKM",
+      "name": "Turkmenistan",
+      "label": "Turkmenistan",
+      "areaKm2": 470628.185,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 53
+    },
+    {
+      "id": "CMR",
+      "name": "Cameroon",
+      "label": "Cameroon",
+      "areaKm2": 465881.838,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 54
+    },
+    {
+      "id": "PNG",
+      "name": "Papua New Guinea",
+      "label": "Papua New Guinea",
+      "areaKm2": 464292.32,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 55
+    },
+    {
+      "id": "YEM",
+      "name": "Yemen",
+      "label": "Yemen",
+      "areaKm2": 454137.606,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 56
+    },
+    {
+      "id": "UZB",
+      "name": "Uzbekistan",
+      "label": "Uzbekistan",
+      "areaKm2": 447370.784,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 57
+    },
+    {
+      "id": "SWE",
+      "name": "Sweden",
+      "label": "Sweden",
+      "areaKm2": 442977.47,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 58
+    },
+    {
+      "id": "IRQ",
+      "name": "Iraq",
+      "label": "Iraq",
+      "areaKm2": 437456.985,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 59
+    },
+    {
+      "id": "PRY",
+      "name": "Paraguay",
+      "label": "Paraguay",
+      "areaKm2": 400905.397,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 60
+    },
+    {
+      "id": "ZWE",
+      "name": "Zimbabwe",
+      "label": "Zimbabwe",
+      "areaKm2": 390183.624,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 61
+    },
+    {
+      "id": "NOR",
+      "name": "Norway",
+      "label": "Norway",
+      "areaKm2": 384250.544,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 62
+    },
+    {
+      "id": "JPN",
+      "name": "Japan",
+      "label": "Japan",
+      "areaKm2": 370098.72,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 63
+    },
+    {
+      "id": "DEU",
+      "name": "Germany",
+      "label": "Germany",
+      "areaKm2": 356163.465,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 64
+    },
+    {
+      "id": "COG",
+      "name": "Republic of the Congo",
+      "label": "Republic of the Congo",
+      "areaKm2": 346875.738,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 65
+    },
+    {
+      "id": "FIN",
+      "name": "Finland",
+      "label": "Finland",
+      "areaKm2": 330493.707,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 66
+    },
+    {
+      "id": "VNM",
+      "name": "Vietnam",
+      "label": "Vietnam",
+      "areaKm2": 328940.772,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 67
+    },
+    {
+      "id": "MYS",
+      "name": "Malaysia",
+      "label": "Malaysia",
+      "areaKm2": 327643.808,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 68
+    },
+    {
+      "id": "CIV",
+      "name": "Ivory Coast",
+      "label": "Côte d'Ivoire",
+      "areaKm2": 322296.984,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 69
+    },
+    {
+      "id": "POL",
+      "name": "Poland",
+      "label": "Poland",
+      "areaKm2": 312543.993,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 70
+    },
+    {
+      "id": "OMN",
+      "name": "Oman",
+      "label": "Oman",
+      "areaKm2": 312072.25,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 71
+    },
+    {
+      "id": "ITA",
+      "name": "Italy",
+      "label": "Italy",
+      "areaKm2": 300287.549,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 72
+    },
+    {
+      "id": "PHL",
+      "name": "Philippines",
+      "label": "Philippines",
+      "areaKm2": 290304.652,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 73
+    },
+    {
+      "id": "BFA",
+      "name": "Burkina Faso",
+      "label": "Burkina Faso",
+      "areaKm2": 273684.202,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 74
+    },
+    {
+      "id": "NZL",
+      "name": "New Zealand",
+      "label": "New Zealand",
+      "areaKm2": 266854.622,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 75
+    },
+    {
+      "id": "GAB",
+      "name": "Gabon",
+      "label": "Gabon",
+      "areaKm2": 260662.43,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 76
+    },
+    {
+      "id": "ECU",
+      "name": "Ecuador",
+      "label": "Ecuador",
+      "areaKm2": 255667.354,
+      "minZoom": 1,
+      "sizeTier": 1,
+      "priority": 77
+    },
+    {
+      "id": "GIN",
+      "name": "Guinea",
+      "label": "Guinea",
+      "areaKm2": 244925.884,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 78
+    },
+    {
+      "id": "UGA",
+      "name": "Uganda",
+      "label": "Uganda",
+      "areaKm2": 242554.534,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 79
+    },
+    {
+      "id": "GBR",
+      "name": "United Kingdom",
+      "label": "United Kingdom",
+      "areaKm2": 239610.592,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 80
+    },
+    {
+      "id": "GHA",
+      "name": "Ghana",
+      "label": "Ghana",
+      "areaKm2": 239566.033,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 81
+    },
+    {
+      "id": "ROU",
+      "name": "Romania",
+      "label": "Romania",
+      "areaKm2": 235771.829,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 82
+    },
+    {
+      "id": "LAO",
+      "name": "Laos",
+      "label": "Lao PDR",
+      "areaKm2": 228945.141,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 83
+    },
+    {
+      "id": "GUY",
+      "name": "Guyana",
+      "label": "Guyana",
+      "areaKm2": 211947.345,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 84
+    },
+    {
+      "id": "BLR",
+      "name": "Belarus",
+      "label": "Belarus",
+      "areaKm2": 206693.437,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 85
+    },
+    {
+      "id": "KGZ",
+      "name": "Kyrgyzstan",
+      "label": "Kyrgyzstan",
+      "areaKm2": 198649.88,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 86
+    },
+    {
+      "id": "SEN",
+      "name": "Senegal",
+      "label": "Senegal",
+      "areaKm2": 197327.419,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 87
+    },
+    {
+      "id": "SYR",
+      "name": "Syria",
+      "label": "Syria",
+      "areaKm2": 185974.103,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 88
+    },
+    {
+      "id": "KHM",
+      "name": "Cambodia",
+      "label": "Cambodia",
+      "areaKm2": 181362.973,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 89
+    },
+    {
+      "id": "URY",
+      "name": "Uruguay",
+      "label": "Uruguay",
+      "areaKm2": 177561.434,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 90
+    },
+    {
+      "id": "SOL",
+      "name": "Somaliland",
+      "label": "Somaliland",
+      "areaKm2": 168491.632,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 91
+    },
+    {
+      "id": "TUN",
+      "name": "Tunisia",
+      "label": "Tunisia",
+      "areaKm2": 156658.493,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 92
+    },
+    {
+      "id": "NPL",
+      "name": "Nepal",
+      "label": "Nepal",
+      "areaKm2": 147193.806,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 93
+    },
+    {
+      "id": "SUR",
+      "name": "Suriname",
+      "label": "Suriname",
+      "areaKm2": 145574.129,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 94
+    },
+    {
+      "id": "TJK",
+      "name": "Tajikistan",
+      "label": "Tajikistan",
+      "areaKm2": 142293.582,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 95
+    },
+    {
+      "id": "BGD",
+      "name": "Bangladesh",
+      "label": "Bangladesh",
+      "areaKm2": 135649.951,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 96
+    },
+    {
+      "id": "GRC",
+      "name": "Greece",
+      "label": "Greece",
+      "areaKm2": 130166.937,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 97
+    },
+    {
+      "id": "NIC",
+      "name": "Nicaragua",
+      "label": "Nicaragua",
+      "areaKm2": 129243.641,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 98
+    },
+    {
+      "id": "ERI",
+      "name": "Eritrea",
+      "label": "Eritrea",
+      "areaKm2": 123679.15,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 99
+    },
+    {
+      "id": "PRK",
+      "name": "North Korea",
+      "label": "Dem. Rep. Korea",
+      "areaKm2": 122493.648,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 100
+    },
+    {
+      "id": "MWI",
+      "name": "Malawi",
+      "label": "Malawi",
+      "areaKm2": 119795.102,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 101
+    },
+    {
+      "id": "BEN",
+      "name": "Benin",
+      "label": "Benin",
+      "areaKm2": 116581.637,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 102
+    },
+    {
+      "id": "HND",
+      "name": "Honduras",
+      "label": "Honduras",
+      "areaKm2": 113513.94,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 103
+    },
+    {
+      "id": "BGR",
+      "name": "Bulgaria",
+      "label": "Bulgaria",
+      "areaKm2": 112418.632,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 104
+    },
+    {
+      "id": "CUB",
+      "name": "Cuba",
+      "label": "Cuba",
+      "areaKm2": 109295.727,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 105
+    },
+    {
+      "id": "GTM",
+      "name": "Guatemala",
+      "label": "Guatemala",
+      "areaKm2": 108480.584,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 106
+    },
+    {
+      "id": "ISL",
+      "name": "Iceland",
+      "label": "Iceland",
+      "areaKm2": 101160.876,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 107
+    },
+    {
+      "id": "KOR",
+      "name": "South Korea",
+      "label": "Republic of Korea",
+      "areaKm2": 97149.644,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 108
+    },
+    {
+      "id": "LBR",
+      "name": "Liberia",
+      "label": "Liberia",
+      "areaKm2": 95666.95,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 109
+    },
+    {
+      "id": "HUN",
+      "name": "Hungary",
+      "label": "Hungary",
+      "areaKm2": 92958.962,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 110
+    },
+    {
+      "id": "SAH",
+      "name": "Western Sahara",
+      "label": "Western Sahara",
+      "areaKm2": 90793.975,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 111
+    },
+    {
+      "id": "PRT",
+      "name": "Portugal",
+      "label": "Portugal",
+      "areaKm2": 90757.7,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 112
+    },
+    {
+      "id": "JOR",
+      "name": "Jordan",
+      "label": "Jordan",
+      "areaKm2": 88859.115,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 113
+    },
+    {
+      "id": "AZE",
+      "name": "Azerbaijan",
+      "label": "Azerbaijan",
+      "areaKm2": 86403.65,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 114
+    },
+    {
+      "id": "AUT",
+      "name": "Austria",
+      "label": "Austria",
+      "areaKm2": 83910.636,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 115
+    },
+    {
+      "id": "CZE",
+      "name": "Czech Republic",
+      "label": "Czech Republic",
+      "areaKm2": 78482.177,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 116
+    },
+    {
+      "id": "SRB",
+      "name": "Serbia",
+      "label": "Serbia",
+      "areaKm2": 77490.118,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 117
+    },
+    {
+      "id": "PAN",
+      "name": "Panama",
+      "label": "Panama",
+      "areaKm2": 74244.702,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 118
+    },
+    {
+      "id": "SLE",
+      "name": "Sierra Leone",
+      "label": "Sierra Leone",
+      "areaKm2": 71876.02,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 119
+    },
+    {
+      "id": "ARE",
+      "name": "United Arab Emirates",
+      "label": "United Arab Emirates",
+      "areaKm2": 71275.805,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 120
+    },
+    {
+      "id": "GEO",
+      "name": "Georgia",
+      "label": "Georgia",
+      "areaKm2": 69305.436,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 121
+    },
+    {
+      "id": "IRL",
+      "name": "Ireland",
+      "label": "Ireland",
+      "areaKm2": 68699.577,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 122
+    },
+    {
+      "id": "LKA",
+      "name": "Sri Lanka",
+      "label": "Sri Lanka",
+      "areaKm2": 66042.874,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 123
+    },
+    {
+      "id": "LTU",
+      "name": "Lithuania",
+      "label": "Lithuania",
+      "areaKm2": 64518.167,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 124
+    },
+    {
+      "id": "LVA",
+      "name": "Latvia",
+      "label": "Latvia",
+      "areaKm2": 64259.776,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 125
+    },
+    {
+      "id": "TGO",
+      "name": "Togo",
+      "label": "Togo",
+      "areaKm2": 57139.47,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 126
+    },
+    {
+      "id": "HRV",
+      "name": "Croatia",
+      "label": "Croatia",
+      "areaKm2": 54421.589,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 127
+    },
+    {
+      "id": "BIH",
+      "name": "Bosnia and Herzegovina",
+      "label": "Bosnia and Herzegovina",
+      "areaKm2": 51684.784,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 128
+    },
+    {
+      "id": "CRI",
+      "name": "Costa Rica",
+      "label": "Costa Rica",
+      "areaKm2": 51512.948,
+      "minZoom": 2,
+      "sizeTier": 2,
+      "priority": 129
+    },
+    {
+      "id": "DOM",
+      "name": "Dominican Republic",
+      "label": "Dominican Republic",
+      "areaKm2": 48589.26,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 130
+    },
+    {
+      "id": "SVK",
+      "name": "Slovakia",
+      "label": "Slovakia",
+      "areaKm2": 48339.636,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 131
+    },
+    {
+      "id": "EST",
+      "name": "Estonia",
+      "label": "Estonia",
+      "areaKm2": 45452.431,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 132
+    },
+    {
+      "id": "DNK",
+      "name": "Denmark",
+      "label": "Denmark",
+      "areaKm2": 42416.993,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 133
+    },
+    {
+      "id": "CHE",
+      "name": "Switzerland",
+      "label": "Switzerland",
+      "areaKm2": 41207.002,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 134
+    },
+    {
+      "id": "BTN",
+      "name": "Bhutan",
+      "label": "Bhutan",
+      "areaKm2": 39876.666,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 135
+    },
+    {
+      "id": "NLD",
+      "name": "Netherlands",
+      "label": "Netherlands",
+      "areaKm2": 37132.36,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 136
+    },
+    {
+      "id": "TWN",
+      "name": "Taiwan",
+      "label": "Taiwan",
+      "areaKm2": 35992.205,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 137
+    },
+    {
+      "id": "MDA",
+      "name": "Moldova",
+      "label": "Moldova",
+      "areaKm2": 33116.833,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 138
+    },
+    {
+      "id": "GNB",
+      "name": "Guinea-Bissau",
+      "label": "Guinea-Bissau",
+      "areaKm2": 32055.844,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 139
+    },
+    {
+      "id": "BEL",
+      "name": "Belgium",
+      "label": "Belgium",
+      "areaKm2": 30630.705,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 140
+    },
+    {
+      "id": "LSO",
+      "name": "Lesotho",
+      "label": "Lesotho",
+      "areaKm2": 30027.586,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 141
+    },
+    {
+      "id": "ARM",
+      "name": "Armenia",
+      "label": "Armenia",
+      "areaKm2": 29557.579,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 142
+    },
+    {
+      "id": "ALB",
+      "name": "Albania",
+      "label": "Albania",
+      "areaKm2": 28335.635,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 143
+    },
+    {
+      "id": "BDI",
+      "name": "Burundi",
+      "label": "Burundi",
+      "areaKm2": 27207.244,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 144
+    },
+    {
+      "id": "HTI",
+      "name": "Haiti",
+      "label": "Haiti",
+      "areaKm2": 26805.166,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 145
+    },
+    {
+      "id": "GNQ",
+      "name": "Equatorial Guinea",
+      "label": "Equatorial Guinea",
+      "areaKm2": 26643.779,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 146
+    },
+    {
+      "id": "SLB",
+      "name": "Solomon Islands",
+      "label": "Solomon Islands",
+      "areaKm2": 25740.302,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 147
+    },
+    {
+      "id": "RWA",
+      "name": "Rwanda",
+      "label": "Rwanda",
+      "areaKm2": 25385.661,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 148
+    },
+    {
+      "id": "MKD",
+      "name": "North Macedonia",
+      "label": "North Macedonia",
+      "areaKm2": 25364.116,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 149
+    },
+    {
+      "id": "BLZ",
+      "name": "Belize",
+      "label": "Belize",
+      "areaKm2": 22780.525,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 150
+    },
+    {
+      "id": "ISR",
+      "name": "Israel",
+      "label": "Israel",
+      "areaKm2": 22050.456,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 151
+    },
+    {
+      "id": "DJI",
+      "name": "Djibouti",
+      "label": "Djibouti",
+      "areaKm2": 21703.895,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 152
+    },
+    {
+      "id": "SLV",
+      "name": "El Salvador",
+      "label": "El Salvador",
+      "areaKm2": 20391.971,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 153
+    },
+    {
+      "id": "SVN",
+      "name": "Slovenia",
+      "label": "Slovenia",
+      "areaKm2": 20194.315,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 154
+    },
+    {
+      "id": "NCL",
+      "name": "New Caledonia",
+      "label": "New Caledonia",
+      "areaKm2": 18667.202,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 155
+    },
+    {
+      "id": "FJI",
+      "name": "Fiji",
+      "label": "Fiji",
+      "areaKm2": 18406.695,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 156
+    },
+    {
+      "id": "KWT",
+      "name": "Kuwait",
+      "label": "Kuwait",
+      "areaKm2": 17329.485,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 157
+    },
+    {
+      "id": "SWZ",
+      "name": "Eswatini",
+      "label": "Kingdom of eSwatini",
+      "areaKm2": 16992.298,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 158
+    },
+    {
+      "id": "TLS",
+      "name": "East Timor",
+      "label": "Timor-Leste",
+      "areaKm2": 15020.863,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 159
+    },
+    {
+      "id": "MNE",
+      "name": "Montenegro",
+      "label": "Montenegro",
+      "areaKm2": 13666.853,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 160
+    },
+    {
+      "id": "BHS",
+      "name": "The Bahamas",
+      "label": "Bahamas",
+      "areaKm2": 12668.179,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 161
+    },
+    {
+      "id": "FLK",
+      "name": "Falkland Islands",
+      "label": "Falkland Islands / Malvinas",
+      "areaKm2": 11386.286,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 162
+    },
+    {
+      "id": "VUT",
+      "name": "Vanuatu",
+      "label": "Vanuatu",
+      "areaKm2": 11292.279,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 163
+    },
+    {
+      "id": "QAT",
+      "name": "Qatar",
+      "label": "Qatar",
+      "areaKm2": 11074.095,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 164
+    },
+    {
+      "id": "JAM",
+      "name": "Jamaica",
+      "label": "Jamaica",
+      "areaKm2": 10932.113,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 165
+    },
+    {
+      "id": "KOS",
+      "name": "Kosovo",
+      "label": "Kosovo",
+      "areaKm2": 10911.751,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 166
+    },
+    {
+      "id": "GMB",
+      "name": "The Gambia",
+      "label": "The Gambia",
+      "areaKm2": 10313.64,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 167
+    },
+    {
+      "id": "LBN",
+      "name": "Lebanon",
+      "label": "Lebanon",
+      "areaKm2": 10010.822,
+      "minZoom": 3,
+      "sizeTier": 3,
+      "priority": 168
+    },
+    {
+      "id": "PRI",
+      "name": "Puerto Rico",
+      "label": "Puerto Rico",
+      "areaKm2": 8943.457,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 169
+    },
+    {
+      "id": "ATF",
+      "name": "French Southern and Antarctic Lands",
+      "label": "French Southern and Antarctic Lands",
+      "areaKm2": 6971.718,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 170
+    },
+    {
+      "id": "PSX",
+      "name": "Palestine",
+      "label": "Palestine",
+      "areaKm2": 6333.339,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 171
+    },
+    {
+      "id": "CYP",
+      "name": "Cyprus",
+      "label": "Cyprus",
+      "areaKm2": 5708.287,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 172
+    },
+    {
+      "id": "BRN",
+      "name": "Brunei",
+      "label": "Brunei Darussalam",
+      "areaKm2": 5672.065,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 173
+    },
+    {
+      "id": "TTO",
+      "name": "Trinidad and Tobago",
+      "label": "Trinidad and Tobago",
+      "areaKm2": 5102.494,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 174
+    },
+    {
+      "id": "SGS",
+      "name": "South Georgia and the South Sandwich Islands",
+      "label": "South Georgia and the Islands",
+      "areaKm2": 3668.249,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 175
+    },
+    {
+      "id": "CPV",
+      "name": "Cape Verde",
+      "label": "Republic of Cabo Verde",
+      "areaKm2": 3585.038,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 176
+    },
+    {
+      "id": "CYN",
+      "name": "Turkish Republic of Northern Cyprus",
+      "label": "Northern Cyprus",
+      "areaKm2": 3471.914,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 177
+    },
+    {
+      "id": "WSM",
+      "name": "Samoa",
+      "label": "Samoa",
+      "areaKm2": 2701.725,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 178
+    },
+    {
+      "id": "PYF",
+      "name": "French Polynesia",
+      "label": "French Polynesia",
+      "areaKm2": 2614.78,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 179
+    },
+    {
+      "id": "LUX",
+      "name": "Luxembourg",
+      "label": "Luxembourg",
+      "areaKm2": 2611.891,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 180
+    },
+    {
+      "id": "KAS",
+      "name": "Siachen Glacier",
+      "label": "Siachen Glacier",
+      "areaKm2": 2118.137,
+      "minZoom": 4,
+      "sizeTier": 4,
+      "priority": 181
+    },
+    {
+      "id": "MUS",
+      "name": "Mauritius",
+      "label": "Mauritius",
+      "areaKm2": 1879.266,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 182
+    },
+    {
+      "id": "COM",
+      "name": "Comoros",
+      "label": "Comoros",
+      "areaKm2": 1585.845,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 183
+    },
+    {
+      "id": "FRO",
+      "name": "Faroe Islands",
+      "label": "Faeroe Islands",
+      "areaKm2": 1035.53,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 184
+    },
+    {
+      "id": "HKG",
+      "name": "Hong Kong",
+      "label": "Hong Kong",
+      "areaKm2": 1028.918,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 185
+    },
+    {
+      "id": "STP",
+      "name": "São Tomé and Príncipe",
+      "label": "São Tomé and Principe",
+      "areaKm2": 985.863,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 186
+    },
+    {
+      "id": "KIR",
+      "name": "Kiribati",
+      "label": "Kiribati",
+      "areaKm2": 937.544,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 187
+    },
+    {
+      "id": "ALD",
+      "name": "Åland",
+      "label": "Åland Islands",
+      "areaKm2": 759.892,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 188
+    },
+    {
+      "id": "DMA",
+      "name": "Dominica",
+      "label": "Dominica",
+      "areaKm2": 697.857,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 189
+    },
+    {
+      "id": "IMN",
+      "name": "Isle of Man",
+      "label": "Isle of Man",
+      "areaKm2": 557.379,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 190
+    },
+    {
+      "id": "LCA",
+      "name": "Saint Lucia",
+      "label": "Saint Lucia",
+      "areaKm2": 551.314,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 191
+    },
+    {
+      "id": "BHR",
+      "name": "Bahrain",
+      "label": "Bahrain",
+      "areaKm2": 541.502,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 192
+    },
+    {
+      "id": "FSM",
+      "name": "Federated States of Micronesia",
+      "label": "Federated States of Micronesia",
+      "areaKm2": 524.081,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 193
+    },
+    {
+      "id": "SGP",
+      "name": "Singapore",
+      "label": "Singapore",
+      "areaKm2": 484.943,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 194
+    },
+    {
+      "id": "GUM",
+      "name": "Guam",
+      "label": "Guam",
+      "areaKm2": 482.259,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 195
+    },
+    {
+      "id": "AND",
+      "name": "Andorra",
+      "label": "Andorra",
+      "areaKm2": 441.81,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 196
+    },
+    {
+      "id": "ATG",
+      "name": "Antigua and Barbuda",
+      "label": "Antigua and Barbuda",
+      "areaKm2": 432.836,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 197
+    },
+    {
+      "id": "TON",
+      "name": "Tonga",
+      "label": "Tonga",
+      "areaKm2": 431.519,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 198
+    },
+    {
+      "id": "CUW",
+      "name": "Curaçao",
+      "label": "Curaçao",
+      "areaKm2": 429.733,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 199
+    },
+    {
+      "id": "HMD",
+      "name": "Heard Island and McDonald Islands",
+      "label": "Heard I. and McDonald Islands",
+      "areaKm2": 418.577,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 200
+    },
+    {
+      "id": "MNP",
+      "name": "Northern Mariana Islands",
+      "label": "Northern Mariana Islands",
+      "areaKm2": 393.501,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 201
+    },
+    {
+      "id": "BRB",
+      "name": "Barbados",
+      "label": "Barbados",
+      "areaKm2": 389.293,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 202
+    },
+    {
+      "id": "PLW",
+      "name": "Palau",
+      "label": "Palau",
+      "areaKm2": 340.622,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 203
+    },
+    {
+      "id": "TCA",
+      "name": "Turks and Caicos Islands",
+      "label": "Turks and Caicos Islands",
+      "areaKm2": 330.215,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 204
+    },
+    {
+      "id": "VIR",
+      "name": "United States Virgin Islands",
+      "label": "United States Virgin Islands",
+      "areaKm2": 315.819,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 205
+    },
+    {
+      "id": "VCT",
+      "name": "Saint Vincent and the Grenadines",
+      "label": "Saint Vincent and the Grenadines",
+      "areaKm2": 311.091,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 206
+    },
+    {
+      "id": "CYM",
+      "name": "Cayman Islands",
+      "label": "Cayman Islands",
+      "areaKm2": 301.319,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 207
+    },
+    {
+      "id": "GRD",
+      "name": "Grenada",
+      "label": "Grenada",
+      "areaKm2": 286.028,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 208
+    },
+    {
+      "id": "MLT",
+      "name": "Malta",
+      "label": "Malta",
+      "areaKm2": 273.77,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 209
+    },
+    {
+      "id": "MHL",
+      "name": "Marshall Islands",
+      "label": "Marshall Islands",
+      "areaKm2": 237.434,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 210
+    },
+    {
+      "id": "KNA",
+      "name": "Saint Kitts and Nevis",
+      "label": "Saint Kitts and Nevis",
+      "areaKm2": 232.939,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 211
+    },
+    {
+      "id": "SPM",
+      "name": "Saint Pierre and Miquelon",
+      "label": "Saint Pierre and Miquelon",
+      "areaKm2": 205.281,
+      "minZoom": 5,
+      "sizeTier": 5,
+      "priority": 212
+    },
+    {
+      "id": "NIU",
+      "name": "Niue",
+      "label": "Niue",
+      "areaKm2": 196.983,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 213
+    },
+    {
+      "id": "SHN",
+      "name": "Saint Helena",
+      "label": "Saint Helena",
+      "areaKm2": 185.837,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 214
+    },
+    {
+      "id": "SYC",
+      "name": "Seychelles",
+      "label": "Seychelles",
+      "areaKm2": 174.403,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 215
+    },
+    {
+      "id": "ABW",
+      "name": "Aruba",
+      "label": "Aruba",
+      "areaKm2": 155.26,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 216
+    },
+    {
+      "id": "IOA",
+      "name": "Australian Indian Ocean Territories",
+      "label": "Indian Ocean Territories",
+      "areaKm2": 143.694,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 217
+    },
+    {
+      "id": "LIE",
+      "name": "Liechtenstein",
+      "label": "Liechtenstein",
+      "areaKm2": 137.952,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 218
+    },
+    {
+      "id": "VGB",
+      "name": "British Virgin Islands",
+      "label": "British Virgin Islands",
+      "areaKm2": 135.359,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 219
+    },
+    {
+      "id": "IOT",
+      "name": "British Indian Ocean Territory",
+      "label": "British Indian Ocean Territory",
+      "areaKm2": 132.406,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 220
+    },
+    {
+      "id": "WLF",
+      "name": "Wallis and Futuna",
+      "label": "Wallis and Futuna Islands",
+      "areaKm2": 131.678,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 221
+    },
+    {
+      "id": "JEY",
+      "name": "Jersey",
+      "label": "Jersey",
+      "areaKm2": 126.314,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 222
+    },
+    {
+      "id": "ASM",
+      "name": "American Samoa",
+      "label": "American Samoa",
+      "areaKm2": 120.402,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 223
+    },
+    {
+      "id": "AIA",
+      "name": "Anguilla",
+      "label": "Anguilla",
+      "areaKm2": 83.283,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 224
+    },
+    {
+      "id": "MSR",
+      "name": "Montserrat",
+      "label": "Montserrat",
+      "areaKm2": 79.779,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 225
+    },
+    {
+      "id": "SMR",
+      "name": "San Marino",
+      "label": "San Marino",
+      "areaKm2": 68.259,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 226
+    },
+    {
+      "id": "MDV",
+      "name": "Maldives",
+      "label": "Maldives",
+      "areaKm2": 66.412,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 227
+    },
+    {
+      "id": "BMU",
+      "name": "Bermuda",
+      "label": "Bermuda",
+      "areaKm2": 65.981,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 228
+    },
+    {
+      "id": "COK",
+      "name": "Cook Islands",
+      "label": "Cook Islands",
+      "areaKm2": 60.654,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 229
+    },
+    {
+      "id": "MAF",
+      "name": "Saint Martin",
+      "label": "Saint-Martin",
+      "areaKm2": 49.008,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 230
+    },
+    {
+      "id": "GGY",
+      "name": "Guernsey",
+      "label": "Guernsey",
+      "areaKm2": 48.055,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 231
+    },
+    {
+      "id": "SXM",
+      "name": "Sint Maarten",
+      "label": "Sint Maarten",
+      "areaKm2": 41.835,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 232
+    },
+    {
+      "id": "NFK",
+      "name": "Norfolk Island",
+      "label": "Norfolk Island",
+      "areaKm2": 41.143,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 233
+    },
+    {
+      "id": "PCN",
+      "name": "Pitcairn Islands",
+      "label": "Pitcairn Islands",
+      "areaKm2": 38.676,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 234
+    },
+    {
+      "id": "NRU",
+      "name": "Nauru",
+      "label": "Nauru",
+      "areaKm2": 27.795,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 235
+    },
+    {
+      "id": "BLM",
+      "name": "Saint Barthélemy",
+      "label": "Saint-Barthélemy",
+      "areaKm2": 24.524,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 236
+    },
+    {
+      "id": "MAC",
+      "name": "Macau",
+      "label": "Macao",
+      "areaKm2": 22.74,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 237
+    },
+    {
+      "id": "MCO",
+      "name": "Monaco",
+      "label": "Monaco",
+      "areaKm2": 12.416,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 238
+    },
+    {
+      "id": "TUV",
+      "name": "Tuvalu",
+      "label": "Tuvalu",
+      "areaKm2": 10.251,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 239
+    },
+    {
+      "id": "ATC",
+      "name": "Ashmore and Cartier Islands",
+      "label": "Ashmore and Cartier Islands",
+      "areaKm2": 2.718,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 240
+    },
+    {
+      "id": "VAT",
+      "name": "Vatican City",
+      "label": "Vatican",
+      "areaKm2": 0.706,
+      "minZoom": 6,
+      "sizeTier": 6,
+      "priority": 241
+    }
+  ]
+}

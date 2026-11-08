@@ -31,8 +31,28 @@ find a visual interior center in each country's largest Mercator-projected
 landmass, avoiding holes and offshore centroids. All map geometry and the Noto Sans font are
 served locally; the app makes no runtime requests to external services.
 
-Labels are centered on those anchors. Collision detection decides which names
-fit, without fixed minimum zoom gates. Text grows in screen pixels throughout
+Labels are centered on those anchors. `public/data/world/country-labels.json`
+lists every country/territory with approximate geographic area, minimum zoom,
+size tier and collision priority. The app fetches this list and applies it to
+the label points; editing its values takes effect on refresh. Regenerating data
+rebuilds the list from the policy in `scripts/lib/country-label-policy.mjs`.
+
+Areas are geodesic measurements of the generalized source geometry, including
+holes and all polygon parts, rather than official country-area statistics.
+Larger areas receive priority when labels compete. These bands control when a
+name becomes eligible; collision detection can delay it until there is room:
+
+| Geographic area | Minimum MapLibre zoom |
+| --- | --- |
+| 1,000,000 km² and above | 0 |
+| 250,000–999,999 km² | 1 |
+| 50,000–249,999 km² | 2 |
+| 10,000–49,999 km² | 3 |
+| 2,000–9,999 km² | 4 |
+| 200–1,999 km² | 5 |
+| Below 200 km² | 6 |
+
+Text size also follows the geographic size tier and grows in screen pixels throughout
 zoom levels 0–8; the label font does not stop growing at regional zoom levels.
 The map has no title plaque covering the upper-left corner.
 

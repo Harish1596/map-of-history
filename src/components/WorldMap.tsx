@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
+import { applyCountryLabelList } from "@/data/world-label-policy";
 import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
 
 type MapStatus = "loading" | "ready" | "error";
@@ -48,10 +49,14 @@ export function WorldMap() {
 
     async function initialize() {
       try {
-        const [maplibre, countries, labels] = await Promise.all([
+        const [maplibre, countries, labels, labelList] = await Promise.all([
           import("maplibre-gl"),
           loadGeography("/data/world/countries.geojson", controller.signal),
           loadGeography("/data/world/labels.geojson", controller.signal),
+          fetch("/data/world/country-labels.json", { signal: controller.signal }).then((response) => {
+            if (!response.ok) throw new Error("Could not load country label list");
+            return response.json();
+          }),
           document.fonts.load('500 16px "Noto Sans"').then((fonts) => {
             if (!fonts.length) throw new Error("Map font unavailable");
           }),
@@ -62,7 +67,7 @@ export function WorldMap() {
         maplibre.setWorkerUrl("/vendor/maplibre-gl-worker.mjs");
         map = new maplibre.Map({
           container: container.current,
-          style: worldMapStyle(countries, labels),
+          style: worldMapStyle(countries, applyCountryLabelList(labels, labelList)),
           center: [0, 20], zoom: 1,
           maxZoom: maximumWorldZoom(), minZoom,
           fadeDuration: 0,

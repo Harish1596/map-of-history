@@ -4,6 +4,7 @@ import test from "node:test";
 import { expression } from "@maplibre/maplibre-gl-style-spec";
 import { worldMapStyle } from "../src/data/world-map-style.ts";
 import { countryLabelPoint } from "../scripts/lib/country-labels.mjs";
+import { applyCountryLabelList } from "../src/data/world-label-policy.ts";
 
 const read = (name) => JSON.parse(readFileSync(new URL(`../public/data/world/${name}.geojson`, import.meta.url)));
 const countries = read("countries");
@@ -44,20 +45,55 @@ test("visual centers avoid holes and use the main landmass of island groups", ()
   assert.ok(Math.abs(point[0] - 5) < 0.01);
 });
 
-test("country label candidates are governed by collisions, not preset zoom gates", () => {
-  assert.equal(layer.filter, undefined);
+test("country labels use size-based zoom gates and area-based collision priority", () => {
+  const list = JSON.parse(readFileSync(new URL("../public/data/world/country-labels.json", import.meta.url)));
+  const byId = new Map(list.countries.map((country) => [country.id, country]));
+  assert.equal(byId.size, countries.features.length);
+  assert.ok(byId.get("DZA").areaKm2 > byId.get("GRL").areaKm2, "geographic area avoids Mercator's polar size distortion");
+  for (const id of ["FRA", "DZA", "PRT"]) {
+    for (const island of ["BMU", "SPM", "PCN"]) {
+      assert.ok(byId.get(id).minZoom < byId.get(island).minZoom, `${id} before ${island}`);
+      assert.ok(byId.get(id).priority < byId.get(island).priority);
+    }
+  }
+  let previousArea = Infinity;
+  let previousZoom = -Infinity;
+  for (const country of list.countries) {
+    assert.ok(country.areaKm2 > 0 && country.areaKm2 <= previousArea);
+    assert.ok(country.minZoom >= previousZoom);
+    const label = labels.features.find((label) => label.id === country.id);
+    assert.equal(label.properties.minZoom, country.minZoom);
+    assert.equal(label.properties.priority, country.priority);
+    assert.equal(label.properties.sizeTier, country.sizeTier);
+    previousArea = country.areaKm2;
+    previousZoom = country.minZoom;
+  }
+  assert.deepEqual(layer.filter, [">=", ["zoom"], ["get", "minZoom"]]);
+  assert.deepEqual(layer.layout["symbol-sort-key"], ["get", "priority"]);
   assert.equal(layer.layout["text-allow-overlap"], false);
   assert.equal(layer.layout["text-anchor"], "center");
 });
 
-test("every label rank grows in screen pixels through the full supported zoom range", () => {
+test("every geographic size tier grows in screen pixels across the style zoom stops", () => {
   const parsed = expression.createExpression(layer.layout["text-size"], "layers[3].layout.text-size");
   assert.equal(parsed.result, "success");
-  for (const rank of [1, 2, 3, 4, 5, 6, 7]) {
-    const size = (zoom) => parsed.value.evaluate({ zoom }, { properties: { rank } });
+  for (const sizeTier of [0, 1, 2, 3, 4, 5, 6]) {
+    const size = (zoom) => parsed.value.evaluate({ zoom }, { properties: { sizeTier } });
     for (const zoom of [0, 1, 2, 3, 4, 5, 6, 7]) {
-      assert.ok(size(zoom + 1) > size(zoom), `rank ${rank}, zoom ${zoom} → ${zoom + 1}`);
+      assert.ok(size(zoom + 1) > size(zoom), `tier ${sizeTier}, zoom ${zoom} → ${zoom + 1}`);
     }
     assert.ok(size(0) >= 10);
   }
+});
+
+test("the local country list controls rendered policy and rejects invalid edits", () => {
+  const list = JSON.parse(readFileSync(new URL("../public/data/world/country-labels.json", import.meta.url)));
+  list.countries.find((country) => country.id === "FRA").minZoom = 4;
+  const applied = applyCountryLabelList(labels, list);
+  assert.equal(applied.features.find((feature) => feature.id === "FRA").properties.minZoom, 4);
+  assert.notEqual(labels.features.find((feature) => feature.id === "FRA").properties.minZoom, 4);
+  assert.throws(() => applyCountryLabelList(labels, { countries: [] }), /Missing country/);
+  assert.throws(() => applyCountryLabelList(labels, { countries: [...list.countries, list.countries[0]] }), /duplicate/);
+  list.countries[0].minZoom = -1;
+  assert.throws(() => applyCountryLabelList(labels, list), /Invalid country/);
 });

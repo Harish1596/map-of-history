@@ -115,7 +115,15 @@ The palette is low saturation, with dark ink supplying readable labels and slate
 
 Source text stays plain. The map has no title overlay; its accessible name remains available to assistive technology.
 
-Country labels use the same Noto Sans family. By rank, sizes are 14/11/10px at zoom 0, 19/15/12px at zoom 3, 24/20/16px at zoom 5, and 34/28/22px at zoom 8, interpolating between stops. Labels use line height 1.15, maximum width 8 em, padding 2px, a land-colored halo (width 1.1px, blur 0.4px), and collision avoidance. All country names are candidates at every zoom; available space controls visibility. Center alignment uses offline-computed interior anchors in the largest landmass, avoiding holes.
+Country labels use the same Noto Sans family. Geographic area determines their
+size tier, minimum zoom and collision priority, using the local country-labels
+list. Larger areas place first. By size tier, font sizes are 14/12/11/10px at
+zoom 0, 19/15/13/12px at zoom 3, 24/20/17/16px at zoom 5, and 34/28/24/22px at
+zoom 8, interpolating between stops. The last font-size value covers tiers 3–6.
+Labels use line height 1.15, maximum width 6 em, padding 2px, a land-colored halo
+(width 1.1px, blur 0.4px), and collision avoidance. Minimum zoom determines
+eligibility; available space determines final visibility. Center alignment uses
+offline-computed interior anchors in the largest landmass, avoiding holes.
 
 ## Layout
 

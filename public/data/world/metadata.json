@@ -9,5 +9,5 @@
   "featureCount": 242,
   "boundaryConvention": "Natural Earth default de facto boundaries. Includes territories and disputed areas; not a count of sovereign states or a statement of legal recognition.",
   "limitations": "Generalized 1:50m snapshot, not live political data, street detail, or survey geometry. Small-country labels appear as space allows when zooming.",
-  "transformations": "Country geometry unchanged. Retain selected display properties. Label points are computed offline with Polylabel inside the largest Mercator-projected landmass, avoiding polygon holes; original source label coordinates are not used."
+  "transformations": "Country geometry unchanged. Label points use offline Polylabel inside the largest Mercator-projected landmass. Country-labels.json ranks geodesic polygon areas with Turf; size bands set minimum zoom and typography, and descending area sets collision priority."
 }
