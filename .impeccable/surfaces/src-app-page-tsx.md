@@ -25,6 +25,9 @@ for smaller places; reset to regain geographic context.
 Standard also labels the five oceans using seven sourced marine-region anchors,
 with North/South Atlantic and Pacific names. Muted blue ocean text yields to
 country labels and follows the same camera and continuous world wrap.
+Standard adds 71 named seas in the same water-ink family, at a smaller text
+scale. Major seas are eligible at overview zoom; smaller seas follow source
+zoom guidance. Anchors are checked against land, with island overlaps corrected.
 Country labels follow geographic-area bands and descending-area collision
 priority, sourced from the local country-labels.json list. Small islands and
 territories become eligible later than larger countries.

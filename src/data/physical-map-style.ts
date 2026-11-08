@@ -115,7 +115,7 @@ export function physicalMapLayers(): LayerSpecification[] {
 
 // Toggle existing layers; never replace the style or change the map's camera.
 export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">, mode: MapMode, surface: PhysicalSurface = "relief") {
-  for (const id of ["country-borders", "country-labels", "ocean-labels"]) {
+  for (const id of ["country-borders", "country-labels", "ocean-labels", "sea-labels"]) {
     if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", mode === "standard" ? "visible" : "none");
   }
   for (const layer of physicalMapLayers()) {

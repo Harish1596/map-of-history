@@ -6,6 +6,7 @@ export function worldMapStyle(
   labels: FeatureCollection,
   islands: FeatureCollection = { type: "FeatureCollection", features: [] },
   oceans: FeatureCollection = { type: "FeatureCollection", features: [] },
+  seas: FeatureCollection = { type: "FeatureCollection", features: [] },
 ): StyleSpecification {
   return {
     version: 8,
@@ -15,6 +16,7 @@ export function worldMapStyle(
       labels: { type: "geojson", data: labels },
       islands: { type: "geojson", data: islands },
       oceans: { type: "geojson", data: oceans },
+      seas: { type: "geojson", data: seas },
     },
     layers: [
       { id: "ocean", type: "background", paint: { "background-color": "#edf3f5" } },
@@ -35,6 +37,20 @@ export function worldMapStyle(
           "text-letter-spacing": 0.08, "text-padding": 4,
           "text-anchor": "center", "text-allow-overlap": false,
           "text-ignore-placement": false,
+        },
+        paint: { "text-color": "#476b7a", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },
+      },
+      {
+        id: "sea-labels", type: "symbol", source: "seas",
+        filter: [">=", ["zoom"], ["get", "minZoom"]],
+        layout: {
+          "text-field": ["get", "name"], "text-font": ["Noto Sans"],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 1, 11, 4, 14, 7, 19, 10, 24],
+          "text-max-width": 7, "text-line-height": 1.2, "text-padding": 3,
+          "text-anchor": "center", "symbol-sort-key": ["get", "priority"],
+          "text-variable-anchor": ["center", "left", "right", "top", "bottom"],
+          "text-radial-offset": 0.5,
+          "text-allow-overlap": false, "text-ignore-placement": false,
         },
         paint: { "text-color": "#476b7a", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },
       },

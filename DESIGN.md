@@ -144,6 +144,14 @@ Country labels place ahead of ocean names. Seven sourced offshore anchors label
 the five oceans, retaining North/South Atlantic and Pacific distinctions. They
 are eligible from overview zoom onward; the layer is hidden in Physical Geography.
 
+Sea names share ocean ink and an ocean-coloured 1.5px halo, with a smaller scale:
+11px at zoom 1, 14px at zoom 4, 19px at zoom 7 and 24px at zoom 10. Use 1.2 line
+height and 3px collision padding. Major seas are eligible at zoom 1; smaller seas
+follow source label guidance. Country/island labels have placement priority.
+Sea anchors stay offshore in the bundled geography, and the layer follows
+Standard-only visibility alongside ocean names.
+Text may shift to nearby anchor positions to avoid country and island labels.
+
 ## Layout
 
 The map fills the viewport, using dynamic viewport height with a conventional viewport fallback. Attribution sits lower left; stacked zoom and reset navigation sits lower right. A compact Standard / Physical Geography switch sits upper left. These placements describe the current map surface, not a template for unrelated future screens.

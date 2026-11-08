@@ -1,0 +1,12 @@
+{
+  "title": "Natural Earth sea label anchors",
+  "source": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_geography_marine_polys.geojson",
+  "license": "Public domain",
+  "licenseUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "sourceSha256": "53f865e8ffa966cdd402145c82c5cd14ee7ce974cd0eb9a3f59f03a4cfd2d66c",
+  "coastlineSha256": "a60b420c634bb75169d2c3a9c6912b153aa3f70f24ee1798b7f98be1fffc10b1",
+  "preparedOn": "2026-11-08",
+  "featureCount": 71,
+  "transformations": "Retain sea-class features and English names; compute interior Polylabel anchors. If an anchor lands on an island in the bundled country outlines, move it to the nearest water candidate on a 32/64/128-step grid inside its marine label region. Major rank-1 seas are eligible at zoom 1. Smaller seas use rounded-down source label zooms, starting at zoom 2. Source rank sets collision priority; labels remain eligible at closer zooms.",
+  "limitations": "Selected named seas, including the Caspian Sea, from the source's sea class. Approximate label regions are placement aids, not surveyed maritime boundaries. Country outlines are generalized; label eligibility does not guarantee visible placement when names compete."
+}
