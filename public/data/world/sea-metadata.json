@@ -12,6 +12,6 @@
     "Bay": 60,
     "Gulf": 61
   },
-  "transformations": "Retain sea-, bay- and gulf-class features and English names; compute interior Polylabel anchors. If an anchor lands on an island in the bundled country outlines, move it to the nearest water candidate on a 32/64/128-step grid inside its marine label region. Major rank-1 waters are eligible at zoom 1. Smaller waters use rounded-down source label zooms, starting at zoom 2. Source rank sets collision priority; labels remain eligible at closer zooms.",
+  "transformations": "Retain sea-, bay- and gulf-class features and English names; compute interior Polylabel anchors. If an anchor lands on an island in the bundled country outlines, move it to the nearest water candidate on a 32/64/128-step grid inside its marine label region. Major rank-1 waters are eligible at zoom 1. Smaller waters use rounded-down source label zooms, starting at zoom 2. Override Bohai Sea to zoom 4 to match Yellow Sea. Source rank sets collision priority; labels remain eligible at closer zooms.",
   "limitations": "Selected named seas, bays and gulfs from the source classifications, including inland seas. Approximate label regions are placement aids, not surveyed maritime boundaries. Country outlines are generalized; label eligibility does not guarantee visible placement when names compete."
 }

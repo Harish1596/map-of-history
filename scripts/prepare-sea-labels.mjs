@@ -40,6 +40,8 @@ function waterAnchor(geometry) {
   throw new Error("Could not place a sea label in water");
 }
 const marineKinds = { sea: "Sea", bay: "Bay", gulf: "Gulf" };
+// Introduce the adjoining Bohai and Yellow seas together.
+const minimumZoomOverrides = { "Bohai Sea": 4 };
 const features = source.features.filter((f) => Object.hasOwn(marineKinds, f.properties.featurecla)).map((feature) => {
   const p = feature.properties;
   const name = p.name_en || p.name;
@@ -47,7 +49,7 @@ const features = source.features.filter((f) => Object.hasOwn(marineKinds, f.prop
   const anchor = waterAnchor(feature.geometry);
   return {
     type: "Feature", id,
-    properties: { id, name, kind: marineKinds[p.featurecla], minZoom: p.scalerank <= 1 ? 1 : Math.max(2, Math.floor(p.min_label ?? 4)), priority: p.scalerank ?? 10, adjustedForLand: anchor.adjusted },
+    properties: { id, name, kind: marineKinds[p.featurecla], minZoom: minimumZoomOverrides[name] ?? (p.scalerank <= 1 ? 1 : Math.max(2, Math.floor(p.min_label ?? 4))), priority: p.scalerank ?? 10, adjustedForLand: anchor.adjusted },
     geometry: { type: "Point", coordinates: anchor.point.map((v) => Number(v.toFixed(5))) },
   };
 });
@@ -60,7 +62,7 @@ writeFileSync(new URL("sea-metadata.json", output), JSON.stringify({
   coastlineSha256: createHash("sha256").update(countryBytes).digest("hex"),
   preparedOn: new Date().toISOString().slice(0, 10), featureCount: features.length,
   kinds: Object.fromEntries(Object.values(marineKinds).map((kind) => [kind, features.filter((f) => f.properties.kind === kind).length])),
-  transformations: "Retain sea-, bay- and gulf-class features and English names; compute interior Polylabel anchors. If an anchor lands on an island in the bundled country outlines, move it to the nearest water candidate on a 32/64/128-step grid inside its marine label region. Major rank-1 waters are eligible at zoom 1. Smaller waters use rounded-down source label zooms, starting at zoom 2. Source rank sets collision priority; labels remain eligible at closer zooms.",
+  transformations: "Retain sea-, bay- and gulf-class features and English names; compute interior Polylabel anchors. If an anchor lands on an island in the bundled country outlines, move it to the nearest water candidate on a 32/64/128-step grid inside its marine label region. Major rank-1 waters are eligible at zoom 1. Smaller waters use rounded-down source label zooms, starting at zoom 2. Override Bohai Sea to zoom 4 to match Yellow Sea. Source rank sets collision priority; labels remain eligible at closer zooms.",
   limitations: "Selected named seas, bays and gulfs from the source classifications, including inland seas. Approximate label regions are placement aids, not surveyed maritime boundaries. Country outlines are generalized; label eligibility does not guarantee visible placement when names compete.",
 }, null, 2) + "\n");
 console.log(`Prepared ${features.length} marine-water label anchors.`);

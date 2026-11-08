@@ -25,6 +25,11 @@ test("named seas, bays and gulfs have stable offshore anchors and zoom eligibili
   const bengal = seas.features.find((f) => f.properties.name === "Bay of Bengal");
   assert.equal(bengal.properties.kind, "Bay");
   assert.equal(bengal.properties.minZoom, 1);
+  assert.equal(
+    seas.features.find((f) => f.properties.name === "Bohai Sea").properties.minZoom,
+    seas.features.find((f) => f.properties.name === "Yellow Sea").properties.minZoom,
+    "Bohai Sea and Yellow Sea become eligible together",
+  );
   for (const f of seas.features) {
     assert(f.properties.minZoom >= 1 && f.properties.minZoom <= 10);
     assert(["Sea", "Bay", "Gulf"].includes(f.properties.kind));
