@@ -64,7 +64,7 @@ export function WorldMap() {
           container: container.current,
           style: worldMapStyle(countries, labels),
           center: [0, 20], zoom: 1,
-          maxZoom: maximumWorldZoom(minZoom), minZoom,
+          maxZoom: maximumWorldZoom(), minZoom,
           fadeDuration: 0,
           renderWorldCopies: true,
           // Bound the full viewport at the poles while leaving longitude free
@@ -82,18 +82,10 @@ export function WorldMap() {
           if (!map || !container.current) return;
           viewportHeight = container.current.clientHeight;
           minZoom = minimumWorldZoom(container.current.clientWidth, viewportHeight);
-          // Avoid an invalid intermediate range while resizing between a wide
-          // and narrow viewport. The shared constraint always uses the new range.
-          if (minZoom > map.getMaxZoom()) {
-            map.setMaxZoom(maximumWorldZoom(minZoom));
-            map.setMinZoom(minZoom);
-          } else {
-            map.setMinZoom(minZoom);
-            map.setMaxZoom(maximumWorldZoom(minZoom));
-          }
+          map.setMinZoom(minZoom);
           setLimits({
             min: map.getZoom() <= minZoom + 0.01,
-            max: map.getZoom() >= maximumWorldZoom(minZoom) - 0.01,
+            max: map.getZoom() >= maximumWorldZoom() - 0.01,
           });
         });
         map.touchZoomRotate.disableRotation();
@@ -147,7 +139,7 @@ export function WorldMap() {
       <div className="world-map__canvas" ref={container} />
       <p id="map-instructions" className="visually-hidden">
         Drag to pan. Scroll or pinch to zoom. Focus the map and use arrow keys to
-        pan, or plus and minus to zoom. Zoom is limited to twice the world overview.
+        pan, or plus and minus to zoom. Use Reset world view to return to the overview.
       </p>
       {status === "loading" && <p className="map-feedback" role="status">Loading the world map…</p>}
       {status === "error" && (

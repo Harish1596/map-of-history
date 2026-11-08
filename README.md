@@ -12,10 +12,15 @@ The map wraps seamlessly east/west across the date line. Zooming out stops when
 the world fills both viewport dimensions, preventing repeated whole worlds and
 space beyond the polar edges. North/south panning stops at the viewport's top
 and bottom boundaries. Portrait screens show a narrower longitude range so the
-map fills their height. Maximum zoom is **2× the
-initial world-view scale** (one additional zoom level), including wheel, pinch,
-keyboard and button input. Bounds adapt when the viewport changes. Google Maps
-is an interaction reference only; no Google services are loaded.
+map fills their height. Maximum zoom is **MapLibre level 21**, matching the
+pixel scale of Google's documented 256px-tile zoom level 22. This replaces the
+earlier 2×-overview restriction and applies to wheel, pinch, keyboard and buttons.
+The close-up cap stays fixed while the minimum adapts to viewport size.
+Google Maps is a scale/interaction reference only; no Google services are loaded.
+Our generalized country data does not add streets or buildings at closer zoom.
+
+Reference: [Google's documented 2D tile zoom range](https://developers.google.com/maps/documentation/tile/2d-tiles-overview)
+and [pixel coordinate scale](https://developers.google.com/maps/documentation/javascript/coordinates).
 
 ## Local map data
 

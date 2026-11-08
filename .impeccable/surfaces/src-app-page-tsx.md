@@ -27,7 +27,8 @@ FIRST VIEWPORT: A continuous flat map edge to edge, with no title plaque (remove
 at the user's request). Attribution lower left. White 44px zoom
 and reset buttons lower right. Signature interaction: all labels and borders
 track the same camera during every pan and zoom. Motion is map navigation only.
-The user clarified that maximum magnification is 2× the initial world view.
+The user increased the zoom range after the earlier 2×-overview cap: maximum
+MapLibre zoom is now 21, using Google's documented zoom-22 pixel scale as reference.
 Pan wraps continuously east/west. Zoom-out fills both viewport dimensions, and
 the viewport's top/bottom edges are constrained to the Mercator polar boundaries.
 

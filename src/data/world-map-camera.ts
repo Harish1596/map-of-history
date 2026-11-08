@@ -1,5 +1,8 @@
 export const MIN_WORLD_ZOOM = -2;
-export const MAX_WORLD_MAGNIFICATION = 2;
+// Google documents 256px tiles through zoom 22. MapLibre's 512px world at
+// zoom zero reaches the same pixel scale at zoom 21 (512 * 2^21 = 256 * 2^22).
+// Reference: https://developers.google.com/maps/documentation/tile/2d-tiles-overview
+export const MAX_WORLD_ZOOM = 21;
 
 export function minimumWorldZoom(viewportWidth: number, viewportHeight = 0) {
   // MapLibre's world is 512 CSS pixels wide at zoom zero. Keep the visible
@@ -8,9 +11,8 @@ export function minimumWorldZoom(viewportWidth: number, viewportHeight = 0) {
   return Math.max(MIN_WORLD_ZOOM, Math.log2(Math.max(1, viewportWidth, viewportHeight) / 512));
 }
 
-export function maximumWorldZoom(minZoom: number) {
-  // Zoom levels are logarithmic: one extra level doubles linear scale.
-  return minZoom + Math.log2(MAX_WORLD_MAGNIFICATION);
+export function maximumWorldZoom() {
+  return MAX_WORLD_ZOOM;
 }
 
 export function constrainWorldCamera(
@@ -19,7 +21,7 @@ export function constrainWorldCamera(
   minZoom = MIN_WORLD_ZOOM,
   viewportHeight = 0,
 ) {
-  const boundedZoom = Math.max(minZoom, Math.min(maximumWorldZoom(minZoom), zoom));
+  const boundedZoom = Math.max(minZoom, Math.min(maximumWorldZoom(), zoom));
   const halfHeight = Math.min(0.5, viewportHeight / (2 * 512 * 2 ** boundedZoom));
   const lat = Math.max(-85, Math.min(85, center.lat));
   const y = (1 - Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360)) / Math.PI) / 2;
