@@ -8,11 +8,12 @@ Drag to pan; scroll, pinch or use the buttons to zoom. Focus the map to use arro
 keys and plus/minus. Country labels avoid overlap and smaller-country names appear
 as space allows when zooming. Reset world view fits the world to the current screen.
 
-The map wraps seamlessly east/west across the date line. Zooming out stops when
-the world fills both viewport dimensions, preventing repeated whole worlds and
-space beyond the polar edges. North/south panning stops at the viewport's top
-and bottom boundaries. Portrait screens show a narrower longitude range so the
-map fills their height. Maximum zoom is **MapLibre level 21**, matching the
+The map wraps seamlessly east/west across the date line. The starting/reset
+overview fills both viewport dimensions. Two additional zoom-out levels are
+available below that overview, making the world four times smaller. At these
+wider views, horizontal world copies remain continuous; if the world is shorter
+than the screen it stays vertically centered. At closer zoom, north/south panning
+stops at the viewport's polar boundaries. Maximum zoom is **MapLibre level 21**, matching the
 pixel scale of Google's documented 256px-tile zoom level 22. This replaces the
 earlier 2×-overview restriction and applies to wheel, pinch, keyboard and buttons.
 The close-up cap stays fixed while the minimum adapts to viewport size.

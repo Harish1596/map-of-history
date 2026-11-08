@@ -4,11 +4,15 @@ export const MIN_WORLD_ZOOM = -2;
 // Reference: https://developers.google.com/maps/documentation/tile/2d-tiles-overview
 export const MAX_WORLD_ZOOM = 21;
 
-export function minimumWorldZoom(viewportWidth: number, viewportHeight = 0) {
+export function worldOverviewZoom(viewportWidth: number, viewportHeight = 0) {
   // MapLibre's world is 512 CSS pixels wide at zoom zero. Keep the visible
   // longitude span at or below 360°, and fill the height so neither pole
   // exposes space beyond the map on tall screens.
   return Math.max(MIN_WORLD_ZOOM, Math.log2(Math.max(1, viewportWidth, viewportHeight) / 512));
+}
+
+export function minimumWorldZoom(viewportWidth: number, viewportHeight = 0) {
+  return Math.max(MIN_WORLD_ZOOM, worldOverviewZoom(viewportWidth, viewportHeight) - 2);
 }
 
 export function maximumWorldZoom() {
