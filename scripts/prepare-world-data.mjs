@@ -1,6 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
-import { countryLabelPoint } from "./lib/country-labels.mjs";
+import { countryLabelCenter } from "./lib/country-labels.mjs";
 import { createCountryLabelList, LABEL_SIZE_BANDS, LABEL_RANK_BANDS } from "./lib/country-label-policy.mjs";
 
 // Run with a downloaded Natural Earth 1:50m Admin-0 countries GeoJSON path.
@@ -31,7 +31,7 @@ for (const feature of source.features) {
   countries.features.push({ type: "Feature", id, properties, geometry: feature.geometry });
   labels.features.push({
     type: "Feature", id, properties,
-    geometry: { type: "Point", coordinates: countryLabelPoint(feature.geometry) },
+    geometry: { type: "Point", coordinates: countryLabelCenter(feature.geometry) },
   });
 }
 
@@ -63,6 +63,6 @@ writeFileSync(new URL("metadata.json", output), JSON.stringify({
   featureCount: countries.features.length,
   boundaryConvention: "Natural Earth default de facto boundaries. Includes territories and disputed areas; not a count of sovereign states or a statement of legal recognition.",
   limitations: "Generalized 1:50m snapshot, not live political data, street detail, or survey geometry. Small-country labels appear as space allows when zooming.",
-  transformations: "Country geometry unchanged. Label points use offline Polylabel inside the largest Mercator-projected landmass. Country-labels.json uses Natural Earth LABELRANK for fixed collision priority and app-specific minimum-zoom bands, with descending geodesic area and identifier as tie-breakers. Turf area bands control typography only. Source MIN_LABEL is retained as guidance, not used as an individual eligibility override.",
+  transformations: "Country geometry unchanged. Country names use the area-weighted centroid of the largest Mercator-projected landmass, subtracting holes. If that center is outside land, use an interior Polylabel fallback. Country-labels.json uses Natural Earth LABELRANK for fixed collision priority and app-specific minimum-zoom bands, with descending geodesic area and identifier as tie-breakers. Turf area bands control typography only. Source MIN_LABEL is retained as guidance, not used as an individual eligibility override.",
 }, null, 2) + "\n");
 console.log(`Prepared ${countries.features.length} local country and territory features.`);

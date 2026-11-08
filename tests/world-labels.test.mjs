@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 import { expression } from "@maplibre/maplibre-gl-style-spec";
 import { worldMapStyle } from "../src/data/world-map-style.ts";
-import { countryLabelPoint } from "../scripts/lib/country-labels.mjs";
+import { countryLabelPoint, countryLabelCenter } from "../scripts/lib/country-labels.mjs";
 import { applyCountryLabelList } from "../src/data/world-label-policy.ts";
 import { createCountryLabelList } from "../scripts/lib/country-label-policy.mjs";
 
@@ -44,6 +44,17 @@ test("visual centers avoid holes and use the main landmass of island groups", ()
   const point = countryLabelPoint({ type: "MultiPolygon", coordinates: [island, mainland] });
   assert.ok(inPolygon(point, mainland));
   assert.ok(Math.abs(point[0] - 5) < 0.01);
+  assert.ok(inPolygon(countryLabelCenter({ type: "Polygon", coordinates: withHole }), withHole));
+  assert.ok(inPolygon(countryLabelCenter({ type: "MultiPolygon", coordinates: [island, mainland] }), mainland));
+});
+
+test("country names use the visual centroid rather than the widest part of an asymmetric outline", () => {
+  const triangle = { type: "Polygon", coordinates: [[[0, 0], [12, 0], [0, 6], [0, 0]]] };
+  const center = countryLabelCenter(triangle);
+  assert.ok(Math.abs(center[0] - 4) < 0.001);
+  const mercator = (lat) => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360));
+  assert.ok(Math.abs(mercator(center[1]) - mercator(6) / 3) < 0.000001);
+  assert.ok(inPolygon(center, triangle.coordinates));
 });
 
 test("country labels use fixed cartographic rank, zoom gates and area tie-breakers", () => {

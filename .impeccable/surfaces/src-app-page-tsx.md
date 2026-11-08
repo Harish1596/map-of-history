@@ -33,8 +33,9 @@ Country labels follow Natural Earth LABELRANK with fixed priority, then descendi
 area and identifier as tie-breakers, from country-labels.json. Ranks 1–2 are
 eligible at zoom 0; ranks 3–7 at zoom 3–7. These are app-specific thresholds.
 Area controls typography only. Priority does not depend on navigation history.
-Geographic anchors stay
-centered and collision avoidance remains enabled.
+Geographic anchors use area-weighted visual centroids of the largest projected
+landmass, with interior Polylabel fallbacks where the centroid falls outside
+land. Text stays centered and collision avoidance remains enabled.
 Physical island names appear in a secondary regional layer. Archipelago names
 give way to individual island names at closer zoom; country labels stay dominant.
 

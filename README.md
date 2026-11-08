@@ -26,9 +26,10 @@ and [pixel coordinate scale](https://developers.google.com/maps/documentation/ja
 
 `public/data/world/countries.geojson` contains 242 country and territory features
 from Natural Earth 1:50m Admin-0 countries. `labels.geojson` uses its English
-map labels. Label positions are calculated offline using Polylabel to
-find a visual interior center in each country's largest Mercator-projected
-landmass, avoiding holes and offshore centroids. All map geometry and the Noto Sans font are
+map labels. Label positions are calculated offline as
+the area-weighted visual center of each country's largest Mercator-projected
+landmass, subtracting holes. When this center falls outside land, an interior
+Polylabel fallback keeps the anchor inside its borders. All map geometry and the Noto Sans font are
 served locally; the app makes no runtime requests to external services.
 
 Labels are centered on those anchors. `public/data/world/country-labels.json`

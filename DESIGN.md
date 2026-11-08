@@ -134,7 +134,9 @@ zoom 8, interpolating between stops. The last font-size value covers tiers 3–6
 Labels use line height 1.15, maximum width 6 em, padding 2px, a land-colored halo
 (width 1.1px, blur 0.4px), and collision avoidance. Minimum zoom determines
 eligibility; available space determines final visibility. Center alignment uses
-offline-computed interior anchors in the largest landmass, avoiding holes.
+the area-weighted visual centroid of the largest Mercator-projected landmass,
+subtracting holes. Concave or holed outlines whose centroid falls outside land
+use an interior Polylabel fallback. Keep the text centered on this fixed anchor.
 
 Physical island and archipelago labels form a secondary layer. They use Noto Sans
 at 11px at zoom 3, 14px at zoom 5 and 18px at zoom 8, with island ink and a 1px
