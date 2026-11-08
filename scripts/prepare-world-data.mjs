@@ -1,5 +1,6 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { createHash } from "node:crypto";
+import { countryLabelPoint } from "./lib/country-labels.mjs";
 
 // Run with a downloaded Natural Earth 1:50m Admin-0 countries GeoJSON path.
 // Deliberately offline: preparing data never contacts a service.
@@ -29,7 +30,7 @@ for (const feature of source.features) {
   countries.features.push({ type: "Feature", id, properties, geometry: feature.geometry });
   labels.features.push({
     type: "Feature", id, properties,
-    geometry: { type: "Point", coordinates: [p.LABEL_X, p.LABEL_Y] },
+    geometry: { type: "Point", coordinates: countryLabelPoint(feature.geometry) },
   });
 }
 
@@ -47,6 +48,6 @@ writeFileSync(new URL("metadata.json", output), JSON.stringify({
   featureCount: countries.features.length,
   boundaryConvention: "Natural Earth default de facto boundaries. Includes territories and disputed areas; not a count of sovereign states or a statement of legal recognition.",
   limitations: "Generalized 1:50m snapshot, not live political data, street detail, or survey geometry. Small-country labels appear as space allows when zooming.",
-  transformations: "Geometry unchanged. Retain selected display properties and split source LABEL_X/LABEL_Y into label point features.",
+  transformations: "Country geometry unchanged. Retain selected display properties. Label points are computed offline with Polylabel inside the largest Mercator-projected landmass, avoiding polygon holes; original source label coordinates are not used.",
 }, null, 2) + "\n");
 console.log(`Prepared ${countries.features.length} local country and territory features.`);

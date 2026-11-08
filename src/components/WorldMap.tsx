@@ -127,10 +127,6 @@ export function WorldMap() {
   return (
     <main className="world-map" aria-label="Explore the world">
       <div className="world-map__canvas" ref={container} />
-      <header className="map-title">
-        <h1>World map</h1>
-        <p>Present-day countries</p>
-      </header>
       <p id="map-instructions" className="visually-hidden">
         Drag to pan. Scroll or pinch to zoom. Focus the map and use arrow keys to
         pan, or plus and minus to zoom. Smaller country names appear as you zoom in.

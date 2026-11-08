@@ -13,26 +13,6 @@ colors:
   control-hover: "#e4eded"
   control-active: "#d4e0df"
 typography:
-  title:
-    fontFamily: '"Noto Sans", sans-serif'
-    fontSize: "26px"
-    fontWeight: 700
-    lineHeight: 1.15
-    letterSpacing: "-0.025em"
-  subtitle:
-    fontFamily: '"Noto Sans", sans-serif'
-    fontSize: "16px"
-    lineHeight: 1.4
-  title-mobile:
-    fontFamily: '"Noto Sans", sans-serif'
-    fontSize: "21px"
-    fontWeight: 700
-    lineHeight: 1.15
-    letterSpacing: "-0.025em"
-  subtitle-mobile:
-    fontFamily: '"Noto Sans", sans-serif'
-    fontSize: "13px"
-    lineHeight: 1.4
   attribution:
     fontFamily: '"Noto Sans", sans-serif'
     fontSize: "12px"
@@ -49,20 +29,14 @@ typography:
     fontSize: "18px"
     fontWeight: 700
 rounded:
-  plaque: "2px"
+  zoom-inner: "2px"
   control: "3px"
 spacing:
   control-gap: "8px"
   desktop-inset: "16px"
-  title-inset: "14px"
+  attribution-inset: "14px"
   mobile-inset: "12px"
 components:
-  map-title:
-    backgroundColor: "{colors.paper}"
-    textColor: "{colors.ink}"
-    typography: "{typography.title}"
-    rounded: "{rounded.plaque}"
-    padding: "6px 12px 8px"
   zoom-button:
     backgroundColor: "{colors.paper}"
     textColor: "{colors.ink}"
@@ -127,7 +101,7 @@ The palette is low saturation, with dark ink supplying readable labels and slate
 - **Pale Ocean** (`ocean`): map background and attribution backing.
 - **Dark Ink** (`ink`): country names, interface text and retry button fill.
 - **Slate Boundary** (`line`): country boundaries and interface outlines.
-- **White Paper** (`paper`): title, controls and feedback surfaces.
+- **White Paper** (`paper`): controls and feedback surfaces.
 - **Muted Divider** (`divider`): separation between the zoom buttons.
 - **Disabled Slate** (`disabled`): unavailable control icons.
 - **Hover Mist** (`control-hover`) and **Pressed Sage** (`control-active`): navigation states.
@@ -139,15 +113,15 @@ The palette is low saturation, with dark ink supplying readable labels and slate
 
 **Font:** locally hosted Noto Sans, with sans-serif fallback. The variable font supports weights 100–900. Use the frontmatter roles for interface type; do not substitute a decorative display face.
 
-The title is compact and bold; the subtitle and source text stay plain. At the mobile breakpoint, the title and subtitle use their smaller roles. No large editorial display hierarchy is part of this system.
+Source text stays plain. The map has no title overlay; its accessible name remains available to assistive technology.
 
-Country labels use the same Noto Sans family. At zoom 0 their sizes are 14, 12 or 11px by rank; at zoom 5 they reach 20, 16 or 13px. Sizes interpolate between those zooms. Labels use line height 1.15, maximum width 8 em, padding 5px, a land-colored halo (width 1.1px, blur 0.4px), and collision avoidance. Smaller names appear as zoom permits.
+Country labels use the same Noto Sans family. By rank, sizes are 14/11/10px at zoom 0, 19/15/12px at zoom 3, 24/20/16px at zoom 5, and 34/28/22px at zoom 8, interpolating between stops. Labels use line height 1.15, maximum width 8 em, padding 2px, a land-colored halo (width 1.1px, blur 0.4px), and collision avoidance. All country names are candidates at every zoom; available space controls visibility. Center alignment uses offline-computed interior anchors in the largest landmass, avoiding holes.
 
 ## Layout
 
-The map fills the viewport, using dynamic viewport height with a conventional viewport fallback. The title sits upper left; attribution sits lower left; stacked zoom and reset navigation sits lower right. These placements describe the current map surface, not a template for unrelated future screens.
+The map fills the viewport, using dynamic viewport height with a conventional viewport fallback. Attribution sits lower left; stacked zoom and reset navigation sits lower right. The upper-left corner stays clear. These placements describe the current map surface, not a template for unrelated future screens.
 
-The title starts 14px from the top and left. Navigation uses 16px right/bottom insets and an 8px gap between the zoom group and reset. Safe-area insets take precedence. At widths up to 600px, navigation moves to a 12px right inset and title padding becomes 7px 10px. Attribution reserves room for navigation with a maximum width of the viewport minus 90px.
+Navigation uses 16px right/bottom insets and an 8px gap between the zoom group and reset. Safe-area insets take precedence. At widths up to 600px, navigation moves to a 12px right inset. Attribution reserves room for navigation with a maximum width of the viewport minus 90px.
 
 Feedback is centered over the map with a maximum width of the viewport minus 40px. Source disclosure opens above the attribution, constrained to 340px or the viewport minus 90px. The geographic canvas resizes with its container; pan and zoom keep labels and boundaries on the same camera.
 
@@ -159,13 +133,9 @@ Surfaces have no shadows. Opaque white fill and a single slate border distinguis
 
 ## Shapes
 
-The form language is rectangular with restrained corners: title plaque uses the smaller radius; controls, source disclosure and feedback use the control radius. The zoom pair shares one outlined shell with a dividing line. Navigation icons are simple 22px outline SVGs with 2px rounded strokes. Country borders scale from 0.65px at zoom 0 to 1px at zoom 4 and 1.4px at zoom 8.
+The form language is rectangular with restrained corners: controls, source disclosure and feedback use the control radius. The zoom pair shares one outlined shell with a dividing line. Navigation icons are simple 22px outline SVGs with 2px rounded strokes. Country borders scale from 0.65px at zoom 0 to 1px at zoom 4 and 1.4px at zoom 8.
 
 ## Components
-
-### Map title
-
-A small white bordered plaque carries “World map” and “Present-day countries.” It does not intercept map pointer input. Typography and responsive variants are defined above.
 
 ### Navigation
 

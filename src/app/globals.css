@@ -47,19 +47,6 @@ a { color: inherit; text-underline-offset: 3px; }
   outline-offset: -3px;
 }
 
-.map-title {
-  position: absolute;
-  top: max(14px, env(safe-area-inset-top));
-  left: max(14px, env(safe-area-inset-left));
-  padding: 6px 12px 8px;
-  background: var(--paper);
-  border: 1px solid var(--line);
-  border-radius: 2px;
-  pointer-events: none;
-}
-.map-title h1 { font-size: 26px; font-weight: 700; line-height: 1.15; margin: 0; letter-spacing: -0.025em; }
-.map-title p { font-size: 16px; line-height: 1.4; margin: 1px 0 0; }
-
 .map-controls {
   position: absolute;
   right: max(16px, env(safe-area-inset-right));
@@ -137,9 +124,6 @@ a { color: inherit; text-underline-offset: 3px; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 @media (max-width: 600px) {
-  .map-title { padding: 7px 10px; }
-  .map-title h1 { font-size: 21px; }
-  .map-title p { font-size: 13px; }
   .map-controls { right: max(12px, env(safe-area-inset-right)); }
 }
 @media (prefers-reduced-motion: reduce) {

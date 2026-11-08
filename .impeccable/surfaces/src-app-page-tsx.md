@@ -23,8 +23,8 @@ use favors a light surface that stays readable on shared screens.
 STORY: Open to the world; recognize continents and country names; pan and zoom
 for smaller places; reset to regain geographic context.
 
-FIRST VIEWPORT: A continuous flat map edge to edge. Small title plaque upper
-left: World map / Present-day countries. Attribution lower left. White 44px zoom
+FIRST VIEWPORT: A continuous flat map edge to edge, with no title plaque (removed
+at the user's request). Attribution lower left. White 44px zoom
 and reset buttons lower right. Signature interaction: all labels and borders
 track the same camera during every pan and zoom. Motion is map navigation only.
 

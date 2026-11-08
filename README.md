@@ -11,9 +11,16 @@ as space allows when zooming. Reset world view fits the world to the current scr
 ## Local map data
 
 `public/data/world/countries.geojson` contains 242 country and territory features
-from Natural Earth 1:50m Admin-0 countries. `labels.geojson` uses the source's label
-positions and English map labels. All map geometry and the Noto Sans font are
+from Natural Earth 1:50m Admin-0 countries. `labels.geojson` uses its English
+map labels. Label positions are calculated offline using Polylabel to
+find a visual interior center in each country's largest Mercator-projected
+landmass, avoiding holes and offshore centroids. All map geometry and the Noto Sans font are
 served locally; the app makes no runtime requests to external services.
+
+Labels are centered on those anchors. Collision detection decides which names
+fit, without fixed minimum zoom gates. Text grows in screen pixels throughout
+zoom levels 0–8; the label font does not stop growing at regional zoom levels.
+The map has no title plaque covering the upper-left corner.
 
 Provenance, source checksum, preparation date and boundary limitations are in
 `public/data/world/metadata.json`. The data uses Natural Earth's default de facto

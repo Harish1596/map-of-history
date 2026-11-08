@@ -146,10 +146,6 @@
       }
     },
     "typographyMeta": {
-      "title": {
-        "displayName": "Map title",
-        "purpose": "Compact identity plaque; smaller mobile role at 600px."
-      },
       "attribution": {
         "displayName": "Attribution",
         "purpose": "Source link and boundary disclosure summary."
@@ -176,14 +172,6 @@
     ]
   },
   "components": [
-    {
-      "name": "Map title",
-      "kind": "custom",
-      "refersTo": "map-title",
-      "description": "Compact identity plaque above the map.",
-      "html": "<header class=\"ds-title\"><h1>World map</h1><p>Present-day countries</p></header>",
-      "css": ".ds-title{font-family:\"Noto Sans\",sans-serif;color:var(--ink,#283b42);display:inline-block;padding:6px 12px 8px;background:var(--paper,#ffffff);border:1px solid var(--line,#6b8184);border-radius:2px;pointer-events:none}.ds-title h1{font-size:26px;font-weight:700;line-height:1.15;margin:0;letter-spacing:-0.025em}.ds-title p{font-size:16px;line-height:1.4;margin:1px 0 0}@media(max-width:600px){.ds-title{padding:7px 10px}.ds-title h1{font-size:21px}.ds-title p{font-size:13px}}"
-    },
     {
       "name": "Zoom navigation",
       "kind": "nav",
