@@ -29,11 +29,11 @@ Ocean labels follow the same camera and continuous world wrap.
 Standard adds 192 named seas, bays and gulfs in the same water-ink family, at a smaller text
 scale. Major seas are eligible at overview zoom; smaller seas follow source
 zoom guidance. Anchors are checked against land, with island overlaps corrected.
-Country labels follow geographic-area bands and descending-area collision
-priority, sourced from the local country-labels.json list. Small islands and
-territories become eligible later than larger countries.
-Already-visible country names retain precedence over newly fitting neighbours
-across zoom reversals for the lifetime of the map. Geographic anchors stay
+Country labels follow Natural Earth LABELRANK with fixed priority, then descending
+area and identifier as tie-breakers, from country-labels.json. Ranks 1–2 are
+eligible at zoom 0; ranks 3–7 at zoom 3–7. These are app-specific thresholds.
+Area controls typography only. Priority does not depend on navigation history.
+Geographic anchors stay
 centered and collision avoidance remains enabled.
 Physical island names appear in a secondary regional layer. Archipelago names
 give way to individual island names at closer zoom; country labels stay dominant.

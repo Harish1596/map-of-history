@@ -33,29 +33,32 @@ served locally; the app makes no runtime requests to external services.
 
 Labels are centered on those anchors. `public/data/world/country-labels.json`
 lists every country/territory with approximate geographic area, minimum zoom,
-size tier and collision priority. The app fetches this list and applies it to
+Natural Earth label rank, size tier and collision priority. The app fetches this list and applies it to
 the label points; editing its values takes effect on refresh. Regenerating data
 rebuilds the list from the policy in `scripts/lib/country-label-policy.mjs`.
 
 Areas are geodesic measurements of the generalized source geometry, including
 holes and all polygon parts, rather than official country-area statistics.
-Initial placement and newly introduced names follow geographic-area priority.
-Already-visible country names retain precedence across zoom-in and zoom-out
-cycles so newly introduced neighbours do not change their priority. This ordering
-lasts until the map is reloaded. Labels keep their geographic anchors and
-collision avoidance. These bands
-control when a name becomes eligible; collision detection can delay it until
-there is room:
+Natural Earth `LABELRANK` controls the fixed collision order, with descending
+geographic area and identifier as tie-breakers. The same rank becomes eligible
+together, so higher-priority ranks are eligible before lower-priority ranks.
+Placement does not depend on which names appeared first during navigation.
+These app-specific thresholds are not a reproduction of Google or Mapbox's
+proprietary basemaps. Labels remain centered with collision avoidance enabled:
 
-| Geographic area | Minimum MapLibre zoom |
+| Natural Earth label rank | Minimum MapLibre zoom |
 | --- | --- |
-| 1,000,000 km² and above | 0 |
-| 250,000–999,999 km² | 1 |
-| 50,000–249,999 km² | 2 |
-| 10,000–49,999 km² | 3 |
-| 2,000–9,999 km² | 4 |
-| 200–1,999 km² | 5 |
-| Below 200 km² | 6 |
+| 1–2 | 0 |
+| 3 | 3 |
+| 4 | 4 |
+| 5 | 5 |
+| 6 | 6 |
+| 7 | 7 |
+
+Côte d’Ivoire and Ghana become eligible at zoom 3; Central African Republic
+at zoom 4, after South Sudan at zoom 3. Eligibility does not guarantee placement
+until enough screen space is available. Source `MIN_LABEL` remains in the data
+for reference; individual country thresholds do not override the rank bands.
 
 Text size also follows the geographic size tier and grows in screen pixels throughout
 zoom levels 0–8; the label font does not stop growing at regional zoom levels.

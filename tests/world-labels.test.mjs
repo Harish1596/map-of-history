@@ -5,6 +5,7 @@ import { expression } from "@maplibre/maplibre-gl-style-spec";
 import { worldMapStyle } from "../src/data/world-map-style.ts";
 import { countryLabelPoint } from "../scripts/lib/country-labels.mjs";
 import { applyCountryLabelList } from "../src/data/world-label-policy.ts";
+import { createCountryLabelList } from "../scripts/lib/country-label-policy.mjs";
 
 const read = (name) => JSON.parse(readFileSync(new URL(`../public/data/world/${name}.geojson`, import.meta.url)));
 const countries = read("countries");
@@ -45,7 +46,7 @@ test("visual centers avoid holes and use the main landmass of island groups", ()
   assert.ok(Math.abs(point[0] - 5) < 0.01);
 });
 
-test("country labels use size-based zoom gates and area-based collision priority", () => {
+test("country labels use fixed cartographic rank, zoom gates and area tie-breakers", () => {
   const list = JSON.parse(readFileSync(new URL("../public/data/world/country-labels.json", import.meta.url)));
   const byId = new Map(list.countries.map((country) => [country.id, country]));
   assert.equal(byId.size, countries.features.length);
@@ -56,22 +57,39 @@ test("country labels use size-based zoom gates and area-based collision priority
       assert.ok(byId.get(id).priority < byId.get(island).priority);
     }
   }
-  let previousArea = Infinity;
-  let previousZoom = -Infinity;
+  let previous;
   for (const country of list.countries) {
-    assert.ok(country.areaKm2 > 0 && country.areaKm2 <= previousArea);
-    assert.ok(country.minZoom >= previousZoom);
+    assert.ok(country.areaKm2 > 0);
+    assert.equal(country.labelRank, countries.features.find((f) => f.id === country.id).properties.rank);
+    if (previous) {
+      assert.ok(country.labelRank >= previous.labelRank);
+      assert.ok(country.minZoom >= previous.minZoom);
+      if (country.labelRank === previous.labelRank) {
+        assert.equal(country.minZoom, previous.minZoom, "same-rank neighbours become eligible together");
+        assert.ok(country.areaKm2 <= previous.areaKm2, "area breaks rank ties");
+      }
+    }
     const label = labels.features.find((label) => label.id === country.id);
     assert.equal(label.properties.minZoom, country.minZoom);
     assert.equal(label.properties.priority, country.priority);
     assert.equal(label.properties.sizeTier, country.sizeTier);
-    previousArea = country.areaKm2;
-    previousZoom = country.minZoom;
+    previous = country;
   }
+  assert.equal(byId.get("CIV").minZoom, 3);
+  assert.ok(byId.get("CIV").priority < byId.get("GHA").priority);
+  assert.ok(byId.get("CIV").priority < byId.get("LBR").priority);
+  assert.ok(byId.get("SDS").minZoom < byId.get("CAF").minZoom);
   assert.deepEqual(layer.filter, [">=", ["zoom"], ["get", "minZoom"]]);
   assert.deepEqual(layer.layout["symbol-sort-key"], ["get", "priority"]);
   assert.equal(layer.layout["text-allow-overlap"], false);
   assert.equal(layer.layout["text-anchor"], "center");
+});
+
+test("country priority does not depend on input order and rejects missing source ranks", () => {
+  const forward = createCountryLabelList(countries.features);
+  assert.deepEqual(createCountryLabelList([...countries.features].reverse()), forward);
+  const invalid = { ...countries.features[0], properties: { ...countries.features[0].properties, rank: undefined } };
+  assert.throws(() => createCountryLabelList([invalid]), /Invalid Natural Earth label rank/);
 });
 
 test("every geographic size tier grows in screen pixels across the style zoom stops", () => {

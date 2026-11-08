@@ -121,11 +121,12 @@ The palette is low saturation, with dark ink supplying readable labels and slate
 
 Source text stays plain. The map has no title overlay; its accessible name remains available to assistive technology.
 
-Country labels use the same Noto Sans family. Geographic area determines their
-size tier, minimum zoom and collision priority, using the local country-labels
-list. Initial placement and newly introduced names use area priority. Visible
-names retain their introduction order across zoom reversals for the lifetime
-of the map, so new neighbours use remaining space. Names
+Country labels use the same Noto Sans family. Natural Earth LABELRANK determines
+fixed collision priority, with descending area and identifier as tie-breakers.
+Rank 1–2 is eligible at zoom 0; ranks 3–7 at zoom 3–7 respectively. These are
+app-specific bands; source MIN_LABEL is retained for reference. No priority
+changes occur in response to browsing history. Geographic area controls font
+size tiers only. Names
 keep their centered geographic anchors and avoid overlaps. By size tier, font
 sizes are 14/12/11/10px at zoom 0, 19/15/13/12px at zoom 3, 24/20/17/16px at
 zoom 5, and 34/28/24/22px at
