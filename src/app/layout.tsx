@@ -3,8 +3,8 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "The Siege of Antioch",
-  description: "An interactive historical map proof of concept.",
+  title: "World map",
+  description: "Explore present-day countries and borders on an interactive world map.",
 };
 
 export default function RootLayout({

@@ -1,5 +1,5 @@
-import { AntiochExperience } from "@/components/AntiochExperience";
+import { WorldMap } from "@/components/WorldMap";
 
 export default function Home() {
-  return <AntiochExperience />;
+  return <WorldMap />;
 }

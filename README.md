@@ -1,7 +1,33 @@
-# Siege of Antioch interactive map
+# Interactive world map
 
-A static-first proof of concept for exploring the Siege of Antioch through a
-synchronized map, timeline, event narrative, and source citations.
+A static proof of concept for exploring present-day geography. The home screen
+is a full-screen classroom map: sage countries, clear borders and country names,
+with pan, zoom and reset controls. Next.js exports the app as local static files.
+
+Drag to pan; scroll, pinch or use the buttons to zoom. Focus the map to use arrow
+keys and plus/minus. Country labels avoid overlap and smaller-country names appear
+as space allows when zooming. Reset world view fits the world to the current screen.
+
+## Local map data
+
+`public/data/world/countries.geojson` contains 242 country and territory features
+from Natural Earth 1:50m Admin-0 countries. `labels.geojson` uses the source's label
+positions and English map labels. All map geometry and the Noto Sans font are
+served locally; the app makes no runtime requests to external services.
+
+Provenance, source checksum, preparation date and boundary limitations are in
+`public/data/world/metadata.json`. The data uses Natural Earth's default de facto
+boundaries, includes territories and disputed areas, and is a generalized snapshot
+rather than live political data. The on-map “Map data” disclosure explains this.
+
+To regenerate the checked-in records from a downloaded copy of the source file:
+
+```bash
+node scripts/prepare-world-data.mjs /path/to/ne_50m_admin_0_countries.geojson
+```
+
+This preparation script does not make network requests. The bundled font's SIL
+Open Font License is stored in `public/fonts/OFL-NotoSans.txt`.
 
 ## Development
 
@@ -41,7 +67,12 @@ npm start
 The preview server uses only Node.js built-ins. Set `STATIC_HOST` or
 `STATIC_PORT` to override its default `127.0.0.1:3000` address.
 
-## Exploring the siege
+## Archived Antioch prototype
+
+The previous historical map is retained in `src/components/AntiochExperience.tsx`,
+its companion components and `public/data/antioch/`. Its stylesheet is archived
+in `src/styles/antioch-legacy.css`. These do not load on the world-map home screen.
+The following describes those retained records and their limitations.
 
 Nine episodes run from the October 1097 arrival to the June 1098 citadel
 surrender. Select an episode on the timeline, use Previous/Next, or follow

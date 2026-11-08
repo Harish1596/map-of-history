@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-08T04:58:57.832606+00:00",
+  "title": "Design System: Classroom World Map",
+  "extensions": {
+    "colorMeta": {
+      "ocean": {
+        "role": "neutral",
+        "displayName": "Pale Ocean",
+        "tonalRamp": [
+          "oklch(15% 0.012 230)",
+          "oklch(27% 0.012 230)",
+          "oklch(38% 0.012 230)",
+          "oklch(50% 0.012 230)",
+          "oklch(61% 0.012 230)",
+          "oklch(73% 0.012 230)",
+          "oklch(84% 0.012 230)",
+          "oklch(95% 0.012 230)"
+        ]
+      },
+      "land": {
+        "role": "primary",
+        "displayName": "Sage Land",
+        "tonalRamp": [
+          "oklch(15% 0.025 140)",
+          "oklch(27% 0.025 140)",
+          "oklch(38% 0.025 140)",
+          "oklch(50% 0.025 140)",
+          "oklch(61% 0.025 140)",
+          "oklch(73% 0.025 140)",
+          "oklch(84% 0.025 140)",
+          "oklch(95% 0.025 140)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Dark Ink",
+        "tonalRamp": [
+          "oklch(15% 0.03 225)",
+          "oklch(27% 0.03 225)",
+          "oklch(38% 0.03 225)",
+          "oklch(50% 0.03 225)",
+          "oklch(61% 0.03 225)",
+          "oklch(73% 0.03 225)",
+          "oklch(84% 0.03 225)",
+          "oklch(95% 0.03 225)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Slate Boundary",
+        "tonalRamp": [
+          "oklch(15% 0.026 200)",
+          "oklch(27% 0.026 200)",
+          "oklch(38% 0.026 200)",
+          "oklch(50% 0.026 200)",
+          "oklch(61% 0.026 200)",
+          "oklch(73% 0.026 200)",
+          "oklch(84% 0.026 200)",
+          "oklch(95% 0.026 200)"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "White Paper",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(27% 0 0)",
+          "oklch(38% 0 0)",
+          "oklch(50% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      },
+      "focus": {
+        "role": "neutral",
+        "displayName": "Focus Teal",
+        "tonalRamp": [
+          "oklch(15% 0.075 220)",
+          "oklch(27% 0.075 220)",
+          "oklch(38% 0.075 220)",
+          "oklch(50% 0.075 220)",
+          "oklch(61% 0.075 220)",
+          "oklch(73% 0.075 220)",
+          "oklch(84% 0.075 220)",
+          "oklch(95% 0.075 220)"
+        ]
+      },
+      "disabled": {
+        "role": "neutral",
+        "displayName": "Disabled Slate",
+        "tonalRamp": [
+          "oklch(15% 0.018 215)",
+          "oklch(27% 0.018 215)",
+          "oklch(38% 0.018 215)",
+          "oklch(50% 0.018 215)",
+          "oklch(61% 0.018 215)",
+          "oklch(73% 0.018 215)",
+          "oklch(84% 0.018 215)",
+          "oklch(95% 0.018 215)"
+        ]
+      },
+      "divider": {
+        "role": "neutral",
+        "displayName": "Muted Divider",
+        "tonalRamp": [
+          "oklch(15% 0.014 205)",
+          "oklch(27% 0.014 205)",
+          "oklch(38% 0.014 205)",
+          "oklch(50% 0.014 205)",
+          "oklch(61% 0.014 205)",
+          "oklch(73% 0.014 205)",
+          "oklch(84% 0.014 205)",
+          "oklch(95% 0.014 205)"
+        ]
+      },
+      "control-hover": {
+        "role": "neutral",
+        "displayName": "Hover Mist",
+        "tonalRamp": [
+          "oklch(15% 0.012 190)",
+          "oklch(27% 0.012 190)",
+          "oklch(38% 0.012 190)",
+          "oklch(50% 0.012 190)",
+          "oklch(61% 0.012 190)",
+          "oklch(73% 0.012 190)",
+          "oklch(84% 0.012 190)",
+          "oklch(95% 0.012 190)"
+        ]
+      },
+      "control-active": {
+        "role": "neutral",
+        "displayName": "Pressed Sage",
+        "tonalRamp": [
+          "oklch(15% 0.018 175)",
+          "oklch(27% 0.018 175)",
+          "oklch(38% 0.018 175)",
+          "oklch(50% 0.018 175)",
+          "oklch(61% 0.018 175)",
+          "oklch(73% 0.018 175)",
+          "oklch(84% 0.018 175)",
+          "oklch(95% 0.018 175)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "title": {
+        "displayName": "Map title",
+        "purpose": "Compact identity plaque; smaller mobile role at 600px."
+      },
+      "attribution": {
+        "displayName": "Attribution",
+        "purpose": "Source link and boundary disclosure summary."
+      }
+    },
+    "shadows": [],
+    "motion": [
+      {
+        "name": "control-hover",
+        "value": "background-color 120ms ease-out",
+        "purpose": "Navigation button state change; CSS transitions become 0ms for reduced motion."
+      },
+      {
+        "name": "reset-world-view",
+        "value": "650ms",
+        "purpose": "Map camera fit to world bounds."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "600px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Map title",
+      "kind": "custom",
+      "refersTo": "map-title",
+      "description": "Compact identity plaque above the map.",
+      "html": "<header class=\"ds-title\"><h1>World map</h1><p>Present-day countries</p></header>",
+      "css": ".ds-title{font-family:\"Noto Sans\",sans-serif;color:var(--ink,#283b42);display:inline-block;padding:6px 12px 8px;background:var(--paper,#ffffff);border:1px solid var(--line,#6b8184);border-radius:2px;pointer-events:none}.ds-title h1{font-size:26px;font-weight:700;line-height:1.15;margin:0;letter-spacing:-0.025em}.ds-title p{font-size:16px;line-height:1.4;margin:1px 0 0}@media(max-width:600px){.ds-title{padding:7px 10px}.ds-title h1{font-size:21px}.ds-title p{font-size:13px}}"
+    },
+    {
+      "name": "Zoom navigation",
+      "kind": "nav",
+      "refersTo": "zoom-button",
+      "description": "Paired zoom controls with a shared outline.",
+      "html": "<nav class=\"ds-zoom\" aria-label=\"Map zoom\"><button class=\"ds-button\" aria-label=\"Zoom in\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 5v14M5 12h14\"/></svg></button><button class=\"ds-button\" aria-label=\"Zoom out\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/></svg></button></nav>",
+      "css": ".ds-zoom{display:inline-block;border:1px solid var(--line,#6b8184);border-radius:3px;overflow:visible}.ds-button{font-family:\"Noto Sans\",sans-serif;color:var(--ink,#283b42);width:44px;height:44px;display:grid;place-items:center;padding:0;background:var(--paper,#ffffff);border:0;cursor:pointer;transition:background-color 120ms ease-out;}.ds-zoom .ds-button:first-child{border-radius:2px 2px 0 0}.ds-zoom .ds-button+ .ds-button{border-top:1px solid #c2ccce;border-radius:0 0 2px 2px}.ds-button:hover:not(:disabled){background:#e4eded}.ds-button:active:not(:disabled){background:#d4e0df}.ds-button:focus-visible{outline:3px solid var(--focus,#175c6f);outline-offset:3px;}.ds-button:disabled{color:#8a979b;cursor:default}@media(prefers-reduced-motion:reduce){.ds-button{transition-duration:0ms}}"
+    },
+    {
+      "name": "Reset world view",
+      "kind": "button",
+      "refersTo": "reset-button",
+      "description": "Separate navigation button that returns to world bounds.",
+      "html": "<button class=\"ds-button ds-reset\" aria-label=\"Reset world view\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M3 10a9 9 0 1 1 2.5 8M3 4v6h6\"/></svg></button>",
+      "css": ".ds-button{font-family:\"Noto Sans\",sans-serif;color:var(--ink,#283b42);width:44px;height:44px;display:grid;place-items:center;padding:0;background:var(--paper,#ffffff);border:0;cursor:pointer;transition:background-color 120ms ease-out;}.ds-reset{width:46px;height:46px;border:1px solid var(--line,#6b8184);border-radius:3px}.ds-button:hover:not(:disabled){background:#e4eded}.ds-button:active:not(:disabled){background:#d4e0df}.ds-button:focus-visible{outline:3px solid var(--focus,#175c6f);outline-offset:3px;}.ds-button:disabled{color:#8a979b;cursor:default}@media(prefers-reduced-motion:reduce){.ds-button{transition-duration:0ms}}"
+    },
+    {
+      "name": "Loading feedback",
+      "kind": "custom",
+      "refersTo": "loading-feedback",
+      "description": "Short status shown over the loading map.",
+      "html": "<p class=\"ds-feedback\" role=\"status\">Loading the world map…</p>",
+      "css": ".ds-feedback{font-family:\"Noto Sans\",sans-serif;color:var(--ink,#283b42);display:inline-block;margin:0;padding:16px 20px;max-width:calc(100% - 40px);background:var(--paper,#ffffff);border:1px solid var(--line,#6b8184);border-radius:3px;font-size:14px}"
+    },
+    {
+      "name": "Source disclosure",
+      "kind": "custom",
+      "refersTo": "source-disclosure",
+      "description": "Native disclosure explaining the source and boundary convention.",
+      "html": "<details class=\"ds-source\"><summary aria-label=\"About map boundaries\">Map data</summary><p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. This generalized dataset is a geographic reference, not a live record of political changes.</p></details>",
+      "css": ".ds-source{font-family:\"Noto Sans\",sans-serif;color:var(--ink,#283b42);font-size:12px;line-height:1.5;max-width:340px}.ds-source summary{cursor:pointer;text-decoration:underline;text-underline-offset:3px}.ds-source summary:focus-visible{outline:3px solid var(--focus,#175c6f);outline-offset:3px;}.ds-source p{margin:8px 0 0;padding:16px;background:var(--paper,#ffffff);border:1px solid var(--line,#6b8184);border-radius:3px;font-size:13px;line-height:1.6}"
+    },
+    {
+      "name": "Retry map",
+      "kind": "button",
+      "refersTo": "retry-button",
+      "description": "Retry action inside the map error feedback.",
+      "html": "<button class=\"ds-retry\" type=\"button\">Retry map</button>",
+      "css": ".ds-retry{font-family:\"Noto Sans\",sans-serif;font-size:14px;min-height:44px;padding:8px 14px;background:var(--ink,#283b42);color:var(--paper,#ffffff);border:0;border-radius:3px;cursor:pointer}.ds-retry:hover{background:var(--focus,#175c6f)}.ds-retry:focus-visible{outline:3px solid var(--focus,#175c6f);outline-offset:3px;}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Classroom World Map",
+    "overview": "A light, quiet geographic canvas supports students and educators on shared classroom screens. Muted sage land, pale ocean, distinct borders and plain country names carry the visual identity. Small white controls remain subordinate to geography.\n\nThe approved world replaces the former dark, gold, serif siege interface. The visual language favors clarity and geographic context; runtime geography and font assets are local.",
+    "keyCharacteristics": [
+      "Sage land against a pale blue-gray ocean.",
+      "Plain sans-serif labels and distinct slate boundaries.",
+      "Small white rectangular controls with visible keyboard focus."
+    ],
+    "rules": [
+      {
+        "name": "The Geographic Color Rule",
+        "body": "Keep land, ocean and boundary colors consistent between the CSS interface and the MapLibre style.",
+        "section": "colors"
+      },
+      {
+        "name": "The Flat Surface Rule",
+        "body": "Use borders and tonal contrast for separation; keep control surfaces unshadowed.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do use local Noto Sans for both interface text and map labels.",
+      "Do preserve visible borders, keyboard focus and generous navigation hit areas.",
+      "Do let country labels reveal through zoom and collision placement.",
+      "Do retain the source and boundary-convention disclosure."
+    ],
+    "donts": [
+      "Don't revive the former dark, gold, serif siege visual language.",
+      "Don't add ornamental shadows or decorative display typography.",
+      "Don't treat illustrative mock geography as authoritative map geometry."
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "title": "Start with the world",
+  "question": "Three ways to frame the same flat world map: present-day country names and borders, pan, zoom, and reset view. Choose the one closest to your vision, or describe what to change. Map shapes and labels in these mockups are illustrative; the implementation will use geographic data.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Classroom screen",
+      "thesis": "A clear, open map designed to remain readable on a shared classroom screen.",
+      "palette": ["#edf3f5", "#d4dfd2", "#283b42", "#ffffff"],
+      "materials": ["flat geographic shapes", "high-contrast sans-serif labels"],
+      "viewport": "The map fills the screen, with a small World map title at top left and stacked zoom and reset controls at right.",
+      "risk": "The restrained geography offers less visual separation between neighboring countries than a multicolor atlas.",
+      "raised": [
+        {"from": "Type specimen", "raise": "Labels and the map respond together to zoom; no independently moving label overlay."},
+        {"from": "Gardens guide", "raise": "The map owns the viewport; controls never displace geographic space."},
+        {"from": "Hall catalog", "raise": "Every visible country label belongs to a real geographic feature."},
+        {"from": "Gate board", "raise": "Keep control positions stable during map movement."},
+        {"from": "Consumer app", "raise": "Use comfortable touch targets and plain-language control names."},
+        {"from": "Timetable", "raise": "Use consistent label hierarchy rather than decorative headings."}
+      ],
+      "comp": ".impeccable/mocks/decision/classroom.png"
+    },
+    {
+      "id": "model-pick",
+      "label": "Political atlas",
+      "kicker": "IMPECCABLE’S PICK",
+      "thesis": "A blue-ocean atlas with softly colored neighboring countries makes borders easy to follow.",
+      "palette": ["#dcecf4", "#e4dfc9", "#cddfcf", "#dfd5e6", "#304857"],
+      "materials": ["flat political map", "compact white controls"],
+      "viewport": "A slim top strip names the map; the entire remaining screen is geography, with zoom controls in the lower right.",
+      "risk": "Familiar and effective, but close to a conventional educational atlas.",
+      "comp": ".impeccable/mocks/decision/atlas.png"
+    },
+    {
+      "id": "type-specimen", "label": "Type specimen", "verdict": "declined",
+      "thesis": "A monochrome map uses scale changes to reveal country labels.",
+      "palette": ["#fafafa", "#161616"], "materials": ["ink", "flat white"],
+      "viewport": "Large labels and an axis control dominate the map.", "risk": "Typographic controls compete with geography.",
+      "case": "Less familiar for classroom geography and less clear about the map task.",
+      "kept": "Synchronized label scaling.", "hero": "https://impeccable.style/worlds/cards/variable-font-specimen-hero.webp"
+    },
+    {
+      "id": "garden-guide", "label": "Gardens guide", "verdict": "declined",
+      "thesis": "Bright green land and capsule controls frame a geographic canvas.",
+      "palette": ["#8ed462", "#f5f1e4", "#f5e211"], "materials": ["flat color", "capsule controls"],
+      "viewport": "An oversized landmass crosses the screen beside colorful controls.", "risk": "The playful treatment can obscure the requested world overview.",
+      "case": "Less suitable for readable political geography and weakens the whole-world starting point.",
+      "kept": "Geography fills the viewport.", "hero": "https://impeccable.style/worlds/cards/aww2-zoo-gardens-guide-map-hero.webp"
+    },
+    {
+      "id": "hall-catalog", "label": "Hall catalog", "verdict": "declined",
+      "thesis": "A country index and numbered map form a linked catalog.",
+      "palette": ["#eeeeea", "#222222"], "materials": ["dense grid", "single ink"],
+      "viewport": "Country cells share space with the map.", "risk": "The index takes room from the only requested feature.",
+      "case": "An index adds a new task and reduces classroom map legibility.",
+      "kept": "Labels map to geographic features.", "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-doujin-event-catalog-hero.webp"
+    },
+    {
+      "id": "gate-board", "label": "Gate board", "verdict": "declined",
+      "thesis": "Country rows and geographic codes form a structured lookup screen.",
+      "palette": ["#ffffff", "#202830", "#eab63d"], "materials": ["fixed columns", "tabular labels"],
+      "viewport": "A country board sits alongside the map.", "risk": "A lookup board distracts from geographic exploration.",
+      "case": "Flight-like ranking has no role in the requested map and adds interpretation work.",
+      "kept": "Stable control positions.", "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-boarding-pass-and-gate-board-hero.webp"
+    },
+    {
+      "id": "consumer-app", "label": "Consumer cards", "verdict": "declined",
+      "thesis": "Rounded country cards and a bottom bar make geography approachable.",
+      "palette": ["#f4efea", "#ffffff", "#2563eb"], "materials": ["soft cards", "large controls"],
+      "viewport": "Cards and a tab bar surround a smaller map.", "risk": "Adds navigation and content that this first step does not need.",
+      "case": "Card browsing serves neither whole-world visibility nor direct map interaction.",
+      "kept": "Comfortable touch targets.", "hero": "https://impeccable.style/worlds/cards/digital-design-canon-warm-consumer-app-surface-hero.webp"
+    },
+    {
+      "id": "timetable", "label": "Timetable rack", "verdict": "declined",
+      "thesis": "Geographic panes follow a strict horizontal information rail.",
+      "palette": ["#d9aa34", "#35424a", "#f5f0df"], "materials": ["angled panes", "one-size labels"],
+      "viewport": "The world is divided across sliding regional panes.", "risk": "Dividing the world prevents the requested continuous overview.",
+      "case": "The form adds unfamiliar navigation and fragments the map.",
+      "kept": "Consistent label hierarchy.", "hero": "https://impeccable.style/worlds/cards/rw-timetable-slide-rack-hero.webp"
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "comp", "toggle": true},
+  "canon": true,
+  "canonCard": {
+    "label": "Plain web map",
+    "thesis": "A familiar gray-and-blue web map with country names and clear border lines.",
+    "palette": ["#e6eef2", "#eceeea", "#55636b", "#ffffff"],
+    "materials": ["flat neutral geography", "standard map controls"],
+    "viewport": "Full-screen map with a compact title at upper left and zoom controls at upper right.",
+    "risk": "Deliberately conventional; little distinctive visual identity.",
+    "comp": ".impeccable/mocks/decision/plain.png"
+  },
+  "steer": true
+}

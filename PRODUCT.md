@@ -16,19 +16,19 @@ classroom workflows remain undecided.
 
 Make historical events explorable through geography, chronology, and their
 connections. The long-term ambition covers humanity's past; the current proof
-of concept focuses on the Siege of Antioch during the First Crusade, 1097–1098.
+of concept now starts with present-day world geography. The Siege of Antioch
+material is retained for a later historical-events layer.
 
-Success for this phase means a working map and interactions: learners can locate
-events, inspect their details and sources, and follow a clickable connection to
-the next event.
+Success for this phase means a full-screen world map with country names and
+borders, reliable pan and zoom, and a reset to the world overview. The user
+selected the classroom-screen preview with sage land and strong borders.
 
 ## Operating Context
 
 The proof of concept is evaluated locally in a desktop or mobile web browser.
-The current interface synchronizes a map, event timeline, and detail panel.
-Learners can select a location, choose an event, follow its next-event link, or
-move through the chronology with Previous/Next. Event URLs preserve selection
-and support browser Back/Forward.
+The current interface is a flat world map with zoom and reset controls. Country
+names become visible as space allows while zooming. The earlier timeline,
+event-detail panel, citations and event navigation remain archived in source.
 
 ## Capabilities and Constraints
 
@@ -51,7 +51,11 @@ and support browser Back/Forward.
 ## Evidence on Hand
 
 - Nine connected Antioch episodes, their places, relationships, citations, and
-  sources live in `public/data/antioch/`.
+  sources live in `public/data/antioch/`, retained for future work.
+- Present-day country and territory geography lives in `public/data/world/`,
+  derived from Natural Earth 1:50m Admin-0 country data. The default boundaries
+  follow Natural Earth's de facto convention; the dataset is a generalized
+  snapshot, not live political data or a count of sovereign states.
 - Local regional basemap data lives in `public/data/antioch/basemap/` and derives
   from public-domain Natural Earth geography. It provides modern geographic
   context rather than a reconstruction of medieval boundaries.
