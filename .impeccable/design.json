@@ -13,7 +13,7 @@
       "provenance": "public/data/world/ocean-metadata.json",
       "color": "#476b7a",
       "sizeStops": [0, 12, 2, 15, 5, 22, 8, 28],
-      "purpose": "Standard-only ocean names with offshore sourced anchors and lower collision priority than country names."
+      "purpose": "Standard-only ocean names with offshore sourced anchors, always-rendered text and first placement priority; sea and other labels yield."
     },
     "geology": {
       "provenance": "public/data/world/geology/metadata.json",

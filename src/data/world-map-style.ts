@@ -29,18 +29,6 @@ export function worldMapStyle(
         },
       },
       {
-        id: "ocean-labels", type: "symbol", source: "oceans",
-        layout: {
-          "text-field": ["get", "name"], "text-font": ["Noto Sans"],
-          "text-size": ["interpolate", ["linear"], ["zoom"], 0, 12, 2, 15, 5, 22, 8, 28],
-          "text-max-width": 7, "text-line-height": 1.2,
-          "text-letter-spacing": 0.08, "text-padding": 4,
-          "text-anchor": "center", "text-allow-overlap": false,
-          "text-ignore-placement": false,
-        },
-        paint: { "text-color": "#476b7a", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },
-      },
-      {
         id: "sea-labels", type: "symbol", source: "seas",
         filter: [">=", ["zoom"], ["get", "minZoom"]],
         layout: {
@@ -102,6 +90,20 @@ export function worldMapStyle(
           "text-halo-width": 1.1,
           "text-halo-blur": 0.4,
         },
+      },
+      {
+        id: "ocean-labels", type: "symbol", source: "oceans",
+        // Symbols place in reverse layer order. Oceans reserve space first;
+        // their names stay visible while other labels avoid their boxes.
+        layout: {
+          "text-field": ["get", "name"], "text-font": ["Noto Sans"],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 0, 12, 2, 15, 5, 22, 8, 28],
+          "text-max-width": 7, "text-line-height": 1.2,
+          "text-letter-spacing": 0.08, "text-padding": 4,
+          "text-anchor": "center", "text-allow-overlap": true,
+          "text-ignore-placement": false,
+        },
+        paint: { "text-color": "#476b7a", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },
       },
     ],
   };

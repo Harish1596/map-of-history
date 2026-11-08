@@ -114,7 +114,9 @@ The Standard map labels the Arctic, Atlantic, Indian, Pacific and Southern
 oceans. Atlantic and Pacific use separate North/South source regions, producing
 seven offshore anchors. The names come from Natural Earth's marine label areas;
 interior anchors are calculated offline and track the map camera and world wrap.
-Ocean labels use muted blue ink and yield collision priority to country names.
+Ocean labels use muted blue ink and receive first placement priority. Their
+names stay visible when their anchors are on screen; sea and other labels yield
+when they compete for the same space.
 They are eligible from the world overview onward and remain eligible at closer
 zooms when their anchors are in view. Polar names require panning into their
 regions. Physical Geography hides this Standard-only label layer.

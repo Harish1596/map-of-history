@@ -32,11 +32,17 @@ test("all five oceans have stable named anchors in water", () => {
   assert.match(metadata.sourceSha256, /^[a-f0-9]{64}$/);
 });
 
-test("ocean labels appear in Standard and yield collision priority to country names", () => {
+test("ocean labels remain visible and reserve space ahead of seas and other labels", () => {
   const style = worldMapStyle(read("countries.geojson"), read("labels.geojson"), read("island-labels.geojson"), read("ocean-labels.geojson"));
   const index = style.layers.findIndex((layer) => layer.id === "ocean-labels");
-  assert(index >= 0 && index < style.layers.findIndex((layer) => layer.id === "country-labels"));
-  assert.equal(style.layers[index].layout["text-allow-overlap"], false);
+  assert(index > style.layers.findIndex((layer) => layer.id === "country-labels"));
+  assert.equal(style.layers[index].layout["text-allow-overlap"], true);
+  assert.equal(style.layers[index].layout["text-ignore-placement"], false);
+  assert.equal(style.layers[index].minzoom, undefined);
+  assert.equal(style.layers[index].maxzoom, undefined);
+  assert.equal(style.layers[index].filter, undefined);
+  const withSeas = worldMapStyle(read("countries.geojson"), read("labels.geojson"), read("island-labels.geojson"), read("ocean-labels.geojson"), read("sea-labels.geojson"));
+  assert(withSeas.layers.findIndex((layer) => layer.id === "ocean-labels") > withSeas.layers.findIndex((layer) => layer.id === "sea-labels"));
   const visibility = new Map();
   const map = { getLayer: (id) => style.layers.find((layer) => layer.id === id), setLayoutProperty: (id, key, value) => visibility.set(id, value) };
   setMapMode(map, "physical");

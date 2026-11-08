@@ -22,7 +22,7 @@ writeFileSync(new URL("ocean-metadata.json", output), JSON.stringify({
   license: "Public domain", licenseUrl: "https://www.naturalearthdata.com/about/terms-of-use/",
   sourceSha256: createHash("sha256").update(raw).digest("hex"),
   preparedOn: new Date().toISOString().slice(0, 10), featureCount: features.length,
-  transformations: "Retain ocean features and compute interior Polylabel anchors. Preserve North/South Atlantic and Pacific source names, normalize uppercase names to title case, and retain the generic English ocean name separately. Labels are eligible at world overview and persist at closer zooms when their anchors are visible.",
-  limitations: "Approximate geographic label placement, not surveyed ocean boundaries. Seven source regions describe five oceans. Polar names require panning into their regions; available space and collision detection affect visibility.",
+  transformations: "Retain ocean features and compute interior Polylabel anchors. Preserve North/South Atlantic and Pacific source names, normalize uppercase names to title case, and retain the generic English ocean name separately. Labels have no zoom cutoff and always render when on screen in Standard, reserving space ahead of sea and other labels.",
+  limitations: "Approximate geographic label placement, not surveyed ocean boundaries. Seven source regions describe five oceans. Names depend on the viewport containing their anchors; polar names require panning into their regions.",
 }, null, 2) + "\n");
 console.log(`Prepared ${features.length} ocean anchors.`);
