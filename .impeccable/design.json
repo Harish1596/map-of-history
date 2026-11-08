@@ -7,7 +7,7 @@
       "provenance": "public/data/world/sea-metadata.json",
       "color": "#476b7a",
       "sizeStops": [1, 11, 4, 14, 7, 19, 10, 24],
-      "purpose": "Standard-only named seas, using source-guided zoom eligibility, offshore anchors and country/island collision priority."
+      "purpose": "Standard-only named seas, bays and gulfs, using source-guided zoom eligibility, offshore anchors and country/island collision priority; oceans retain first priority."
     },
     "oceanLabels": {
       "provenance": "public/data/world/ocean-metadata.json",

@@ -39,26 +39,28 @@ function waterAnchor(geometry) {
   }
   throw new Error("Could not place a sea label in water");
 }
-const features = source.features.filter((f) => f.properties.featurecla === "sea").map((feature) => {
+const marineKinds = { sea: "Sea", bay: "Bay", gulf: "Gulf" };
+const features = source.features.filter((f) => Object.hasOwn(marineKinds, f.properties.featurecla)).map((feature) => {
   const p = feature.properties;
   const name = p.name_en || p.name;
   const id = `sea-${p.ne_id}`;
   const anchor = waterAnchor(feature.geometry);
   return {
     type: "Feature", id,
-    properties: { id, name, minZoom: p.scalerank <= 1 ? 1 : Math.max(2, Math.floor(p.min_label ?? 4)), priority: p.scalerank ?? 10, adjustedForLand: anchor.adjusted },
+    properties: { id, name, kind: marineKinds[p.featurecla], minZoom: p.scalerank <= 1 ? 1 : Math.max(2, Math.floor(p.min_label ?? 4)), priority: p.scalerank ?? 10, adjustedForLand: anchor.adjusted },
     geometry: { type: "Point", coordinates: anchor.point.map((v) => Number(v.toFixed(5))) },
   };
 });
 writeFileSync(new URL("sea-labels.geojson", output), JSON.stringify({ type: "FeatureCollection", features }) + "\n");
 writeFileSync(new URL("sea-metadata.json", output), JSON.stringify({
-  title: "Natural Earth sea label anchors",
+  title: "Natural Earth sea, bay and gulf label anchors",
   source: "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_geography_marine_polys.geojson",
   license: "Public domain", licenseUrl: "https://www.naturalearthdata.com/about/terms-of-use/",
   sourceSha256: createHash("sha256").update(raw).digest("hex"),
   coastlineSha256: createHash("sha256").update(countryBytes).digest("hex"),
   preparedOn: new Date().toISOString().slice(0, 10), featureCount: features.length,
-  transformations: "Retain sea-class features and English names; compute interior Polylabel anchors. If an anchor lands on an island in the bundled country outlines, move it to the nearest water candidate on a 32/64/128-step grid inside its marine label region. Major rank-1 seas are eligible at zoom 1. Smaller seas use rounded-down source label zooms, starting at zoom 2. Source rank sets collision priority; labels remain eligible at closer zooms.",
-  limitations: "Selected named seas, including the Caspian Sea, from the source's sea class. Approximate label regions are placement aids, not surveyed maritime boundaries. Country outlines are generalized; label eligibility does not guarantee visible placement when names compete.",
+  kinds: Object.fromEntries(Object.values(marineKinds).map((kind) => [kind, features.filter((f) => f.properties.kind === kind).length])),
+  transformations: "Retain sea-, bay- and gulf-class features and English names; compute interior Polylabel anchors. If an anchor lands on an island in the bundled country outlines, move it to the nearest water candidate on a 32/64/128-step grid inside its marine label region. Major rank-1 waters are eligible at zoom 1. Smaller waters use rounded-down source label zooms, starting at zoom 2. Source rank sets collision priority; labels remain eligible at closer zooms.",
+  limitations: "Selected named seas, bays and gulfs from the source classifications, including inland seas. Approximate label regions are placement aids, not surveyed maritime boundaries. Country outlines are generalized; label eligibility does not guarantee visible placement when names compete.",
 }, null, 2) + "\n");
-console.log(`Prepared ${features.length} sea anchors.`);
+console.log(`Prepared ${features.length} marine-water label anchors.`);

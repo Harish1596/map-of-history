@@ -14,16 +14,20 @@ function inside([x, y], polygon) {
   return result;
 }
 
-test("named seas have stable IDs and source-guided zoom eligibility", () => {
+test("named seas, bays and gulfs have stable offshore anchors and zoom eligibility", () => {
   const seas = read("sea-labels.geojson");
   const countries = read("countries.geojson");
-  assert.equal(seas.features.length, 71);
-  assert.equal(new Set(seas.features.map((f) => f.id)).size, 71);
-  for (const name of ["Mediterranean Sea", "Black Sea", "Red Sea", "Caspian Sea", "Caribbean Sea", "Baltic Sea", "North Sea", "Aegean Sea", "Bering Sea"]) {
+  assert.equal(seas.features.length, 192);
+  assert.equal(new Set(seas.features.map((f) => f.id)).size, 192);
+  for (const name of ["Mediterranean Sea", "Black Sea", "Red Sea", "Caspian Sea", "Caribbean Sea", "Baltic Sea", "North Sea", "Aegean Sea", "Bering Sea", "Bay of Bengal", "Gulf of Mexico", "Persian Gulf", "Bay of Biscay"]) {
     assert(seas.features.some((f) => f.properties.name === name), name);
   }
+  const bengal = seas.features.find((f) => f.properties.name === "Bay of Bengal");
+  assert.equal(bengal.properties.kind, "Bay");
+  assert.equal(bengal.properties.minZoom, 1);
   for (const f of seas.features) {
-    assert(f.properties.minZoom >= 1 && f.properties.minZoom <= 8);
+    assert(f.properties.minZoom >= 1 && f.properties.minZoom <= 10);
+    assert(["Sea", "Bay", "Gulf"].includes(f.properties.kind));
     assert(f.geometry.coordinates.every(Number.isFinite));
     assert(Math.abs(f.geometry.coordinates[0]) <= 180 && Math.abs(f.geometry.coordinates[1]) <= 90);
     for (const country of countries.features) {
@@ -33,6 +37,7 @@ test("named seas have stable IDs and source-guided zoom eligibility", () => {
   }
   const meta = read("sea-metadata.json");
   assert.equal(meta.featureCount, seas.features.length);
+  assert.deepEqual(meta.kinds, { Sea: 71, Bay: 60, Gulf: 61 });
   assert.equal(meta.license, "Public domain");
   assert.match(meta.sourceSha256, /^[a-f0-9]{64}$/);
   assert.equal(meta.coastlineSha256, createHash("sha256").update(readFileSync(new URL("../public/data/world/countries.geojson", import.meta.url))).digest("hex"));

@@ -129,11 +129,12 @@ Regenerate from the same marine source used for coastal names:
 node scripts/prepare-ocean-labels.mjs /path/to/ne_10m_geography_marine_polys.geojson
 ```
 
-### Sea names in Standard
+### Seas, bays and gulfs in Standard
 
-The Standard map also labels 71 source-classified seas, including the
-Mediterranean, Black, Red, Caribbean, Caspian, Baltic and North seas. Major seas
-are eligible at zoom 1; smaller seas follow source-guided minimum zooms 4–7.
+The Standard map labels 192 marine waters: 71 seas, 60 bays and 61 gulfs. These
+include the Mediterranean, Black, Red, Caribbean, Caspian, Baltic and North seas,
+Bay of Bengal, Gulf of Mexico and Persian Gulf. Major waters are eligible at
+zoom 1; smaller waters follow source-guided minimum zooms 4–7.
 Country and island names retain collision priority. Labels persist at closer
 zooms when their anchors are visible and there is space to place them.
 
@@ -142,8 +143,9 @@ zooms when their anchors are visible and there is space to place them.
 are placed inside source marine label regions and checked against the bundled
 country outlines. If an interior anchor falls on an island, the preparation
 chooses a nearby water point inside the same region. Names are shown in Standard
-and hidden in Physical Geography. The dataset is selected coverage, not every
-water body with “Sea” in its name; label regions do not define maritime borders.
+and hidden in Physical Geography. Source classes determine inclusion, preserving
+the distinction between seas, bays and gulfs. This is selected coverage; label
+regions do not define maritime borders.
 
 ```bash
 node scripts/prepare-sea-labels.mjs /path/to/ne_10m_geography_marine_polys.geojson
