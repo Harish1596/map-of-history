@@ -39,8 +39,12 @@ rebuilds the list from the policy in `scripts/lib/country-label-policy.mjs`.
 
 Areas are geodesic measurements of the generalized source geometry, including
 holes and all polygon parts, rather than official country-area statistics.
-Larger areas receive priority when labels compete. These bands control when a
-name becomes eligible; collision detection can delay it until there is room:
+Initial placement and newly introduced names follow geographic-area priority.
+As you zoom in, already-visible country names retain precedence so new neighbours
+do not displace them. Zooming out restores area-based placement for the wider
+view. Labels keep their geographic anchors and collision avoidance. These bands
+control when a name becomes eligible; collision detection can delay it until
+there is room:
 
 | Geographic area | Minimum MapLibre zoom |
 | --- | --- |

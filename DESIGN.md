@@ -123,8 +123,12 @@ Source text stays plain. The map has no title overlay; its accessible name remai
 
 Country labels use the same Noto Sans family. Geographic area determines their
 size tier, minimum zoom and collision priority, using the local country-labels
-list. Larger areas place first. By size tier, font sizes are 14/12/11/10px at
-zoom 0, 19/15/13/12px at zoom 3, 24/20/17/16px at zoom 5, and 34/28/24/22px at
+list. Initial placement and newly introduced names use area priority. During
+zoom-in, visible names retain their introduction order so new neighbours use
+remaining space. Zoom-out resets to area priority for the wider view. Names
+keep their centered geographic anchors and avoid overlaps. By size tier, font
+sizes are 14/12/11/10px at zoom 0, 19/15/13/12px at zoom 3, 24/20/17/16px at
+zoom 5, and 34/28/24/22px at
 zoom 8, interpolating between stops. The last font-size value covers tiers 3–6.
 Labels use line height 1.15, maximum width 6 em, padding 2px, a land-colored halo
 (width 1.1px, blur 0.4px), and collision avoidance. Minimum zoom determines

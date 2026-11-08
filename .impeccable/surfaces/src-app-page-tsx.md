@@ -32,6 +32,9 @@ zoom guidance. Anchors are checked against land, with island overlaps corrected.
 Country labels follow geographic-area bands and descending-area collision
 priority, sourced from the local country-labels.json list. Small islands and
 territories become eligible later than larger countries.
+During zoom-in, already-visible country names retain precedence over newly
+fitting neighbours. Zoom-out restores area priority. Geographic anchors stay
+centered and collision avoidance remains enabled.
 Physical island names appear in a secondary regional layer. Archipelago names
 give way to individual island names at closer zoom; country labels stay dominant.
 

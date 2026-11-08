@@ -5,6 +5,7 @@ import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
 import { applyCountryLabelList } from "@/data/world-label-policy";
+import { retainCountryLabels } from "@/data/country-label-retention";
 import { physicalMapLayers, reliefSource, landCoverLayer, landCoverSource, geologyLayer, geologySource, setMapMode, type MapMode, type PhysicalSurface } from "@/data/physical-map-style";
 import landCoverLegend from "../../public/data/world/land-cover/legend.json";
 import geologyLegend from "../../public/data/world/geology/legend.json";
@@ -111,6 +112,7 @@ export function WorldMap() {
     let disposed = false;
     let map: LibreMap | undefined;
     let observer: ResizeObserver | undefined;
+    let releaseCountryLabels: (() => void) | undefined;
     let failed = false;
     const controller = new AbortController();
     const timeout = window.setTimeout(() => {
@@ -156,6 +158,7 @@ export function WorldMap() {
           attributionControl: false,
         });
         mapRef.current = map;
+        releaseCountryLabels = retainCountryLabels(map);
         map.on("resize", () => {
           if (!map || !container.current) return;
           viewportHeight = container.current.clientHeight;
@@ -217,6 +220,7 @@ export function WorldMap() {
       physicalRequest.current = null;
       window.clearTimeout(timeout);
       observer?.disconnect();
+      releaseCountryLabels?.();
       map?.remove();
       mapRef.current = null;
     };

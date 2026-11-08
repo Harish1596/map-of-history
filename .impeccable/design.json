@@ -3,6 +3,9 @@
   "generatedAt": "2026-11-08T04:58:57.832606+00:00",
   "title": "Design System: Classroom World Map",
   "extensions": {
+    "countryLabelRetention": {
+      "purpose": "Keep visible country labels ahead of new neighbours during zoom-in; restore area-based priority on zoom-out. Preserve centered anchors and collision avoidance."
+    },
     "seaLabels": {
       "provenance": "public/data/world/sea-metadata.json",
       "color": "#476b7a",
