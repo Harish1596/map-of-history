@@ -1,0 +1,13 @@
+{
+  "title": "Natural Earth Admin-0 countries, 1:50m",
+  "source": "https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/",
+  "download": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_50m_admin_0_countries.geojson",
+  "license": "Public domain",
+  "licenseUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "preparedOn": "2026-11-08",
+  "sourceSha256": "3e458fc036ad0a66411f2c1e6cac49c5d7bfb81cb1123bc513b22511a2b7fdeb",
+  "featureCount": 242,
+  "boundaryConvention": "Natural Earth default de facto boundaries. Includes territories and disputed areas; not a count of sovereign states or a statement of legal recognition.",
+  "limitations": "Generalized 1:50m snapshot, not live political data, street detail, or survey geometry. Small-country labels appear as space allows when zooming.",
+  "transformations": "Geometry unchanged. Retain selected display properties and split source LABEL_X/LABEL_Y into label point features."
+}
