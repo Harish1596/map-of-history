@@ -22,6 +22,8 @@ material is retained for a later historical-events layer.
 Success for this phase means a full-screen world map with country names and
 borders, reliable pan and zoom, and a reset to the world overview. The user
 selected the classroom-screen preview with sage land and strong borders.
+The map must pan continuously east/west and limit maximum magnification to twice
+the initial world view, as explicitly clarified by the user.
 
 ## Operating Context
 

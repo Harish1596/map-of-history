@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
+import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
 
 type MapStatus = "loading" | "ready" | "error";
 const WORLD_BOUNDS: [[number, number], [number, number]] = [[-180, -58], [180, 84]];
@@ -56,28 +57,43 @@ export function WorldMap() {
           }),
         ]);
         if (disposed || !container.current) return;
+        let minZoom = minimumWorldZoom(container.current.clientWidth);
         maplibre.setWorkerUrl("/vendor/maplibre-gl-worker.mjs");
         map = new maplibre.Map({
           container: container.current,
           style: worldMapStyle(countries, labels),
           center: [0, 20], zoom: 1,
-          maxZoom: 8, minZoom: -2,
+          maxZoom: maximumWorldZoom(minZoom), minZoom,
           fadeDuration: 0,
-          renderWorldCopies: false,
+          renderWorldCopies: true,
           // Permit the complete world to fit a portrait viewport. The default
           // Mercator constraint otherwise zooms in to fill the viewport height.
-          transformConstrain: (center, zoom) => ({
-            center: new maplibre.LngLat(
-              Math.max(-180, Math.min(180, center.lng)),
-              Math.max(-85, Math.min(85, center.lat)),
-            ),
-            zoom: Math.max(-2, Math.min(8, zoom)),
-          }),
+          transformConstrain: (center, zoom) => {
+            const camera = constrainWorldCamera(center, zoom, minZoom);
+            return { center: new maplibre.LngLat(camera.lng, camera.lat), zoom: camera.zoom };
+          },
           dragRotate: false, pitchWithRotate: false,
           maxPitch: 0,
           attributionControl: false,
         });
         mapRef.current = map;
+        map.on("resize", () => {
+          if (!map || !container.current) return;
+          minZoom = minimumWorldZoom(container.current.clientWidth);
+          // Avoid an invalid intermediate range while resizing between a wide
+          // and narrow viewport. The shared constraint always uses the new range.
+          if (minZoom > map.getMaxZoom()) {
+            map.setMaxZoom(maximumWorldZoom(minZoom));
+            map.setMinZoom(minZoom);
+          } else {
+            map.setMinZoom(minZoom);
+            map.setMaxZoom(maximumWorldZoom(minZoom));
+          }
+          setLimits({
+            min: map.getZoom() <= minZoom + 0.01,
+            max: map.getZoom() >= maximumWorldZoom(minZoom) - 0.01,
+          });
+        });
         map.touchZoomRotate.disableRotation();
         map.keyboard.disableRotation();
         const canvas = map.getCanvas();
@@ -129,7 +145,7 @@ export function WorldMap() {
       <div className="world-map__canvas" ref={container} />
       <p id="map-instructions" className="visually-hidden">
         Drag to pan. Scroll or pinch to zoom. Focus the map and use arrow keys to
-        pan, or plus and minus to zoom. Smaller country names appear as you zoom in.
+        pan, or plus and minus to zoom. Zoom is limited to twice the world overview.
       </p>
       {status === "loading" && <p className="map-feedback" role="status">Loading the world map…</p>}
       {status === "error" && (

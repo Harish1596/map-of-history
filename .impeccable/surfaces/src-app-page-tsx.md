@@ -27,6 +27,8 @@ FIRST VIEWPORT: A continuous flat map edge to edge, with no title plaque (remove
 at the user's request). Attribution lower left. White 44px zoom
 and reset buttons lower right. Signature interaction: all labels and borders
 track the same camera during every pan and zoom. Motion is map navigation only.
+The user clarified that maximum magnification is 2× the initial world view.
+Pan wraps continuously east/west; zoom-out stops at one world-width.
 
 FORM: Classroom screen, fifth grounded candidate; direction seed `3d33963b`.
 The preview's invented geometry is replaced by sourced GeoJSON. Noto Sans supplies

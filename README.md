@@ -8,6 +8,12 @@ Drag to pan; scroll, pinch or use the buttons to zoom. Focus the map to use arro
 keys and plus/minus. Country labels avoid overlap and smaller-country names appear
 as space allows when zooming. Reset world view fits the world to the current screen.
 
+The map wraps seamlessly east/west across the date line. Zooming out stops at
+one world-width, preventing a row of repeated worlds. Maximum zoom is **2× the
+initial world-view scale** (one additional zoom level), including wheel, pinch,
+keyboard and button input. Bounds adapt when the viewport changes. Google Maps
+is an interaction reference only; no Google services are loaded.
+
 ## Local map data
 
 `public/data/world/countries.geojson` contains 242 country and territory features
