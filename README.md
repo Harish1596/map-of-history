@@ -157,11 +157,12 @@ node scripts/prepare-coastal-data.mjs /path/to/ne_10m_geography_regions_polys.ge
 
 ### Land cover
 
-In **Physical Geography**, enable **Land cover · 2020** to replace the relief
+In **Physical Geography**, choose **Land cover · 2020** to replace the relief
 colours with classified surface cover. The collapsible legend explains 12
 grouped categories plus no data. Coastlines, names and reference waterways
-remain above the classification. Turning it off restores shaded relief.
-Controls preserve the camera; the selection survives switching map modes.
+remain above the classification. Choose **Terrain relief** to restore relief.
+The radio group offers one surface at a time: Terrain relief, Land cover or Rock
+types. Controls preserve the camera; the selection survives switching map modes.
 
 This is a **modern 2020 reference, not historical vegetation**. The source is
 the ESA CCI / Copernicus Climate Change Service land-cover product v2.1.1, led
@@ -191,6 +192,46 @@ With the same Python raster tooling as relief, regenerate in two explicit steps:
 python scripts/prepare-land-cover.py --download-overview /tmp/land-cover-2020.tif
 # Prepare the app assets locally, with no network requests.
 python scripts/prepare-land-cover.py /tmp/land-cover-2020.tif
+```
+
+### Geology: rock types
+
+Choose **Physical Geography → Rock types** to view surface lithology from GLiM
+v1.1, using the original **LiMW GIS 2015** archive linked by the University of
+Hamburg and CCGM-CGMW. The legend retains all 16 first-level source classes:
+unconsolidated sediments; siliciclastic, mixed and carbonate sedimentary rocks;
+evaporites; pyroclastics; silica-rich/intermediate/silica-poor volcanic and
+plutonic rocks; metamorphic rocks; water; ice; and no data. Brief class descriptions
+are available as legend-entry tooltips. Changing the surface never moves the map.
+
+The preparation reads all **1,235,259 source polygons**, rasterizes them at pixel
+centres into a 32768×16384 Eckert IV classification grid, masks the ocean with
+the bundled country geometry and generates 5,461 local, lossless indexed PNG
+tiles at native Web Mercator zooms 0–6. Source class IDs are preserved; colours
+come from `public/data/world/geology/legend.json`. Categorical nearest-neighbour
+rendering avoids blending rock classes. Tiles load only when Rock types is chosen.
+
+This is a compiled surface-lithology reference. It does not show geological age,
+subsurface sections, faults or tectonic plates. Regional source scales vary
+(reported average approximately 1:3,750,000); some boundaries reflect different
+source maps. The roughly kilometre-spaced preparation grid omits subpixel units,
+and closer zoom does not create more detail. Water/ice classes describe cover,
+without inferring the rock beneath them. Generalized reference shorelines and
+water features may differ from GLiM's boundaries.
+
+The original archive and intermediate raster stay outside the app. Source links,
+archive/raster/legend/coastline checksums, class counts, source credit, rights
+notices and transformations are recorded in `public/data/world/geology/metadata.json`.
+The on-map GLiM credit links to the authors' dataset page. Source publications:
+[Hartmann & Moosdorf (2012)](https://doi.org/10.1029/2012GC004370) and
+[Moosdorf & Hartmann (2015)](https://doi.org/10.14682/2015LMWP).
+
+With `fiona`, `rasterio`, `numpy` and `Pillow` in a Python environment, regenerate
+from the downloaded original archive without network access:
+
+```bash
+python scripts/prepare-geology.py --rasterize /path/to/LiMW_GIS-2015.gdb.zip /tmp/geology.tif
+python scripts/prepare-geology.py /tmp/geology.tif
 ```
 
 Provenance, source checksum, preparation date and boundary limitations are in

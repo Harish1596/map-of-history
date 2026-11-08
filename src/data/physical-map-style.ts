@@ -1,6 +1,23 @@
 import type { LayerSpecification, Map as LibreMap, RasterSourceSpecification } from "maplibre-gl";
 
 export type MapMode = "standard" | "physical";
+export type PhysicalSurface = "relief" | "land-cover" | "geology";
+
+export function geologySource(): RasterSourceSpecification {
+  return {
+    type: "raster", tiles: ["/data/world/geology/{z}/{x}/{y}.png"],
+    tileSize: 512, minzoom: 0, maxzoom: 6,
+    attribution: "GLiM · Hartmann & Moosdorf; CCGM-CGMW (2015)",
+  };
+}
+
+export function geologyLayer(): LayerSpecification {
+  return {
+    id: "physical-geology", type: "raster", source: "physical-geology",
+    layout: { visibility: "none" },
+    paint: { "raster-opacity": 1, "raster-resampling": "nearest", "raster-fade-duration": 0 },
+  };
+}
 
 export function landCoverSource(): RasterSourceSpecification {
   return {
@@ -97,13 +114,15 @@ export function physicalMapLayers(): LayerSpecification[] {
 }
 
 // Toggle existing layers; never replace the style or change the map's camera.
-export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">, mode: MapMode, landCover = false) {
+export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">, mode: MapMode, surface: PhysicalSurface = "relief") {
   for (const id of ["country-borders", "country-labels"]) {
     if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", mode === "standard" ? "visible" : "none");
   }
   for (const layer of physicalMapLayers()) {
-    const visible = mode === "physical" && !(layer.id === "physical-relief" && landCover);
+    const visible = mode === "physical" && !(layer.id === "physical-relief" && surface !== "relief");
     if (map.getLayer(layer.id)) map.setLayoutProperty(layer.id, "visibility", visible ? "visible" : "none");
   }
-  if (map.getLayer("physical-land-cover")) map.setLayoutProperty("physical-land-cover", "visibility", mode === "physical" && landCover ? "visible" : "none");
+  for (const name of ["land-cover", "geology"] as const) {
+    if (map.getLayer(`physical-${name}`)) map.setLayoutProperty(`physical-${name}`, "visibility", mode === "physical" && surface === name ? "visible" : "none");
+  }
 }

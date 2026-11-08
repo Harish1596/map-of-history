@@ -5,8 +5,9 @@ import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
 import { applyCountryLabelList } from "@/data/world-label-policy";
-import { physicalMapLayers, reliefSource, landCoverLayer, landCoverSource, setMapMode, type MapMode } from "@/data/physical-map-style";
+import { physicalMapLayers, reliefSource, landCoverLayer, landCoverSource, geologyLayer, geologySource, setMapMode, type MapMode, type PhysicalSurface } from "@/data/physical-map-style";
 import landCoverLegend from "../../public/data/world/land-cover/legend.json";
+import geologyLegend from "../../public/data/world/geology/legend.json";
 import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
 
 type MapStatus = "loading" | "ready" | "error";
@@ -35,8 +36,9 @@ async function loadGeography(path: string, signal: AbortSignal): Promise<Feature
 function resetPhysicalSources(map: LibreMap | null) {
   if (!map) return;
   if (map.getLayer("physical-land-cover")) map.removeLayer("physical-land-cover");
+  if (map.getLayer("physical-geology")) map.removeLayer("physical-geology");
   for (const layer of physicalMapLayers().reverse()) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
-  for (const name of ["relief", "rivers", "lakes", "labels", "coasts", "land-cover"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
+  for (const name of ["relief", "rivers", "lakes", "labels", "coasts", "land-cover", "geology"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
 }
 
 export function WorldMap() {
@@ -46,8 +48,11 @@ export function WorldMap() {
   const [attempt, setAttempt] = useState(0);
   const [limits, setLimits] = useState({ min: true, max: false });
   const [mode, setMode] = useState<MapMode>("standard");
-  const [landCover, setLandCover] = useState(false);
-  const [landCoverLoading, setLandCoverLoading] = useState(false);
+  const [surface, setSurface] = useState<PhysicalSurface>("relief");
+  const [surfaceLoading, setSurfaceLoading] = useState(false);
+  const landCover = surface === "land-cover";
+  const geology = surface === "geology";
+  const activeLegend = geology ? geologyLegend : landCoverLegend;
   const [physicalStatus, setPhysicalStatus] = useState<MapStatus>("loading");
   const [physicalAttempt, setPhysicalAttempt] = useState(0);
   const physicalRequest = useRef<{ controller: AbortController; data: Promise<FeatureCollection[]> } | null>(null);
@@ -86,9 +91,11 @@ export function WorldMap() {
         }
         if (landCover && !map.getSource("physical-land-cover")) map.addSource("physical-land-cover", landCoverSource());
         if (landCover && !map.getLayer("physical-land-cover")) map.addLayer(landCoverLayer(), "physical-lakes");
-        setMapMode(map, "physical", landCover);
+        if (geology && !map.getSource("physical-geology")) map.addSource("physical-geology", geologySource());
+        if (geology && !map.getLayer("physical-geology")) map.addLayer(geologyLayer(), "physical-lakes");
+        setMapMode(map, "physical", surface);
         setPhysicalStatus("ready");
-        if (landCover) map.once("idle", () => { if (!cancelled) setLandCoverLoading(false); });
+        if (surface !== "relief") map.once("idle", () => { if (!cancelled) setSurfaceLoading(false); });
       } catch {
         if (!cancelled && map) {
           setMapMode(map, "standard");
@@ -98,7 +105,7 @@ export function WorldMap() {
     }
     void showPhysical();
     return () => { cancelled = true; };
-  }, [mode, status, physicalAttempt, landCover]);
+  }, [mode, status, physicalAttempt, landCover, geology, surface]);
 
   useEffect(() => {
     let disposed = false;
@@ -170,7 +177,7 @@ export function WorldMap() {
         });
         map.on("error", (event) => {
           if ("sourceId" in event && typeof event.sourceId === "string" && event.sourceId.startsWith("physical-")) {
-            if (event.sourceId === "physical-land-cover" && (!map?.getLayer("physical-land-cover") || map.getLayoutProperty("physical-land-cover", "visibility") !== "visible")) return;
+            if (["physical-land-cover", "physical-geology"].includes(event.sourceId) && (!map?.getLayer(event.sourceId) || map.getLayoutProperty(event.sourceId, "visibility") !== "visible")) return;
             if (!disposed) {
               if (map) setMapMode(map, "standard");
               setPhysicalStatus("error");
@@ -227,26 +234,35 @@ export function WorldMap() {
         }}>Physical Geography</button>
       </div>
       {mode === "physical" && status === "ready" && physicalStatus === "ready" && (
-        <label className="land-cover-toggle">
-          <input type="checkbox" checked={landCover} onChange={(event) => {
-            setLandCoverLoading(event.target.checked);
-            setLandCover(event.target.checked);
-          }} />
-          Land cover · 2020
-        </label>
+        <fieldset className="physical-surfaces">
+          <legend className="visually-hidden">Physical map colours</legend>
+          {([
+            ["relief", "Terrain relief"],
+            ["land-cover", "Land cover · 2020"],
+            ["geology", "Rock types"],
+          ] as const).map(([value, label]) => (
+            <label key={value}>
+              <input type="radio" name="physical-surface" value={value} checked={surface === value} onChange={() => {
+                setSurfaceLoading(value !== "relief");
+                setSurface(value);
+              }} />
+              {label}
+            </label>
+          ))}
+        </fieldset>
       )}
-      {mode === "physical" && landCover && landCoverLoading && physicalStatus === "ready" && status === "ready" && (
-        <p className="map-feedback map-feedback--land-cover" role="status">Loading land cover…</p>
+      {mode === "physical" && surface !== "relief" && surfaceLoading && physicalStatus === "ready" && status === "ready" && (
+        <p className="map-feedback map-feedback--surface" role="status">{geology ? "Loading rock types…" : "Loading land cover…"}</p>
       )}
-      {mode === "physical" && landCover && !landCoverLoading && physicalStatus === "ready" && status === "ready" && (
-        <details className="land-cover-legend">
-          <summary>Land-cover legend · 2020</summary>
+      {mode === "physical" && surface !== "relief" && !surfaceLoading && physicalStatus === "ready" && status === "ready" && (
+        <details className="map-legend" key={surface}>
+          <summary>{geology ? "Rock-type legend · GLiM" : "Land-cover legend · 2020"}</summary>
           <div>
-            <ul aria-label="Land-cover categories">
-              {landCoverLegend.classes.map((group) => <li key={group.id}><span style={{ backgroundColor: group.color }} aria-hidden="true" />{group.name}</li>)}
+            <ul aria-label={geology ? "Rock-type categories" : "Land-cover categories"}>
+              {activeLegend.classes.map((group) => <li key={group.id} title={"description" in group ? group.description : undefined}><span style={{ backgroundColor: group.color }} aria-hidden="true" />{group.name}</li>)}
             </ul>
-            <p>{landCoverLegend.notice}</p>
-            <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">ESA CCI / Copernicus C3S · UCLouvain</a>
+            <p>{activeLegend.notice}</p>
+            <a href={activeLegend.sourceUrl} target="_blank" rel="noreferrer">{activeLegend.sourceName}</a>
           </div>
         </details>
       )}
@@ -254,7 +270,7 @@ export function WorldMap() {
         Drag to pan. Scroll or pinch to zoom. Focus the map and use arrow keys to
         pan, or plus and minus to zoom. Use Reset world view to return to the overview.
         Switch map modes to explore countries or natural features without changing your view.
-        In Physical Geography, enable Land cover to compare modern vegetation and surface types using the legend.
+        In Physical Geography, choose Terrain relief, Land cover or Rock types and use the legend to identify map colours.
       </p>
       {status === "ready" && mode === "physical" && physicalStatus === "loading" && (
         <p className="map-feedback map-feedback--physical" role="status">Loading physical geography…</p>
@@ -265,6 +281,7 @@ export function WorldMap() {
           <button type="button" onClick={() => {
             // Recreate sources so failed terrain tiles are requested again.
             resetPhysicalSources(mapRef.current);
+            setSurfaceLoading(surface !== "relief");
             setPhysicalStatus("loading");
             setPhysicalAttempt((value) => value + 1);
           }}>Retry physical geography</button>
@@ -291,9 +308,10 @@ export function WorldMap() {
       <footer className="map-attribution">
         <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/" target="_blank" rel="noreferrer">Natural Earth</a>
         {mode === "physical" && landCover && <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">ESA / C3S 2020</a>}
+        {mode === "physical" && geology && <a href={geologyLegend.sourceUrl} target="_blank" rel="noreferrer">GLiM</a>}
         <details>
           <summary aria-label="About map data">Map data</summary>
-          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
+          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {geology ? <>Rock colours show surface lithology from <a href="https://doi.org/10.1029/2012GC004370" target="_blank" rel="noreferrer">GLiM, Hartmann &amp; Moosdorf (2012)</a>, using the CCGM-CGMW 2015 GIS compilation. Source detail varies by region; this is not geological age, subsurface structure or site-level mapping.</> : landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
         </details>
       </footer>
       <noscript><p className="map-feedback">Enable JavaScript to explore the interactive map.</p></noscript>

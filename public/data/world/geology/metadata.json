@@ -1,0 +1,49 @@
+{
+  "title": "GLiM surface lithology, categorical global overview",
+  "sourceVersion": "GLiM 1.1 / LiMW GIS 2015",
+  "source": "https://www.geo.uni-hamburg.de/en/geologie/forschung/aquatische-geochemie/glim.html",
+  "archive": "https://www.dropbox.com/s/9vuowtebp9f1iud/LiMW_GIS%202015.gdb.zip?dl=1",
+  "publisher": "https://www.ccgm.org/en/product/lithological-map-of-the-world/",
+  "citations": [
+    "Hartmann, J. & Moosdorf, N. (2012), doi:10.1029/2012GC004370",
+    "Moosdorf, N. & Hartmann, J. (2015), doi:10.14682/2015LMWP"
+  ],
+  "rights": "\u00a9 CCGM-CGMW 2015; original GIS archive publicly linked by the authors and publisher.",
+  "rightsUrl": "https://www.ccgm.org/en/licence-agreement-for-the-digital-maps-of-the-commission-for-the-geological-map-of-the-world/",
+  "sourceSha256": "895be0cde43f68d1fe6a24dafafbde715d9c9893adfea28916a9a69f88cc320c",
+  "classificationRasterSha256": "710cb2713a4194ad2f83e1e4fc0dd5b4b6a576faa8a914651e47bc054b163d7e",
+  "legendSha256": "80a5ec90ec0b9e3cff54e254fe25a0ccbadf630fcc45c429d4738dcc11abd5e5",
+  "coastlineSha256": "a60b420c634bb75169d2c3a9c6912b153aa3f70f24ee1798b7f98be1fffc10b1",
+  "featureCount": 1235259,
+  "sourceClassCounts": {
+    "vi": 26955,
+    "vb": 67180,
+    "pa": 106182,
+    "mt": 97215,
+    "su": 290440,
+    "ss": 236305,
+    "pb": 26040,
+    "pi": 15854,
+    "sm": 142134,
+    "wb": 26078,
+    "py": 14377,
+    "sc": 144413,
+    "va": 32197,
+    "nd": 1039,
+    "ev": 5507,
+    "ig": 3343
+  },
+  "rasterGridSpacingMetres": [
+    1016.4461488952638,
+    1027.6693125732422
+  ],
+  "preparedOn": "2026-11-08",
+  "projection": "EPSG:3857",
+  "scheme": "XYZ",
+  "tileSize": 512,
+  "minZoom": 0,
+  "maxZoom": 6,
+  "tileCount": 5461,
+  "transformations": "Read GLiM_export first-level xx rock classes from the authors' original GIS archive. Rasterize all polygons at pixel centres into a 32768\u00d716384 Eckert IV categorical grid. Apply the bundled country coastline mask. Reproject using nearest-neighbour sampling into lossless indexed PNG XYZ tiles. Index 0 is no data, 255 is transparent ocean. Preserve all 16 source classes; use custom legend colours.",
+  "limitations": "Surface lithology, not geological age, tectonic boundaries, a subsurface section or a medieval reconstruction. Compilation scales vary by region (reported average approximately 1:3,750,000); some boundaries reflect source-map differences. Rasterization omits subpixel units. Zooming beyond native zoom 6 adds no detail. Ice/water indicate cover, not underlying rock. Reference rivers, lakes and shorelines can differ from GLiM boundaries."
+}

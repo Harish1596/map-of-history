@@ -34,13 +34,13 @@ test("land cover replaces relief only while selected in Physical Geography", () 
   const ids = ["country-borders", "country-labels", landCoverLayer().id, ...physicalMapLayers().map((l) => l.id)];
   const visibility = new Map();
   const map = { getLayer: (id) => ids.includes(id), setLayoutProperty: (id, key, value) => visibility.set(id, value) };
-  setMapMode(map, "physical", true);
+  setMapMode(map, "physical", "land-cover");
   assert.equal(visibility.get("physical-relief"), "none");
   assert.equal(visibility.get("physical-land-cover"), "visible");
   assert.equal(visibility.get("physical-coastline"), "visible");
-  setMapMode(map, "standard", true);
+  setMapMode(map, "standard", "land-cover");
   assert.equal(visibility.get("physical-land-cover"), "none");
-  setMapMode(map, "physical", false);
+  setMapMode(map, "physical", "relief");
   assert.equal(visibility.get("physical-relief"), "visible");
   assert.equal(visibility.get("physical-land-cover"), "none");
 });

@@ -1,0 +1,24 @@
+{
+  "title": "Rock types · GLiM",
+  "sourceName": "GLiM · Hartmann & Moosdorf",
+  "sourceUrl": "https://www.geo.uni-hamburg.de/en/geologie/forschung/aquatische-geochemie/glim.html",
+  "notice": "Surface lithology, not geological age or a subsurface section. Regional source detail varies; close zoom does not add detail.",
+  "classes": [
+    { "id": 1, "code": "su", "name": "Unconsolidated sediments", "color": "#eadba8", "description": "Loose sediments such as sand, clay and gravel." },
+    { "id": 2, "code": "ss", "name": "Siliciclastic sedimentary", "color": "#c9ad70", "description": "Sedimentary rocks dominated by silicate fragments, including sandstone and shale." },
+    { "id": 3, "code": "sm", "name": "Mixed sedimentary", "color": "#bfc9a5", "description": "Mixed siliciclastic and carbonate sedimentary rocks." },
+    { "id": 4, "code": "sc", "name": "Carbonate sedimentary", "color": "#8dc0b7", "description": "Carbonate-rich sedimentary rocks, including limestone and dolomite." },
+    { "id": 5, "code": "ev", "name": "Evaporites", "color": "#d3b6cd", "description": "Rocks deposited through evaporation, including rock salt and gypsum." },
+    { "id": 6, "code": "py", "name": "Pyroclastic rocks", "color": "#dca375", "description": "Rocks made from fragments ejected by volcanic eruptions." },
+    { "id": 7, "code": "va", "name": "Volcanic · silica-rich", "color": "#d77b77", "description": "Acid volcanic rocks in the source classification; examples include rhyolite." },
+    { "id": 8, "code": "vi", "name": "Volcanic · intermediate", "color": "#c79083", "description": "Intermediate volcanic rocks; examples include andesite." },
+    { "id": 9, "code": "vb", "name": "Volcanic · silica-poor", "color": "#9f6d83", "description": "Basic volcanic rocks in the source classification; examples include basalt." },
+    { "id": 10, "code": "pa", "name": "Plutonic · silica-rich", "color": "#e4a4ab", "description": "Acid plutonic rocks formed underground; examples include granite." },
+    { "id": 11, "code": "pi", "name": "Plutonic · intermediate", "color": "#ca95b3", "description": "Intermediate plutonic rocks formed underground; examples include diorite." },
+    { "id": 12, "code": "pb", "name": "Plutonic · silica-poor", "color": "#a884a3", "description": "Basic plutonic rocks formed underground; examples include gabbro." },
+    { "id": 13, "code": "mt", "name": "Metamorphic rocks", "color": "#a6aacb", "description": "Rocks altered by heat, pressure or fluids." },
+    { "id": 14, "code": "wb", "name": "Water bodies", "color": "#87b6cf", "description": "Areas classified as water, rather than exposed rock." },
+    { "id": 15, "code": "ig", "name": "Ice / glaciers", "color": "#f4f6f7", "description": "Ice-covered areas, rather than exposed rock." },
+    { "id": 0, "code": "nd", "name": "No data", "color": "#e3e7e7", "description": "Unknown or unmapped lithology; no rock type is inferred." }
+  ]
+}

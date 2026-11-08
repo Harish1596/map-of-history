@@ -196,23 +196,26 @@ Named feature regions are not filled or outlined: those source polygons are
 approximate label-placement aids, not exact geographic boundaries. Source-guided
 label eligibility starts at zooms 2–10 and persists at closer zooms.
 
-### Land-cover control and legend
+### Physical surface control and legends
 
-Physical Geography offers a native checkbox labelled “Land cover · 2020” below
-the mode switch, in a white outlined surface with a 44px minimum hit area.
-Selecting it replaces relief colours with opaque categorical land-cover tiles;
-switching it off restores relief. The same camera, reference water layers and
-labels remain. Use nearest-neighbour rendering and lossless palette colours
-from `public/data/world/land-cover/legend.json`, without blending categories.
-The overview is a modern 2020 classification, not historical vegetation.
+Physical Geography offers a native radio group below the mode switch: “Terrain
+relief”, “Land cover · 2020” and “Rock types”. One surface is selected at a time.
+Each label has a 44px minimum hit area, 10px 12px padding, an 18px native radio
+and an 8px gap. The white outlined group wraps on narrow screens. It preserves
+the camera, reference water layers and labels. Land cover and rock types replace
+relief colours with opaque categorical tiles; nearest-neighbour rendering and
+lossless palette colours avoid blending categories. Palettes and source notes
+live in the respective `public/data/world/{land-cover,geology}/legend.json` files.
+Land cover is a modern 2020 overview. Rock types describe compiled surface
+lithology, with no geological ages or subsurface interpretation implied.
 
 A collapsed native disclosure above the lower-left attribution opens the
-legend. Its 44px summary reveals labelled, outlined 14px colour swatches, a short
-modern-reference/overview notice and source credit. The panel fits within the
+active legend. Its 44px summary reveals labelled, outlined 14px colour swatches,
+a short source-specific overview notice and source credit. The panel fits within the
 viewport minus navigation space; its contents scroll on short screens. Text is
 12px dark ink on white, with 1.5 line height. No title plaque is reintroduced.
 Selection is retained across mode changes but shown only in Physical Geography.
-Land-cover loading uses a status surface below the checkbox; failed tiles use
+Classification loading uses a status surface below the radio group; failed tiles use
 the existing physical-data retry path. Source credit stays visible in attribution.
 
 ### Navigation controls

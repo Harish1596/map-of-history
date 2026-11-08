@@ -3,12 +3,18 @@
   "generatedAt": "2026-11-08T04:58:57.832606+00:00",
   "title": "Design System: Classroom World Map",
   "extensions": {
+    "geology": {
+      "provenance": "public/data/world/geology/metadata.json",
+      "palette": "public/data/world/geology/legend.json",
+      "nativeMaxZoom": 6,
+      "purpose": "Compiled surface lithology, selected exclusively alongside relief and land cover; retain GLiM first-level classes, source credit and scale limitations."
+    },
     "landCover": {
       "provenance": "public/data/world/land-cover/metadata.json",
       "palette": "public/data/world/land-cover/legend.json",
       "year": 2020,
       "nativeMaxZoom": 5,
-      "purpose": "Optional categorical cover in Physical Geography; replaces relief, retains labels/waterways; modern reference with a collapsible legend and source credit."
+      "purpose": "Categorical cover selected through the Physical Geography radio group; replaces relief, retains labels/waterways; modern reference with a collapsible legend and source credit."
     },
     "coasts": {
       "source": "Natural Earth physical regions, points, marine regions and 1:50m coastlines",
@@ -205,6 +211,13 @@
     ]
   },
   "components": [
+    {
+      "name": "Physical surface selection",
+      "kind": "custom",
+      "description": "Native radio group selecting exactly one physical map colour surface.",
+      "html": "<fieldset class=\"ds-surfaces\"><legend>Physical map colours</legend><label><input type=\"radio\" name=\"ds-surface\" checked>Terrain relief</label><label><input type=\"radio\" name=\"ds-surface\">Land cover · 2020</label><label><input type=\"radio\" name=\"ds-surface\">Rock types</label></fieldset>",
+      "css": ".ds-surfaces{display:flex;flex-wrap:wrap;max-width:100%;margin:0;padding:0;border:1px solid #6b8184;border-radius:3px;background:#fff;color:#283b42;font:13px 'Noto Sans',sans-serif}.ds-surfaces legend{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.ds-surfaces label{display:flex;align-items:center;gap:8px;min-height:44px;padding:10px 12px;cursor:pointer}.ds-surfaces label:hover{background:#e4eded}.ds-surfaces input{margin:0;width:18px;height:18px;accent-color:#175c6f}.ds-surfaces input:focus-visible{outline:3px solid #175c6f;outline-offset:3px}"
+    },
     {
       "name": "Map mode switch",
       "kind": "custom",

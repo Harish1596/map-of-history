@@ -38,11 +38,13 @@ collision placement; approximate label regions are not drawn as boundaries,
 hiding political borders and country names. It loads local layers on first use
 and preserves the camera. Relief is locally tiled and generalized for world and
 regional views, with no tilt or 3D terrain.
-Land cover is an optional checkbox beneath the physical-mode switch. It replaces
-relief colours with grouped modern 2020 cover, using a collapsible lower-left
-legend and explicit source/year/overview limitations. It preserves the camera
-and loads local categorical tiles only when selected. Attribution lower left
-includes ESA/C3S. White 44px zoom and reset buttons sit lower right.
+A native radio group beneath the physical-mode switch selects Terrain relief,
+Land cover · 2020 or Rock types. The categorical views replace relief colours,
+use a collapsible lower-left legend and explain their source/overview limits.
+Rock types retain GLiM's first-level surface lithology; they do not imply rock age
+or subsurface structure. Selection preserves the camera and loads only local
+tiles for the chosen surface. Attribution includes the active dataset's credit.
+White 44px zoom and reset buttons sit lower right.
 Signature interaction: all labels and borders
 track the same camera during every pan and zoom. Motion is map navigation only.
 The user increased the zoom range after the earlier 2×-overview cap: maximum
