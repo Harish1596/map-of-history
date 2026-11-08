@@ -46,7 +46,7 @@ test("ocean labels remain visible and reserve space ahead of seas and other labe
   const visibility = new Map();
   const map = { getLayer: (id) => style.layers.find((layer) => layer.id === id), setLayoutProperty: (id, key, value) => visibility.set(id, value) };
   setMapMode(map, "physical");
-  assert.equal(visibility.get("ocean-labels"), "none");
+  assert.equal(visibility.get("ocean-labels"), "visible");
   setMapMode(map, "standard");
   assert.equal(visibility.get("ocean-labels"), "visible");
 });

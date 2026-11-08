@@ -48,7 +48,7 @@ test("named seas, bays and gulfs have stable offshore anchors and zoom eligibili
   assert.equal(meta.coastlineSha256, createHash("sha256").update(readFileSync(new URL("../public/data/world/countries.geojson", import.meta.url))).digest("hex"));
 });
 
-test("sea labels yield to countries and switch with Standard", () => {
+test("sea labels yield to countries and remain available in both modes", () => {
   const seas = read("sea-labels.geojson");
   const style = worldMapStyle(read("countries.geojson"), read("labels.geojson"), read("island-labels.geojson"), read("ocean-labels.geojson"), seas);
   const index = style.layers.findIndex((layer) => layer.id === "sea-labels");
@@ -61,6 +61,6 @@ test("sea labels yield to countries and switch with Standard", () => {
   assert.deepEqual(style.layers[index].filter, [">=", ["zoom"], ["get", "minZoom"]]);
   const visibility = new Map();
   const map = { getLayer: (id) => style.layers.find((layer) => layer.id === id), setLayoutProperty: (id, key, value) => visibility.set(id, value) };
-  setMapMode(map, "physical"); assert.equal(visibility.get("sea-labels"), "none");
+  setMapMode(map, "physical"); assert.equal(visibility.get("sea-labels"), "visible");
   setMapMode(map, "standard"); assert.equal(visibility.get("sea-labels"), "visible");
 });

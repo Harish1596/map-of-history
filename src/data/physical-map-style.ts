@@ -3,6 +3,14 @@ import type { LayerSpecification, Map as LibreMap, RasterSourceSpecification } f
 export type MapMode = "standard" | "physical";
 export type PhysicalSurface = "relief" | "land-cover" | "geology";
 
+export function bathymetrySource(): RasterSourceSpecification {
+  return {
+    type: "raster", tiles: ["/data/world/bathymetry/{z}/{x}/{y}.png"],
+    tileSize: 512, minzoom: 0, maxzoom: 4,
+    attribution: "Natural Earth · SRTM Plus bathymetry",
+  };
+}
+
 export function geologySource(): RasterSourceSpecification {
   return {
     type: "raster", tiles: ["/data/world/geology/{z}/{x}/{y}.png"],
@@ -49,6 +57,11 @@ export function physicalMapLayers(): LayerSpecification[] {
       id: "physical-relief", type: "raster", source: "physical-relief",
       layout: { visibility: "none" },
       paint: { "raster-opacity": 0.9, "raster-fade-duration": 0, "raster-resampling": "linear" },
+    },
+    {
+      id: "physical-bathymetry", type: "raster", source: "physical-bathymetry",
+      layout: { visibility: "none" },
+      paint: { "raster-opacity": 1, "raster-fade-duration": 0, "raster-resampling": "linear" },
     },
     {
       id: "physical-lakes", type: "fill", source: "physical-lakes",
@@ -115,8 +128,11 @@ export function physicalMapLayers(): LayerSpecification[] {
 
 // Toggle existing layers; never replace the style or change the map's camera.
 export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">, mode: MapMode, surface: PhysicalSurface = "relief") {
-  for (const id of ["country-borders", "country-labels", "ocean-labels", "sea-labels"]) {
+  for (const id of ["country-borders", "country-labels"]) {
     if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", mode === "standard" ? "visible" : "none");
+  }
+  for (const id of ["ocean-labels", "sea-labels"]) {
+    if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", "visible");
   }
   for (const layer of physicalMapLayers()) {
     const visible = mode === "physical" && !(layer.id === "physical-relief" && surface !== "relief");

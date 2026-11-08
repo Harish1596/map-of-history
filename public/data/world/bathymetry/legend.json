@@ -1,0 +1,80 @@
+{
+  "title": "Ocean depth \u00b7 metres",
+  "sourceName": "Natural Earth \u00b7 SRTM Plus",
+  "sourceUrl": "https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-bathymetry/",
+  "notice": "Approximate depth bands below sea level. Generalized world/regional reference; not a navigation chart or a live survey. Close zoom adds no detail.",
+  "classes": [
+    {
+      "id": 0,
+      "name": "0\u2013200 m",
+      "color": "#b9dce9",
+      "minimumDepthMetres": 0
+    },
+    {
+      "id": 1,
+      "name": "200\u20131,000 m",
+      "color": "#94c8df",
+      "minimumDepthMetres": 200
+    },
+    {
+      "id": 2,
+      "name": "1,000\u20132,000 m",
+      "color": "#70b2d0",
+      "minimumDepthMetres": 1000
+    },
+    {
+      "id": 3,
+      "name": "2,000\u20133,000 m",
+      "color": "#589aba",
+      "minimumDepthMetres": 2000
+    },
+    {
+      "id": 4,
+      "name": "3,000\u20134,000 m",
+      "color": "#4386a8",
+      "minimumDepthMetres": 3000
+    },
+    {
+      "id": 5,
+      "name": "4,000\u20135,000 m",
+      "color": "#367798",
+      "minimumDepthMetres": 4000
+    },
+    {
+      "id": 6,
+      "name": "5,000\u20136,000 m",
+      "color": "#2c698d",
+      "minimumDepthMetres": 5000
+    },
+    {
+      "id": 7,
+      "name": "6,000\u20137,000 m",
+      "color": "#245d81",
+      "minimumDepthMetres": 6000
+    },
+    {
+      "id": 8,
+      "name": "7,000\u20138,000 m",
+      "color": "#205477",
+      "minimumDepthMetres": 7000
+    },
+    {
+      "id": 9,
+      "name": "8,000\u20139,000 m",
+      "color": "#1d4c6e",
+      "minimumDepthMetres": 8000
+    },
+    {
+      "id": 10,
+      "name": "9,000\u201310,000 m",
+      "color": "#194565",
+      "minimumDepthMetres": 9000
+    },
+    {
+      "id": 11,
+      "name": "10,000+ m",
+      "color": "#163e5c",
+      "minimumDepthMetres": 10000
+    }
+  ]
+}

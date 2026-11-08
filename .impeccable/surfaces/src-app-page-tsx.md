@@ -69,3 +69,8 @@ the preview's plain sans-serif character; automated fingerprinting suggested an
 unrelated display face and is not suitable for country-map labels.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+
+Physical Geography has local bathymetric depth-band tiles below country land,
+visible alongside every physical surface. Ocean and sea names are shared across
+modes. The existing legend shows depth intervals in metres; classification
+surfaces retain their own legends and include depth bands in the same panel.

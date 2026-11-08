@@ -150,14 +150,14 @@ zoom 8, with 0.08em letter spacing, 1.2 line height and 4px collision padding.
 Ocean names place first and always render when their anchors are in view; other
 labels avoid their collision boxes. Seven sourced offshore anchors label
 the five oceans, retaining North/South Atlantic and Pacific distinctions. They
-are eligible from overview zoom onward; the layer is hidden in Physical Geography.
+are eligible from overview zoom onward; the layer is visible in both map modes.
 
 Sea, bay and gulf names share ocean ink and an ocean-coloured 1.5px halo, with a smaller scale:
 11px at zoom 1, 14px at zoom 4, 19px at zoom 7 and 24px at zoom 10. Use 1.2 line
 height and 3px collision padding. Major seas are eligible at zoom 1; smaller seas
 follow source label guidance. Country/island labels have placement priority.
 Sea anchors stay offshore in the bundled geography, and the layer follows
-Standard-only visibility alongside ocean names.
+visibility in both modes alongside ocean names.
 Text stays centered on its water anchor with a five-em wrapping width. Names
 yield to collisions rather than shifting toward nearby land.
 
@@ -269,3 +269,10 @@ Loading uses a short status message in a centered white outlined surface. Errors
 - **Don't** revive the former dark, gold, serif siege visual language.
 - **Don't** add ornamental shadows or decorative display typography.
 - **Don't** treat illustrative mock geography as authoritative map geometry.
+
+Underwater geography uses a physical-only raster beneath country land and the
+selected physical surface. Twelve sequential blues distinguish approximate
+depth intervals, from pale continental shelves to dark ocean trenches. Reuse
+the collapsible legend for metres below sea level, including a source link and
+overzoom limitations. Ocean/sea names sit above all physical surfaces, with their
+existing geographic anchors, zoom gates and readable water-colored halos.

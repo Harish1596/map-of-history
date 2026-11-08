@@ -128,7 +128,7 @@ names stay visible when their anchors are on screen; sea and other labels yield
 when they compete for the same space.
 They are eligible from the world overview onward and remain eligible at closer
 zooms when their anchors are in view. Polar names require panning into their
-regions. Physical Geography hides this Standard-only label layer.
+regions. Ocean names are available in both Standard and Physical Geography.
 
 The tiny local dataset is `public/data/world/ocean-labels.geojson`; source,
 licensing, checksum and preparation details are in `ocean-metadata.json`.
@@ -154,7 +154,7 @@ country outlines. If an interior anchor falls on an island, the preparation
 chooses a nearby water point inside the same region. Names stay centered on
 these anchors with a five-em wrapping width; they yield when there is insufficient
 room rather than shifting toward land. Names are shown in Standard
-and hidden in Physical Geography. Source classes determine inclusion, preserving
+and Physical Geography. Source classes determine inclusion, preserving
 the distinction between seas, bays and gulfs. This is selected coverage; label
 regions do not define maritime borders.
 
@@ -369,3 +369,24 @@ geometry files remain empty until those features can be responsibly sourced.
 No precise troop routes are asserted by the story links.
 
 Data tests require Node 22.6+ (TypeScript stripping); Node 22.19+ is recommended.
+
+### Underwater geography
+
+Physical Geography includes Natural Earth 1:10m bathymetry, derived from SRTM
+Plus, beneath all three land surfaces. Twelve depth bands run from 0–200 m to
+10,000+ m below sea level. Shelves, basins, ridges and trenches are represented
+through depth patterns; there are no individually named seafloor-feature layers
+or 3D underwater relief. Ocean and sea names are available in both map modes.
+
+The source is https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-bathymetry/
+(public domain). Local metadata records source and coastline checksums.
+`public/data/world/bathymetry/legend.json` supplies the depth legend. The 341
+indexed PNG tiles cover zooms 0–4; closer views enlarge those tiles. The source
+classification is generalized; approximately 4.9 km preparation-grid sampling
+at the equator does not imply survey accuracy. Standard retains flat blue water.
+
+Regenerate offline with the existing Python geospatial environment:
+
+```bash
+python scripts/prepare-bathymetry.py /path/to/ne_10m_bathymetry_all.zip
+```

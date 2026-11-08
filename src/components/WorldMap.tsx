@@ -5,9 +5,10 @@ import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
 import { applyCountryLabelList } from "@/data/world-label-policy";
-import { physicalMapLayers, reliefSource, landCoverLayer, landCoverSource, geologyLayer, geologySource, setMapMode, type MapMode, type PhysicalSurface } from "@/data/physical-map-style";
+import { physicalMapLayers, reliefSource, bathymetrySource, landCoverLayer, landCoverSource, geologyLayer, geologySource, setMapMode, type MapMode, type PhysicalSurface } from "@/data/physical-map-style";
 import landCoverLegend from "../../public/data/world/land-cover/legend.json";
 import geologyLegend from "../../public/data/world/geology/legend.json";
+import bathymetryLegend from "../../public/data/world/bathymetry/legend.json";
 import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
 
 type MapStatus = "loading" | "ready" | "error";
@@ -38,7 +39,7 @@ function resetPhysicalSources(map: LibreMap | null) {
   if (map.getLayer("physical-land-cover")) map.removeLayer("physical-land-cover");
   if (map.getLayer("physical-geology")) map.removeLayer("physical-geology");
   for (const layer of physicalMapLayers().reverse()) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
-  for (const name of ["relief", "rivers", "lakes", "labels", "coasts", "land-cover", "geology"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
+  for (const name of ["relief", "bathymetry", "rivers", "lakes", "labels", "coasts", "land-cover", "geology"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
 }
 
 export function WorldMap() {
@@ -52,7 +53,7 @@ export function WorldMap() {
   const [surfaceLoading, setSurfaceLoading] = useState(false);
   const landCover = surface === "land-cover";
   const geology = surface === "geology";
-  const activeLegend = geology ? geologyLegend : landCoverLegend;
+  const activeLegend = geology ? geologyLegend : landCover ? landCoverLegend : bathymetryLegend;
   const [physicalStatus, setPhysicalStatus] = useState<MapStatus>("loading");
   const [physicalAttempt, setPhysicalAttempt] = useState(0);
   const physicalRequest = useRef<{ controller: AbortController; data: Promise<FeatureCollection[]> } | null>(null);
@@ -82,12 +83,13 @@ export function WorldMap() {
         const data = await physicalRequest.current.data;
         if (cancelled || !map) return;
         if (!map.getSource("physical-relief")) map.addSource("physical-relief", reliefSource());
+        if (!map.getSource("physical-bathymetry")) map.addSource("physical-bathymetry", bathymetrySource());
         for (const [index, name] of ["rivers", "lakes", "labels", "coasts"].entries()) {
           const id = `physical-${name}`;
           if (!map.getSource(id)) map.addSource(id, { type: "geojson", data: data[index] });
         }
         for (const layer of physicalMapLayers()) {
-          if (!map.getLayer(layer.id)) map.addLayer(layer, "island-labels");
+          if (!map.getLayer(layer.id)) map.addLayer(layer, layer.id === "physical-bathymetry" ? "countries" : "sea-labels");
         }
         if (landCover && !map.getSource("physical-land-cover")) map.addSource("physical-land-cover", landCoverSource());
         if (landCover && !map.getLayer("physical-land-cover")) map.addLayer(landCoverLayer(), "physical-lakes");
@@ -256,15 +258,21 @@ export function WorldMap() {
       {mode === "physical" && surface !== "relief" && surfaceLoading && physicalStatus === "ready" && status === "ready" && (
         <p className="map-feedback map-feedback--surface" role="status">{geology ? "Loading rock types…" : "Loading land cover…"}</p>
       )}
-      {mode === "physical" && surface !== "relief" && !surfaceLoading && physicalStatus === "ready" && status === "ready" && (
+      {mode === "physical" && (surface === "relief" || !surfaceLoading) && physicalStatus === "ready" && status === "ready" && (
         <details className="map-legend" key={surface}>
-          <summary>{geology ? "Rock-type legend · GLiM" : "Land-cover legend · 2020"}</summary>
+          <summary>{geology ? "Rock-type legend · GLiM" : landCover ? "Land-cover legend · 2020" : "Ocean depth · metres"}</summary>
           <div>
-            <ul aria-label={geology ? "Rock-type categories" : "Land-cover categories"}>
+            <ul aria-label={geology ? "Rock-type categories" : landCover ? "Land-cover categories" : "Ocean depth bands"}>
               {activeLegend.classes.map((group) => <li key={group.id} title={"description" in group ? group.description : undefined}><span style={{ backgroundColor: group.color }} aria-hidden="true" />{group.name}</li>)}
             </ul>
             <p>{activeLegend.notice}</p>
             <a href={activeLegend.sourceUrl} target="_blank" rel="noreferrer">{activeLegend.sourceName}</a>
+            {surface !== "relief" && <>
+              <p>Ocean depth · metres</p>
+              <ul aria-label="Ocean depth bands">{bathymetryLegend.classes.map((band) => <li key={band.id}><span style={{ backgroundColor: band.color }} aria-hidden="true" />{band.name}</li>)}</ul>
+              <p>{bathymetryLegend.notice}</p>
+              <a href={bathymetryLegend.sourceUrl} target="_blank" rel="noreferrer">{bathymetryLegend.sourceName}</a>
+            </>}
           </div>
         </details>
       )}
@@ -313,7 +321,7 @@ export function WorldMap() {
         {mode === "physical" && geology && <a href={geologyLegend.sourceUrl} target="_blank" rel="noreferrer">GLiM</a>}
         <details>
           <summary aria-label="About map data">Map data</summary>
-          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {geology ? <>Rock colours show surface lithology from <a href="https://doi.org/10.1029/2012GC004370" target="_blank" rel="noreferrer">GLiM, Hartmann &amp; Moosdorf (2012)</a>, using the CCGM-CGMW 2015 GIS compilation. Source detail varies by region; this is not geological age, subsurface structure or site-level mapping.</> : landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
+          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. <a href={bathymetryLegend.sourceUrl} target="_blank" rel="noreferrer">Natural Earth bathymetry</a> adds approximate seafloor depth bands derived from SRTM Plus. Ocean and sea names appear in both modes. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {geology ? <>Rock colours show surface lithology from <a href="https://doi.org/10.1029/2012GC004370" target="_blank" rel="noreferrer">GLiM, Hartmann &amp; Moosdorf (2012)</a>, using the CCGM-CGMW 2015 GIS compilation. Source detail varies by region; this is not geological age, subsurface structure or site-level mapping.</> : landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
         </details>
       </footer>
       <noscript><p className="map-feedback">Enable JavaScript to explore the interactive map.</p></noscript>

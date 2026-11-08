@@ -1,0 +1,32 @@
+{
+  "title": "Natural Earth 1:10m bathymetric depth bands",
+  "source": "https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-bathymetry/",
+  "download": "https://naciscdn.org/naturalearth/10m/physical/ne_10m_bathymetry_all.zip",
+  "license": "Public domain",
+  "licenseUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "sourceSha256": "9c5ea31402e5eb322a49f56136bfdc2732ab4e60c85720a4f83606f08088e5c2",
+  "coastlineSha256": "a60b420c634bb75169d2c3a9c6912b153aa3f70f24ee1798b7f98be1fffc10b1",
+  "preparedOn": "2026-11-08",
+  "tileSize": 512,
+  "minZoom": 0,
+  "maxZoom": 4,
+  "tileCount": 341,
+  "projection": "EPSG:3857",
+  "scheme": "XYZ",
+  "depthThresholdsMetres": [
+    0,
+    200,
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    7000,
+    8000,
+    9000,
+    10000
+  ],
+  "transformations": "Burn nested source depth polygons from shallowest to deepest into an 8192\u00d74096 EPSG:4326 grid. Mask bundled country land, then reproject with nearest-neighbour sampling into local indexed PNG tiles. Index 255 is transparent. Colors represent depth intervals, not measured point depths.",
+  "limitations": "Generalized depth polygons from SRTM Plus, with source cartographic buffering near coasts. Approximately 4.9 km source-grid sampling at the equator; no extra detail when overzoomed. Ridges, shelves, basins and trenches are represented by depth patterns, without individually named feature boundaries or 3D relief."
+}
