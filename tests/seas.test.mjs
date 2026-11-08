@@ -49,6 +49,10 @@ test("sea labels yield to countries and switch with Standard", () => {
   const index = style.layers.findIndex((layer) => layer.id === "sea-labels");
   assert(index >= 0 && index < style.layers.findIndex((layer) => layer.id === "country-labels"));
   assert.equal(style.layers[index].layout["text-allow-overlap"], false);
+  assert.equal(style.layers[index].layout["text-anchor"], "center");
+  assert.equal(style.layers[index].layout["text-variable-anchor"], undefined, "sea names cannot shift toward neighbouring land");
+  assert.equal(style.layers[index].layout["text-radial-offset"] ?? 0, 0);
+  assert(style.layers[index].layout["text-max-width"] <= 5, "narrow wrapping keeps sea names near their water anchor");
   assert.deepEqual(style.layers[index].filter, [">=", ["zoom"], ["get", "minZoom"]]);
   const visibility = new Map();
   const map = { getLayer: (id) => style.layers.find((layer) => layer.id === id), setLayoutProperty: (id, key, value) => visibility.set(id, value) };

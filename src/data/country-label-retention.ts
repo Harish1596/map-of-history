@@ -1,19 +1,9 @@
 import type { Map as LibreMap, ExpressionSpecification } from "maplibre-gl";
 
-// Keep labels already introduced during zoom-in ahead of newly fitting names.
-// Zoom-out restores geographic-area priority for the wider view.
-export function retainCountryLabels(map: Pick<LibreMap, "getZoom" | "getLayer" | "queryRenderedFeatures" | "setLayoutProperty" | "on" | "off">) {
+// Keep introduction priority for the lifetime of this map. Clearing it when
+// zoom reverses lets newly fitting neighbours displace previously visible names.
+export function retainCountryLabels(map: Pick<LibreMap, "getLayer" | "queryRenderedFeatures" | "setLayoutProperty" | "on" | "off">) {
   const retained = new Map<string, number>();
-  let previousZoom = map.getZoom();
-
-  function zoomChanged() {
-    const zoom = map.getZoom();
-    if (zoom < previousZoom - 0.000001 && retained.size) {
-      retained.clear();
-      if (map.getLayer("country-labels")) map.setLayoutProperty("country-labels", "symbol-sort-key", ["get", "priority"]);
-    }
-    previousZoom = zoom;
-  }
 
   function rememberVisible() {
     if (!map.getLayer("country-labels")) return;
@@ -35,10 +25,8 @@ export function retainCountryLabels(map: Pick<LibreMap, "getZoom" | "getLayer" |
     map.setLayoutProperty("country-labels", "symbol-sort-key", expression);
   }
 
-  map.on("zoom", zoomChanged);
   map.on("idle", rememberVisible);
   return () => {
-    map.off("zoom", zoomChanged);
     map.off("idle", rememberVisible);
   };
 }

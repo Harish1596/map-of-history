@@ -123,9 +123,9 @@ Source text stays plain. The map has no title overlay; its accessible name remai
 
 Country labels use the same Noto Sans family. Geographic area determines their
 size tier, minimum zoom and collision priority, using the local country-labels
-list. Initial placement and newly introduced names use area priority. During
-zoom-in, visible names retain their introduction order so new neighbours use
-remaining space. Zoom-out resets to area priority for the wider view. Names
+list. Initial placement and newly introduced names use area priority. Visible
+names retain their introduction order across zoom reversals for the lifetime
+of the map, so new neighbours use remaining space. Names
 keep their centered geographic anchors and avoid overlaps. By size tier, font
 sizes are 14/12/11/10px at zoom 0, 19/15/13/12px at zoom 3, 24/20/17/16px at
 zoom 5, and 34/28/24/22px at
@@ -155,7 +155,8 @@ height and 3px collision padding. Major seas are eligible at zoom 1; smaller sea
 follow source label guidance. Country/island labels have placement priority.
 Sea anchors stay offshore in the bundled geography, and the layer follows
 Standard-only visibility alongside ocean names.
-Text may shift to nearby anchor positions to avoid country and island labels.
+Text stays centered on its water anchor with a five-em wrapping width. Names
+yield to collisions rather than shifting toward nearby land.
 
 ## Layout
 

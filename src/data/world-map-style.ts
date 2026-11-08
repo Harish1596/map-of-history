@@ -34,10 +34,8 @@ export function worldMapStyle(
         layout: {
           "text-field": ["get", "name"], "text-font": ["Noto Sans"],
           "text-size": ["interpolate", ["linear"], ["zoom"], 1, 11, 4, 14, 7, 19, 10, 24],
-          "text-max-width": 7, "text-line-height": 1.2, "text-padding": 3,
+          "text-max-width": 5, "text-line-height": 1.2, "text-padding": 3,
           "text-anchor": "center", "symbol-sort-key": ["get", "priority"],
-          "text-variable-anchor": ["center", "left", "right", "top", "bottom"],
-          "text-radial-offset": 0.5,
           "text-allow-overlap": false, "text-ignore-placement": false,
         },
         paint: { "text-color": "#476b7a", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },

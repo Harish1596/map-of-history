@@ -40,9 +40,10 @@ rebuilds the list from the policy in `scripts/lib/country-label-policy.mjs`.
 Areas are geodesic measurements of the generalized source geometry, including
 holes and all polygon parts, rather than official country-area statistics.
 Initial placement and newly introduced names follow geographic-area priority.
-As you zoom in, already-visible country names retain precedence so new neighbours
-do not displace them. Zooming out restores area-based placement for the wider
-view. Labels keep their geographic anchors and collision avoidance. These bands
+Already-visible country names retain precedence across zoom-in and zoom-out
+cycles so newly introduced neighbours do not change their priority. This ordering
+lasts until the map is reloaded. Labels keep their geographic anchors and
+collision avoidance. These bands
 control when a name becomes eligible; collision detection can delay it until
 there is room:
 
@@ -146,7 +147,9 @@ zooms when their anchors are visible and there is space to place them.
 `sea-metadata.json` records source/checksums and preparation details. Anchors
 are placed inside source marine label regions and checked against the bundled
 country outlines. If an interior anchor falls on an island, the preparation
-chooses a nearby water point inside the same region. Names are shown in Standard
+chooses a nearby water point inside the same region. Names stay centered on
+these anchors with a five-em wrapping width; they yield when there is insufficient
+room rather than shifting toward land. Names are shown in Standard
 and hidden in Physical Geography. Source classes determine inclusion, preserving
 the distinction between seas, bays and gulfs. This is selected coverage; label
 regions do not define maritime borders.

@@ -4,13 +4,13 @@
   "title": "Design System: Classroom World Map",
   "extensions": {
     "countryLabelRetention": {
-      "purpose": "Keep visible country labels ahead of new neighbours during zoom-in; restore area-based priority on zoom-out. Preserve centered anchors and collision avoidance."
+      "purpose": "Keep visible country labels ahead of new neighbours across zoom reversals for the map lifetime. Preserve centered anchors and collision avoidance."
     },
     "seaLabels": {
       "provenance": "public/data/world/sea-metadata.json",
       "color": "#476b7a",
       "sizeStops": [1, 11, 4, 14, 7, 19, 10, 24],
-      "purpose": "Standard-only named seas, bays and gulfs, using source-guided zoom eligibility, offshore anchors and country/island collision priority; oceans retain first priority."
+      "purpose": "Standard-only named seas, bays and gulfs, using source-guided zoom eligibility, fixed offshore centers with five-em wrapping and country/island collision priority; oceans retain first priority."
     },
     "oceanLabels": {
       "provenance": "public/data/world/ocean-metadata.json",
