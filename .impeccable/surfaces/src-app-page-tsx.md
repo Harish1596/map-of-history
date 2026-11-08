@@ -74,3 +74,11 @@ Physical Geography has local bathymetric depth-band tiles below country land,
 visible alongside every physical surface. Ocean and sea names are shared across
 modes. The existing legend shows depth intervals in metres; classification
 surfaces retain their own legends and include depth bands in the same panel.
+
+Physical Features disclosure has six independent checkboxes: peaks, volcanoes,
+canyons, named forests, undersea names and tectonics. All runtime data is local.
+Markers, labels and model boundary lines open a source panel when selected;
+recorded elevations are qualified by their source. Keep the pale control panels,
+44px targets, distinct authored marker shapes and explicit geographic/model
+limitations. Selecting a feature closes the filter disclosure; its source panel
+temporarily replaces the depth/classification legend.

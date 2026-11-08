@@ -1,0 +1,331 @@
+{
+  "title": "Mountain peaks and Holocene volcanoes",
+  "preparedOn": "2026-11-08",
+  "sources": [
+    {
+      "name": "Natural Earth 1:10m geography regions elevation points",
+      "url": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_geography_regions_elevation_points.geojson",
+      "sourceSha256": "f98a16867867146ec4146d6d4b18c823eeedb2825947de666116cf9a4e3f43cb",
+      "license": "Public domain",
+      "licenseUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "sourceRecords": 711
+    },
+    {
+      "name": "Global Volcanism Program, 2026. Volcanoes of the World (v. 5.4.0; 7 Aug 2026). Distributed by Smithsonian Institution, compiled by Venzke, E.",
+      "url": "https://webservices.volcano.si.edu/geoserver/GVP-VOTW/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=GVP-VOTW%3ASmithsonian_VOTW_Holocene_Volcanoes&outputFormat=application%2Fjson",
+      "informationUrl": "https://volcano.si.edu/database/webservices.cfm",
+      "doi": "https://doi.org/10.5479/si.GVP.VOTW5-2026.5.4",
+      "sourceSha256": "af021dc6f7e3fa0b9b32f719430eafbd9a324a65301042918037b44cdc755737",
+      "license": "US federal employee database compilation; Smithsonian/GVP terms apply. Attribute Global Volcanism Program, Smithsonian Institution.",
+      "licenseUrl": "https://volcano.si.edu/gvp_termsofuse.cfm",
+      "sourceRecords": 1214,
+      "sourceTimestamp": "2026-11-08T18:26:13.162Z"
+    }
+  ],
+  "featureCounts": {
+    "peaks": 558,
+    "volcanoes": 1214,
+    "total": 1772,
+    "mergedPeakRecords": 74
+  },
+  "transformations": "Keep Natural Earth mountain class with positive elevation; retain all Smithsonian Holocene volcano points and available numeric elevations (including submarine negative elevations). Round coordinates to five decimals. Merge peak/volcano records within 15 km only when substantive normalized names match or an explicit alias matches; preserve source peak name/elevation on the volcano. Rank peaks by Natural Earth scalerank, volcanoes by curated overview names then elevation; zoom 3–6. No eruption-status labels are inferred.",
+  "limitations": "Selected cartographic peaks, not an exhaustive summit inventory. Natural Earth elevations are source-era values, not a current height survey (for example Everest 8,848 m). Smithsonian locations may identify volcanic fields, calderas, or submarine systems rather than individual summits. Holocene catalog inclusion does not mean currently erupting or active; extinct volcanoes outside this catalog may remain ordinary peaks. Close but differently named summits/systems remain separate. Elevation is omitted for two volcano records where GVP supplies none. Not for navigation or hazard assessment.",
+  "mergedPeakRecords": [
+    {
+      "peak": "Emi Koussi",
+      "volcano": "Koussi, Emi"
+    },
+    {
+      "peak": "Mount Karisimbi",
+      "volcano": "Karisimbi"
+    },
+    {
+      "peak": "Pico Basilé",
+      "volcano": "Basile, Pico"
+    },
+    {
+      "peak": "Mousa Ali",
+      "volcano": "Mousa Alli"
+    },
+    {
+      "peak": "Mount Cameroon",
+      "volcano": "Cameroon"
+    },
+    {
+      "peak": "Mount Erebus",
+      "volcano": "Erebus"
+    },
+    {
+      "peak": "Mount Takahe",
+      "volcano": "Takahe"
+    },
+    {
+      "peak": "Mount Iwate",
+      "volcano": "Iwatesan"
+    },
+    {
+      "peak": "Mount Unzen",
+      "volcano": "Unzendake"
+    },
+    {
+      "peak": "Mount Fuji",
+      "volcano": "Fujisan"
+    },
+    {
+      "peak": "Milna",
+      "volcano": "Milna"
+    },
+    {
+      "peak": "Koryaksky",
+      "volcano": "Koryaksky"
+    },
+    {
+      "peak": "Klyuchevskaya Sopka",
+      "volcano": "Klyuchevskoy"
+    },
+    {
+      "peak": "Damavand",
+      "volcano": "Damavand"
+    },
+    {
+      "peak": "Alaid Volcano",
+      "volcano": "Alaid"
+    },
+    {
+      "peak": "Baekdu Mountain",
+      "volcano": "Changbaishan"
+    },
+    {
+      "peak": "Mount Ararat",
+      "volcano": "Ararat"
+    },
+    {
+      "peak": "Mount Kuju",
+      "volcano": "Kujusan"
+    },
+    {
+      "peak": "Hallasan",
+      "volcano": "Halla"
+    },
+    {
+      "peak": "Erciyes Dagi",
+      "volcano": "Erciyes Volcanic Complex"
+    },
+    {
+      "peak": "Mount Aragats",
+      "volcano": "Aragats"
+    },
+    {
+      "peak": "Mount Vesuvius",
+      "volcano": "Vesuvius"
+    },
+    {
+      "peak": "Mount Elbrus",
+      "volcano": "Elbrus"
+    },
+    {
+      "peak": "Kiska Volcano",
+      "volcano": "Kiska"
+    },
+    {
+      "peak": "Colima",
+      "volcano": "Colima"
+    },
+    {
+      "peak": "Pico de Orizaba",
+      "volcano": "Orizaba, Pico de"
+    },
+    {
+      "peak": "Popocatépetl",
+      "volcano": "Popocatepetl"
+    },
+    {
+      "peak": "Mount Katmai",
+      "volcano": "Katmai"
+    },
+    {
+      "peak": "Aniakchak",
+      "volcano": "Aniakchak"
+    },
+    {
+      "peak": "Mount Vsevidof",
+      "volcano": "Vsevidof"
+    },
+    {
+      "peak": "Mount Baker",
+      "volcano": "Baker"
+    },
+    {
+      "peak": "Mount Shasta",
+      "volcano": "Shasta"
+    },
+    {
+      "peak": "Mount Hood",
+      "volcano": "Hood"
+    },
+    {
+      "peak": "Mount Redoubt",
+      "volcano": "Redoubt"
+    },
+    {
+      "peak": "Mount Rainier",
+      "volcano": "Rainier"
+    },
+    {
+      "peak": "Villarrica Volcano",
+      "volcano": "Villarrica"
+    },
+    {
+      "peak": "Nevado del Ruiz",
+      "volcano": "Ruiz, Nevado del"
+    },
+    {
+      "peak": "Tronador",
+      "volcano": "Tronador"
+    },
+    {
+      "peak": "Ojos del Salado",
+      "volcano": "Ojos del Salado, Nevados"
+    },
+    {
+      "peak": "Volcán Tajumulco y Tacana",
+      "volcano": "Tajumulco"
+    },
+    {
+      "peak": "Barú Volcano",
+      "volcano": "Baru"
+    },
+    {
+      "peak": "Volcán Tacaná",
+      "volcano": "Tacana"
+    },
+    {
+      "peak": "Kartala",
+      "volcano": "Karthala"
+    },
+    {
+      "peak": "Volcán Wolf",
+      "volcano": "Wolf"
+    },
+    {
+      "peak": "Tambora",
+      "volcano": "Tambora"
+    },
+    {
+      "peak": "Gunung Semeru",
+      "volcano": "Semeru"
+    },
+    {
+      "peak": "Gunung Merapi",
+      "volcano": "Merapi"
+    },
+    {
+      "peak": "Gunung Cereme",
+      "volcano": "Ciremai"
+    },
+    {
+      "peak": "Krakatoa",
+      "volcano": "Krakatau"
+    },
+    {
+      "peak": "Mount Kerinci",
+      "volcano": "Kerinci"
+    },
+    {
+      "peak": "Taal Volcano",
+      "volcano": "Taal"
+    },
+    {
+      "peak": "Mount Kanlaon",
+      "volcano": "Kanlaon"
+    },
+    {
+      "peak": "Pinatubo",
+      "volcano": "Pinatubo"
+    },
+    {
+      "peak": "Rinjani",
+      "volcano": "Rinjani"
+    },
+    {
+      "peak": "Mount Etna",
+      "volcano": "Etna"
+    },
+    {
+      "peak": "Takuan Group",
+      "volcano": "Takuan Group"
+    },
+    {
+      "peak": "Ulawun",
+      "volcano": "Ulawun"
+    },
+    {
+      "peak": "Mount Balbi",
+      "volcano": "Balbi"
+    },
+    {
+      "peak": "Mount Ruapehu",
+      "volcano": "Ruapehu"
+    },
+    {
+      "peak": "Mount Taranaki",
+      "volcano": "Taranaki"
+    },
+    {
+      "peak": "Pico do Fogo",
+      "volcano": "Fogo"
+    },
+    {
+      "peak": "Mauna Kea",
+      "volcano": "Mauna Kea"
+    },
+    {
+      "peak": "Haleakalā",
+      "volcano": "Haleakala"
+    },
+    {
+      "peak": "Soufrière Hills",
+      "volcano": "Soufriere Hills"
+    },
+    {
+      "peak": "Mount Saint Catherine",
+      "volcano": "St. Catherine"
+    },
+    {
+      "peak": "Mount Misery",
+      "volcano": "Liamuiga"
+    },
+    {
+      "peak": "Morne Diablotins",
+      "volcano": "Diablotins, Morne"
+    },
+    {
+      "peak": "Mount Pelée",
+      "volcano": "Pelee"
+    },
+    {
+      "peak": "La Soufrière",
+      "volcano": "Soufriere Guadeloupe"
+    },
+    {
+      "peak": "La Soufrière",
+      "volcano": "Soufriere St. Vincent"
+    },
+    {
+      "peak": "Llullaillaco",
+      "volcano": "Llullaillaco"
+    },
+    {
+      "peak": "Coropuna",
+      "volcano": "Coropuna"
+    },
+    {
+      "peak": "Galeras",
+      "volcano": "Galeras"
+    },
+    {
+      "peak": "Chimborazo volcano",
+      "volcano": "Chimborazo"
+    }
+  ]
+}

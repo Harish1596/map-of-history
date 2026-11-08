@@ -390,3 +390,45 @@ Regenerate offline with the existing Python geospatial environment:
 ```bash
 python scripts/prepare-bathymetry.py /path/to/ne_10m_bathymetry_all.zip
 ```
+
+### Physical landmarks and tectonics
+
+The Features disclosure independently switches six categories. Symbols, labels
+and plate boundary lines can be selected for source links, source-record
+elevations and geographic limitations. Choices persist across surface/mode
+switches. Standard hides these physical layers. All data loads from local files.
+
+| Category | Bundled coverage | Source |
+| --- | --- | --- |
+| Mountain peaks | 558 standalone summits, plus 74 merged volcano summit records | Natural Earth elevation points |
+| Volcanoes | 1,214 Holocene catalogued volcanic systems | Smithsonian GVP v5.4.0, 7 Aug 2026 |
+| Named forests | 15 selected forest/ecoregion locations | Wikidata, CC0 |
+| Canyons | 14 selected named locations | Wikidata, CC0 |
+| Undersea names | 5,311 unique gazetteer features | IHO–IOC GEBCO Gazetteer; IHO DCDB / NOAA NCEI |
+| Tectonics | 52 plate labels; 1,700 classified contiguous boundary lines representing 5,824 source steps | PB2002, Peter Bird; Hugo Ahlenius / Nordpil, ODC-By 1.0 |
+
+Metadata files in `public/data/world/physical/` preserve source URLs, checksums,
+versions, acknowledgements and transformation details. Individual features have
+source links. Gazetteer terms are recorded separately from the GEBCO bathymetric
+grid licence; the two are not assumed interchangeable.
+
+Forests, canyons and undersea features are label locations, not invented region
+polygons. Coverage of forests/canyons is a selected starting collection. Natural
+Earth summit elevations can predate newer measurements. GVP includes volcanic
+fields, calderas and submarine systems; catalogue membership does not indicate
+current activity. PB2002 is an approximate modern plate model published in 2003,
+not an exhaustive fault map, earthquake hazard assessment or medieval geography.
+
+Preparation scripts run offline against downloaded source snapshots:
+
+```bash
+node scripts/prepare-summits.mjs /path/to/elevation-points.geojson /path/to/gvp-holocene.geojson
+node scripts/prepare-named-landmarks.mjs /path/to/source-directory
+node scripts/prepare-tectonics.mjs /path/to/PB2002_steps.json /path/to/PB2002_plates.json
+```
+
+The named-landmark source directory contains the two Wikidata entity snapshots
+(`named-regions-wikidata.json`, `named-regions-extra-wikidata.json`) and complete
+GEBCO GeoJSON exports (`undersea-0.geojson`, `undersea-1.geojson`,
+`undersea-2.geojson`). GEBCO service exports must be paginated to obtain all
+records. Runtime never contacts any of these preparation-time services.

@@ -1,0 +1,33 @@
+{
+  "preparedOn": "2026-11-08",
+  "sources": [
+    {
+      "name": "Wikidata selected named forests and canyons",
+      "url": "https://www.wikidata.org/",
+      "license": "CC0",
+      "licenseUrl": "https://www.wikidata.org/wiki/Wikidata:Licensing",
+      "note": "Selected source coordinates, not comprehensive global coverage; no invented forest or canyon outlines."
+    },
+    {
+      "name": "IHO–IOC GEBCO Gazetteer of Undersea Feature Names",
+      "url": "https://www.gebco.net/data-products/undersea-feature-names",
+      "download": "https://services2.arcgis.com/C8EMgrsFcRFL6LrL/ArcGIS/rest/services/Undersea_Features/FeatureServer",
+      "attribution": "IHO-IOC GEBCO Gazetteer of Undersea Feature Names, www.gebco.net; IHO DCDB; NOAA NCEI",
+      "license": "GEBCO requests source acknowledgement; see the linked gazetteer documentation. Not asserted to share the separate GEBCO elevation-grid licence."
+    }
+  ],
+  "sourceSha256": {
+    "named-regions-wikidata.json": "8d82f711ea323c53fb7064814c869a09a3f5db6e27353a9d59cc2fa8007b7f41",
+    "named-regions-extra-wikidata.json": "90e67b090bbbc7f808d1d1482b8af52bf68a23728096ea0fb76b9c1b690707d0",
+    "undersea-0.geojson": "b6c5a735246d6dee432cdd98fb7d0e43d73c2b05669e5ffb504848a1140c6f64",
+    "undersea-1.geojson": "6822e801de6a15ae623528f9faa9320bfd5edfa7483fb9a961f8b3fde77f0a09",
+    "undersea-2.geojson": "c9d90c61aa6a59e839bafc74e1bbcba682fa443e0432957d035adc1c47a674c2"
+  },
+  "counts": {
+    "forests": 15,
+    "canyons": 14,
+    "undersea": 5311
+  },
+  "transformations": "Select named forest/ecoregion and canyon records from Wikidata snapshots. Preserve source coordinates and record URLs. Convert GEBCO point/line/polygon source features into one label anchor per FEATURE_ID, preferring polygon over line over point geometry. Polygon anchors are interior Polylabel points; lines use their middle source vertex. Retain feature type. Use editorial zoom priorities for major undersea names. Raw geometry is not displayed as a boundary.",
+  "limitations": "Representative label locations can differ from local shoreline detail. Forest records include named forest regions/ecoregions and do not describe historical vegetation or current extent. Undersea label anchors identify large features, not exact depths. Sources may contain alternative names and approximate coordinates."
+}

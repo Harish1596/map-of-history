@@ -276,3 +276,18 @@ depth intervals, from pale continental shelves to dark ocean trenches. Reuse
 the collapsible legend for metres below sea level, including a source link and
 overzoom limitations. Ocean/sea names sit above all physical surfaces, with their
 existing geographic anchors, zoom gates and readable water-colored halos.
+
+Physical landmarks use authored small symbols: slate summit triangles, rust
+cratered volcanoes, brown canyon strokes, green forest trees and pale undersea
+diamonds with dark blue halos. Individual features become eligible at regional
+zooms; collision avoidance stays enabled. Classified tectonic boundaries use
+rust (convergent), blue (divergent) and dashed ochre (transform) with a light
+casing; plate names have secondary visual priority.
+
+Keep six independent checkboxes in a Features disclosure below the physical
+surface controls. Preserve those choices while switching surface or mode. A
+selected feature opens a compact source panel, showing source-record elevation
+and limitations when applicable. The panel replaces the depth legend while open
+and closes with its labelled button or Escape. Regional label locations do not
+imply mapped forest/canyon/undersea boundaries. Volcano symbols do not imply
+current activity; PB2002 is a modern plate model, not a historical fault map.

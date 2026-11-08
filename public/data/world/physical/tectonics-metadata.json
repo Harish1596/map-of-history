@@ -1,0 +1,46 @@
+{
+  "title": "PB2002 plate boundaries and tectonic plate labels",
+  "sourceName": "PB2002 — Peter Bird; Hugo Ahlenius / Nordpil",
+  "attribution": "Contains information from PB2002 (Peter Bird; Hugo Ahlenius / Nordpil), available under the ODC Attribution License v1.0.",
+  "license": "Open Data Commons Attribution License v1.0 (ODC-By)",
+  "licenseUrl": "https://opendatacommons.org/licenses/by/1-0/",
+  "licenseDeclarationUrl": "https://github.com/fraxen/tectonicplates/blob/339b0c56563c118307b1f4542703047f5f698fae/LICENSE.md",
+  "revision": "339b0c56563c118307b1f4542703047f5f698fae",
+  "citation": "Bird, P. (2003), An updated digital model of plate boundaries, Geochemistry, Geophysics, Geosystems, 4(3), 1027, doi:10.1029/2001GC000252.",
+  "citationUrl": "https://doi.org/10.1029/2001GC000252",
+  "sourceDocumentationUrl": "https://github.com/fraxen/tectonicplates/blob/339b0c56563c118307b1f4542703047f5f698fae/original/README.md",
+  "preparedOn": "2026-11-08",
+  "modelYear": 2002,
+  "sources": [
+    {
+      "url": "https://github.com/fraxen/tectonicplates/blob/339b0c56563c118307b1f4542703047f5f698fae/GeoJSON/PB2002_steps.json",
+      "sourceSha256": "528fdeb1d57eb3d4c6e730951eabc6fd7da9dbc5fc7038b9f19100c52b986c9a",
+      "featureCount": 5824
+    },
+    {
+      "url": "https://github.com/fraxen/tectonicplates/blob/339b0c56563c118307b1f4542703047f5f698fae/GeoJSON/PB2002_plates.json",
+      "sourceSha256": "922918f970baf7e645821a4a728b945dbb5eeac1337d71d087fba021bcc79e21",
+      "featureCount": 54
+    }
+  ],
+  "boundaryCount": 1700,
+  "sourceStepCount": 5824,
+  "plateLabelCount": 52,
+  "boundaryTypes": {
+    "Convergent": 242,
+    "Divergent": 703,
+    "Transform": 755
+  },
+  "sourceClassMapping": {
+    "SUB": "Convergent",
+    "CCB": "Convergent",
+    "OCB": "Convergent",
+    "CRB": "Divergent",
+    "OSR": "Divergent",
+    "CTF": "Transform",
+    "OTF": "Transform"
+  },
+  "simplificationToleranceDegrees": 0.002,
+  "transformations": "Preserve every source step, its endpoints and class. Reduce GIS-densified intermediate vertices within each step using Douglas-Peucker simplification at 0.002 degrees (at most approximately 223 m); never simplify across source step endpoints. Join only adjacent, source-declared continuous steps with equal class and exact shared endpoints; round to five decimals. Source GeoJSON already splits the antimeridian. Plate labels use interior Polylabel anchors in the largest Mercator-projected polygon for each unique plate code. Names retain source wording with a Plate suffix; overview plates start at zoom 2, regional plates at 3, small plates at 5.",
+  "limitations": "PB2002 is a generalized global model published in 2003, not a current fault inventory, hazard model, or historical reconstruction. Boundaries are approximate; diffuse deformation zones and individual faults are not displayed. Source step classes describe modeled relative motion and are grouped into three broad display types; original seven class codes are retained. Distributor GeoJSON has 5,824 segments due to splitting, versus 5,819 steps in original documentation, and 54 plate polygons for 52 plates. Label anchors are cartographic aids, not plate centers or measurements. Model applies to present-day reference geography only."
+}

@@ -1,4 +1,5 @@
 import type { LayerSpecification, Map as LibreMap, RasterSourceSpecification } from "maplibre-gl";
+import { landmarkMapLayers, setLandmarkVisibility, DEFAULT_LANDMARK_OPTIONS, type LandmarkOptions } from "./landmark-map-style.ts";
 
 export type MapMode = "standard" | "physical";
 export type PhysicalSurface = "relief" | "land-cover" | "geology";
@@ -80,6 +81,7 @@ export function physicalMapLayers(): LayerSpecification[] {
       layout: { visibility: "none", "line-cap": "round", "line-join": "round" },
       paint: { "line-color": "#6b8184", "line-opacity": 0.75, "line-width": ["interpolate", ["linear"], ["zoom"], 0, 0.45, 5, 0.8, 8, 1.2] },
     },
+    ...landmarkMapLayers().filter((layer) => layer.type === "line"),
     {
       id: "physical-river-labels", type: "symbol", source: "physical-rivers",
       filter: ["all", [">=", ["zoom"], ["get", "labelZoom"]], ["!=", ["get", "name"], ""]],
@@ -123,11 +125,12 @@ export function physicalMapLayers(): LayerSpecification[] {
       },
       paint: { "text-color": zone === "water" ? "#214458" : "#5c5545", "text-halo-color": zone === "water" ? "#9bc4dc" : "#d4dfd2", "text-halo-width": 1.5 },
     })),
+    ...landmarkMapLayers().filter((layer) => layer.type === "symbol"),
   ];
 }
 
 // Toggle existing layers; never replace the style or change the map's camera.
-export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">, mode: MapMode, surface: PhysicalSurface = "relief") {
+export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">, mode: MapMode, surface: PhysicalSurface = "relief", landmarks: LandmarkOptions = DEFAULT_LANDMARK_OPTIONS) {
   for (const id of ["country-borders", "country-labels"]) {
     if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", mode === "standard" ? "visible" : "none");
   }
@@ -141,4 +144,5 @@ export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">
   for (const name of ["land-cover", "geology"] as const) {
     if (map.getLayer(`physical-${name}`)) map.setLayoutProperty(`physical-${name}`, "visibility", mode === "physical" && surface === name ? "visible" : "none");
   }
+  setLandmarkVisibility(map, mode === "physical", landmarks);
 }

@@ -10,15 +10,18 @@ import landCoverLegend from "../../public/data/world/land-cover/legend.json";
 import geologyLegend from "../../public/data/world/geology/legend.json";
 import bathymetryLegend from "../../public/data/world/bathymetry/legend.json";
 import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
+import { LANDMARK_GROUPS, DEFAULT_LANDMARK_OPTIONS, PHYSICAL_DATA_FILES, addLandmarkIcons, landmarkMapLayers, landmarkGroupForLayer, setLandmarkVisibility, type LandmarkOptions, type LandmarkGroup } from "@/data/landmark-map-style";
 
 type MapStatus = "loading" | "ready" | "error";
 const WORLD_BOUNDS: [[number, number], [number, number]] = [[-180, -58], [180, 84]];
+type SelectedLandmark = { name: string; kind: string; group: LandmarkGroup; sourceName: string; sourceUrl: string; informationUrl?: string; elevationMetres?: number; locationNote?: string; boundaryType?: string };
 
-function Icon({ name }: { name: "plus" | "minus" | "reset" }) {
+function Icon({ name }: { name: "plus" | "minus" | "reset" | "close" }) {
   return (
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       {name === "plus" && <path d="M12 5v14M5 12h14" />}
       {name === "minus" && <path d="M5 12h14" />}
+      {name === "close" && <path d="m6 6 12 12M6 18 18 6" />}
       {name === "reset" && <><path d="M3 10a9 9 0 1 1 2.5 8M3 4v6h6" /></>}
     </svg>
   );
@@ -39,7 +42,7 @@ function resetPhysicalSources(map: LibreMap | null) {
   if (map.getLayer("physical-land-cover")) map.removeLayer("physical-land-cover");
   if (map.getLayer("physical-geology")) map.removeLayer("physical-geology");
   for (const layer of physicalMapLayers().reverse()) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
-  for (const name of ["relief", "bathymetry", "rivers", "lakes", "labels", "coasts", "land-cover", "geology"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
+  for (const name of ["relief", "bathymetry", ...PHYSICAL_DATA_FILES, "land-cover", "geology"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
 }
 
 export function WorldMap() {
@@ -51,6 +54,9 @@ export function WorldMap() {
   const [mode, setMode] = useState<MapMode>("standard");
   const [surface, setSurface] = useState<PhysicalSurface>("relief");
   const [surfaceLoading, setSurfaceLoading] = useState(false);
+  const [landmarks, setLandmarks] = useState<LandmarkOptions>(DEFAULT_LANDMARK_OPTIONS);
+  const landmarkOptionsRef = useRef(landmarks);
+  const [selectedLandmark, setSelectedLandmark] = useState<SelectedLandmark | null>(null);
   const landCover = surface === "land-cover";
   const geology = surface === "geology";
   const activeLegend = geology ? geologyLegend : landCover ? landCoverLegend : bathymetryLegend;
@@ -71,7 +77,7 @@ export function WorldMap() {
         if (!physicalRequest.current) {
           const controller = new AbortController();
           const timeout = window.setTimeout(() => controller.abort(), 25_000);
-          const data = Promise.all(["rivers", "lakes", "labels", "coasts"].map((name) =>
+          const data = Promise.all(PHYSICAL_DATA_FILES.map((name) =>
             loadGeography(`/data/world/physical/${name}.geojson`, controller.signal),
           )).finally(() => window.clearTimeout(timeout));
           physicalRequest.current = { controller, data };
@@ -84,10 +90,11 @@ export function WorldMap() {
         if (cancelled || !map) return;
         if (!map.getSource("physical-relief")) map.addSource("physical-relief", reliefSource());
         if (!map.getSource("physical-bathymetry")) map.addSource("physical-bathymetry", bathymetrySource());
-        for (const [index, name] of ["rivers", "lakes", "labels", "coasts"].entries()) {
+        for (const [index, name] of PHYSICAL_DATA_FILES.entries()) {
           const id = `physical-${name}`;
           if (!map.getSource(id)) map.addSource(id, { type: "geojson", data: data[index] });
         }
+        addLandmarkIcons(map);
         for (const layer of physicalMapLayers()) {
           if (!map.getLayer(layer.id)) map.addLayer(layer, layer.id === "physical-bathymetry" ? "countries" : "sea-labels");
         }
@@ -95,7 +102,7 @@ export function WorldMap() {
         if (landCover && !map.getLayer("physical-land-cover")) map.addLayer(landCoverLayer(), "physical-lakes");
         if (geology && !map.getSource("physical-geology")) map.addSource("physical-geology", geologySource());
         if (geology && !map.getLayer("physical-geology")) map.addLayer(geologyLayer(), "physical-lakes");
-        setMapMode(map, "physical", surface);
+        setMapMode(map, "physical", surface, landmarkOptionsRef.current);
         setPhysicalStatus("ready");
         if (surface !== "relief") map.once("idle", () => { if (!cancelled) setSurfaceLoading(false); });
       } catch {
@@ -108,6 +115,11 @@ export function WorldMap() {
     void showPhysical();
     return () => { cancelled = true; };
   }, [mode, status, physicalAttempt, landCover, geology, surface]);
+
+  useEffect(() => {
+    landmarkOptionsRef.current = landmarks;
+    if (mapRef.current) setLandmarkVisibility(mapRef.current, mode === "physical" && physicalStatus === "ready", landmarks);
+  }, [landmarks, mode, physicalStatus]);
 
   useEffect(() => {
     let disposed = false;
@@ -158,6 +170,18 @@ export function WorldMap() {
           attributionControl: false,
         });
         mapRef.current = map;
+        map.on("click", (event) => {
+          if (!map || disposed) return;
+          const layers = landmarkMapLayers().filter((layer) => !layer.id.endsWith("casing") && map?.getLayer(layer.id) && map.getLayoutProperty(layer.id, "visibility") !== "none").map((layer) => layer.id);
+          if (!layers.length) return;
+          const hit = map.queryRenderedFeatures(event.point, { layers })[0];
+          const group = hit && landmarkGroupForLayer(hit.layer.id);
+          const p = hit?.properties;
+          if (!group || !p || typeof p.name !== "string" || typeof p.sourceUrl !== "string") { setSelectedLandmark(null); return; }
+          const disclosure = document.querySelector<HTMLDetailsElement>(".physical-features");
+          if (disclosure) disclosure.open = false;
+          setSelectedLandmark({ name: p.name, kind: p.kind, group, sourceName: p.sourceName, sourceUrl: p.sourceUrl, informationUrl: p.informationUrl, elevationMetres: typeof p.elevationMetres === "number" ? p.elevationMetres : undefined, locationNote: p.locationNote, boundaryType: p.boundaryType });
+        });
         map.on("resize", () => {
           if (!map || !container.current) return;
           viewportHeight = container.current.clientHeight;
@@ -225,10 +249,10 @@ export function WorldMap() {
   }, [attempt]);
 
   return (
-    <main className="world-map" aria-label="Explore the world">
+    <main className="world-map" aria-label="Explore the world" onKeyDown={(event) => { if (event.key === "Escape") setSelectedLandmark(null); }}>
       <div className="world-map__canvas" ref={container} />
       <div className="map-modes" role="group" aria-label="Map mode">
-        <button type="button" aria-pressed={mode === "standard"} disabled={status !== "ready"} onClick={() => setMode("standard")}>Standard</button>
+        <button type="button" aria-pressed={mode === "standard"} disabled={status !== "ready"} onClick={() => { setSelectedLandmark(null); setMode("standard"); }}>Standard</button>
         <button type="button" aria-pressed={mode === "physical"} disabled={status !== "ready"} onClick={() => {
           if (mode !== "physical") {
             if (physicalStatus === "error") resetPhysicalSources(mapRef.current);
@@ -238,6 +262,7 @@ export function WorldMap() {
         }}>Physical Geography</button>
       </div>
       {mode === "physical" && status === "ready" && physicalStatus === "ready" && (
+        <div className="physical-panel">
         <fieldset className="physical-surfaces">
           <legend className="visually-hidden">Physical map colours</legend>
           {([
@@ -254,11 +279,34 @@ export function WorldMap() {
             </label>
           ))}
         </fieldset>
+        <details className="physical-features">
+          <summary>Features · {Object.values(landmarks).filter(Boolean).length} of 6</summary>
+          <fieldset>
+            <legend className="visually-hidden">Physical features</legend>
+            {LANDMARK_GROUPS.map(([key, label]) => <label key={key}><input type="checkbox" checked={landmarks[key]} onChange={(event) => { setLandmarks((current) => ({ ...current, [key]: event.target.checked })); if (selectedLandmark?.group === key && !event.target.checked) setSelectedLandmark(null); }} />{label}</label>)}
+          </fieldset>
+          <p>Select a symbol, name, or plate boundary for its source.</p>
+          {landmarks.tectonics && <p className="tectonic-key"><span className="boundary-key boundary-key--convergent" />Convergent <span className="boundary-key boundary-key--divergent" />Divergent <span className="boundary-key boundary-key--transform" />Transform</p>}
+        </details>
+        </div>
+      )}
+      {mode === "physical" && selectedLandmark && physicalStatus === "ready" && (
+        <section className="feature-information" aria-label="Selected physical feature" aria-live="polite">
+          <div className="feature-information__heading"><h2>{selectedLandmark.name}</h2><button type="button" aria-label="Close feature information" onClick={() => setSelectedLandmark(null)}><Icon name="close" /></button></div>
+          <p>{selectedLandmark.kind}{selectedLandmark.boundaryType ? ` · ${selectedLandmark.boundaryType}` : ""}</p>
+          {selectedLandmark.elevationMetres !== undefined && <p>Elevation: {selectedLandmark.elevationMetres.toLocaleString("en", { maximumFractionDigits: 2 })} m</p>}
+          {selectedLandmark.kind === "Peak" && <p>Elevation recorded in Natural Earth; newer measurements may differ.</p>}
+          {selectedLandmark.kind === "Volcano" && <p>Catalogued volcanic system; this does not indicate current activity.</p>}
+          {selectedLandmark.group === "tectonics" && <p>PB2002 plate model, published 2003. Approximate plate boundaries, not individual faults or earthquake hazard.</p>}
+          {selectedLandmark.locationNote && <p>{selectedLandmark.locationNote}</p>}
+          <a href={selectedLandmark.sourceUrl} target="_blank" rel="noreferrer">Source: {selectedLandmark.sourceName}</a>
+          {selectedLandmark.informationUrl && selectedLandmark.informationUrl !== selectedLandmark.sourceUrl && <a href={selectedLandmark.informationUrl} target="_blank" rel="noreferrer">Feature record</a>}
+        </section>
       )}
       {mode === "physical" && surface !== "relief" && surfaceLoading && physicalStatus === "ready" && status === "ready" && (
         <p className="map-feedback map-feedback--surface" role="status">{geology ? "Loading rock types…" : "Loading land cover…"}</p>
       )}
-      {mode === "physical" && (surface === "relief" || !surfaceLoading) && physicalStatus === "ready" && status === "ready" && (
+      {mode === "physical" && !selectedLandmark && (surface === "relief" || !surfaceLoading) && physicalStatus === "ready" && status === "ready" && (
         <details className="map-legend" key={surface}>
           <summary>{geology ? "Rock-type legend · GLiM" : landCover ? "Land-cover legend · 2020" : "Ocean depth · metres"}</summary>
           <div>
@@ -322,6 +370,7 @@ export function WorldMap() {
         <details>
           <summary aria-label="About map data">Map data</summary>
           <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. <a href={bathymetryLegend.sourceUrl} target="_blank" rel="noreferrer">Natural Earth bathymetry</a> adds approximate seafloor depth bands derived from SRTM Plus. Ocean and sea names appear in both modes. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {geology ? <>Rock colours show surface lithology from <a href="https://doi.org/10.1029/2012GC004370" target="_blank" rel="noreferrer">GLiM, Hartmann &amp; Moosdorf (2012)</a>, using the CCGM-CGMW 2015 GIS compilation. Source detail varies by region; this is not geological age, subsurface structure or site-level mapping.</> : landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
+          <p>Peak locations and source-record elevations: <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth</a>. Volcanic systems: <a href="https://volcano.si.edu/" target="_blank" rel="noreferrer">Smithsonian Global Volcanism Program</a>. Selected forest and canyon locations: <a href="https://www.wikidata.org/wiki/Wikidata:Licensing" target="_blank" rel="noreferrer">Wikidata (CC0)</a>. Undersea names: <a href="https://www.gebco.net/data-products/undersea-feature-names" target="_blank" rel="noreferrer">IHO-IOC GEBCO Gazetteer of Undersea Feature Names</a>, IHO DCDB / NOAA NCEI. Contains information from <a href="https://doi.org/10.1029/2001GC000252" target="_blank" rel="noreferrer">PB2002, Peter Bird (2003); Hugo Ahlenius / Nordpil</a>, available under the <a href="https://opendatacommons.org/licenses/by/1-0/" target="_blank" rel="noreferrer">ODC Attribution License v1.0</a>. Region labels identify approximate locations, not surveyed boundaries or historical extents.</p>
         </details>
       </footer>
       <noscript><p className="map-feedback">Enable JavaScript to explore the interactive map.</p></noscript>

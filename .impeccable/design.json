@@ -3,6 +3,10 @@
   "generatedAt": "2026-11-08T04:58:57.832606+00:00",
   "title": "Design System: Classroom World Map",
   "extensions": {
+    "physicalLandmarks": {
+      "provenance": ["public/data/world/physical/summits-metadata.json", "public/data/world/physical/named-landmarks-metadata.json", "public/data/world/physical/tectonics-metadata.json"],
+      "purpose": "Six independent local feature categories with authored symbols, zoom gates and clickable source information. Source-record summit elevations, catalogued volcanoes without activity claims, representative region labels without invented outlines, and classified PB2002 model boundaries."
+    },
     "bathymetry": {
       "provenance": "public/data/world/bathymetry/metadata.json",
       "palette": "public/data/world/bathymetry/legend.json",
