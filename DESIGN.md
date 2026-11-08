@@ -172,11 +172,17 @@ padding, 13px medium Noto Sans text and the shared 3px focus outline. The active
 button uses dark ink with white text; hover uses focus teal. `aria-pressed`
 exposes the selected mode. No title or branding accompanies the switch.
 
-Physical Geography hides country borders and country names. Lakes use water
+Physical Geography hides country borders and country names. Local shaded-relief
+tiles reveal ridges, valleys and plateaus beneath water features and names.
+The source's cross-blended elevation/region colours are desaturated to 65%, with
+90% raster opacity over sage land. Ocean areas are transparent, matching the
+existing coastline mask. Native raster zooms 0–4 serve overview/regional detail;
+closer views enlarge the same imagery. This is flat shaded relief, without tilt.
+Lakes use water
 fill, rivers use river blue, and water names use water ink. Landform names use
 landform ink with a sage halo. Natural-feature names grow from 12px at zoom 1
 to 16px at zoom 4 and 22px at zoom 8. Island labels remain in both modes. No
-elevation shading is implied. Switching layers preserves the same map camera.
+numerical elevation colour scale is implied. Switching layers preserves the same map camera.
 Physical loading/error feedback sits below the mode switch, leaving navigation
 usable. Standard startup does not fetch physical datasets.
 

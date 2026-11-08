@@ -30,9 +30,11 @@ give way to individual island names at closer zoom; country labels stay dominant
 
 FIRST VIEWPORT: A continuous flat map edge to edge, with no title plaque (removed
 at the user's request). A compact Standard / Physical Geography switch sits upper
-left. Physical mode shows rivers, lakes, natural landform names and islands,
+left. Physical mode shows sourced shaded relief with restrained elevation/region
+colours beneath rivers, lakes, natural landform names and islands,
 hiding political borders and country names. It loads local layers on first use
-and preserves the camera. Attribution lower left. White 44px zoom
+and preserves the camera. Relief is locally tiled and generalized for world and
+regional views, with no tilt or 3D terrain. Attribution lower left. White 44px zoom
 and reset buttons lower right. Signature interaction: all labels and borders
 track the same camera during every pan and zoom. Motion is map navigation only.
 The user increased the zoom range after the earlier 2×-overview cap: maximum

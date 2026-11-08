@@ -1,9 +1,22 @@
-import type { LayerSpecification, Map as LibreMap } from "maplibre-gl";
+import type { LayerSpecification, Map as LibreMap, RasterSourceSpecification } from "maplibre-gl";
 
 export type MapMode = "standard" | "physical";
 
+export function reliefSource(): RasterSourceSpecification {
+  return {
+    type: "raster", tiles: ["/data/world/relief/{z}/{x}/{y}.webp"],
+    tileSize: 512, minzoom: 0, maxzoom: 4,
+    attribution: "Natural Earth",
+  };
+}
+
 export function physicalMapLayers(): LayerSpecification[] {
   return [
+    {
+      id: "physical-relief", type: "raster", source: "physical-relief",
+      layout: { visibility: "none" },
+      paint: { "raster-opacity": 0.9, "raster-fade-duration": 0, "raster-resampling": "linear" },
+    },
     {
       id: "physical-lakes", type: "fill", source: "physical-lakes",
       filter: [">=", ["zoom"], ["get", "minZoom"]],

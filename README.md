@@ -76,8 +76,31 @@ River names follow their lines; lake and landform names use interior anchors.
 Source URLs, checksums, licensing and preparation details are recorded in
 `public/data/world/physical/metadata.json`.
 
-These layers show generalized physical geography, without elevation shading
-or 3D terrain. They do not include every waterway or landform. Lake extents are
+Physical Geography also includes locally tiled **shaded relief with elevation-based
+colours**, showing mountain ridges, valleys and plateaus beneath the names and
+water features. These are Natural Earth's cross-blended hypsometric tints with
+shaded relief: colours vary with both elevation and geographic region, so there
+is no single numerical elevation colour scale. Lighting is baked into the imagery;
+this is a top-down relief map, with no 3D terrain or tilt.
+
+The relief tiles live in `public/data/world/relief/` (512px WebP, Web Mercator XYZ,
+native zooms 0–4). They load only in Physical Geography and are enlarged at closer
+zooms without introducing new terrain detail. The existing ocean stays visible
+through a transparency mask derived from the bundled country outlines.
+The source archive checksum, coastline checksum, transformation details and
+licensing are in `public/data/world/relief/metadata.json`.
+
+To regenerate the relief tiles, use a Python environment with `rasterio`, `numpy`
+and `Pillow`, then run:
+
+```bash
+python scripts/prepare-relief.py /path/to/HYP_LR_SR.zip
+```
+
+The preparation script does not make network requests. Its source is
+[Natural Earth's cross-blended shaded relief](https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/).
+
+The physical layers do not include every waterway or landform. Lake extents are
 not current water levels, and the finer 1:10m data may differ slightly from the
 existing 1:50m coastal outlines. Regenerate from downloaded source files with:
 

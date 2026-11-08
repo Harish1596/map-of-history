@@ -5,7 +5,7 @@ import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
 import { applyCountryLabelList } from "@/data/world-label-policy";
-import { physicalMapLayers, setMapMode, type MapMode } from "@/data/physical-map-style";
+import { physicalMapLayers, reliefSource, setMapMode, type MapMode } from "@/data/physical-map-style";
 import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
 
 type MapStatus = "loading" | "ready" | "error";
@@ -29,6 +29,12 @@ async function loadGeography(path: string, signal: AbortSignal): Promise<Feature
     throw new Error(`Invalid geographic data in ${path}`);
   }
   return data as FeatureCollection;
+}
+
+function resetPhysicalSources(map: LibreMap | null) {
+  if (!map) return;
+  for (const layer of physicalMapLayers().reverse()) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
+  for (const name of ["relief", "rivers", "lakes", "labels"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
 }
 
 export function WorldMap() {
@@ -66,6 +72,7 @@ export function WorldMap() {
         }
         const data = await physicalRequest.current.data;
         if (cancelled || !map) return;
+        if (!map.getSource("physical-relief")) map.addSource("physical-relief", reliefSource());
         for (const [index, name] of ["rivers", "lakes", "labels"].entries()) {
           const id = `physical-${name}`;
           if (!map.getSource(id)) map.addSource(id, { type: "geojson", data: data[index] });
@@ -156,7 +163,10 @@ export function WorldMap() {
         });
         map.on("error", (event) => {
           if ("sourceId" in event && typeof event.sourceId === "string" && event.sourceId.startsWith("physical-")) {
-            if (!disposed) setPhysicalStatus("error");
+            if (!disposed) {
+              if (map) setMapMode(map, "standard");
+              setPhysicalStatus("error");
+            }
             return;
           }
           failed = true;
@@ -201,7 +211,10 @@ export function WorldMap() {
       <div className="map-modes" role="group" aria-label="Map mode">
         <button type="button" aria-pressed={mode === "standard"} disabled={status !== "ready"} onClick={() => setMode("standard")}>Standard</button>
         <button type="button" aria-pressed={mode === "physical"} disabled={status !== "ready"} onClick={() => {
-          if (mode !== "physical") setPhysicalStatus("loading");
+          if (mode !== "physical") {
+            if (physicalStatus === "error") resetPhysicalSources(mapRef.current);
+            setPhysicalStatus("loading");
+          }
           setMode("physical");
         }}>Physical Geography</button>
       </div>
@@ -216,7 +229,12 @@ export function WorldMap() {
       {status === "ready" && mode === "physical" && physicalStatus === "error" && (
         <div className="map-feedback map-feedback--physical" role="alert">
           <p>Physical geography couldn’t load. You can retry or switch to Standard.</p>
-          <button type="button" onClick={() => { setPhysicalStatus("loading"); setPhysicalAttempt((value) => value + 1); }}>Retry physical geography</button>
+          <button type="button" onClick={() => {
+            // Recreate sources so failed terrain tiles are requested again.
+            resetPhysicalSources(mapRef.current);
+            setPhysicalStatus("loading");
+            setPhysicalAttempt((value) => value + 1);
+          }}>Retry physical geography</button>
         </div>
       )}
       {status === "loading" && <p className="map-feedback" role="status">Loading the world map…</p>}
@@ -241,7 +259,7 @@ export function WorldMap() {
         <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/" target="_blank" rel="noreferrer">Natural Earth</a>
         <details>
           <summary aria-label="About map data">Map data</summary>
-          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography shows selected rivers, lakes, islands, mountain ranges, deserts, plateaus and plains from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/" target="_blank" rel="noreferrer">Natural Earth’s physical datasets</a>. These generalized features are a geographic reference, with no elevation shading or live water levels.</p>
+          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. Colours blend elevation and regional characteristics; they are not a precise elevation scale. Relief is generalized for world and regional views; zooming closer enlarges it without adding detail. Water levels are not live.</p>
         </details>
       </footer>
       <noscript><p className="map-feedback">Enable JavaScript to explore the interactive map.</p></noscript>

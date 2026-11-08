@@ -1,0 +1,22 @@
+{
+  "title": "Natural Earth cross-blended hypsometric tints with shaded relief",
+  "source": "https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/",
+  "download": "https://naciscdn.org/naturalearth/10m/raster/HYP_LR_SR.zip",
+  "license": "Public domain",
+  "licenseUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "sourceSha256": "601da5bbde53445fa865bfd15d7ced77a19ccb958c33d3e9c7fbde0fc7d4bd21",
+  "coastlineSha256": "a60b420c634bb75169d2c3a9c6912b153aa3f70f24ee1798b7f98be1fffc10b1",
+  "preparedOn": "2026-11-08",
+  "sourceDimensions": [
+    16200,
+    8100
+  ],
+  "projection": "EPSG:3857",
+  "scheme": "XYZ",
+  "tileSize": 512,
+  "minZoom": 0,
+  "maxZoom": 4,
+  "tileCount": 341,
+  "transformations": "Reproject EPSG:4326 imagery to Web Mercator; clip alpha to bundled country geometry; reduce colour saturation to 65%; generate 512px WebP tiles at zooms 0\u20134, quality 86.",
+  "limitations": "Generalized 1:10m relief for world and regional views. Higher zooms enlarge existing imagery without adding detail. Cross-blended colours vary by elevation and geographic region, not a single numerical elevation scale. Baked lighting, not an elevation grid or 3D terrain. Coastline masking can produce slight source-alignment differences."
+}

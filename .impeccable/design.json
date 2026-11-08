@@ -3,6 +3,16 @@
   "generatedAt": "2026-11-08T04:58:57.832606+00:00",
   "title": "Design System: Classroom World Map",
   "extensions": {
+    "relief": {
+      "source": "Natural Earth HYP_LR_SR",
+      "provenance": "public/data/world/relief/metadata.json",
+      "projection": "EPSG:3857",
+      "tileSize": 512,
+      "nativeMaxZoom": 4,
+      "saturation": 0.65,
+      "opacity": 0.9,
+      "purpose": "Physical-mode terrain shading under water and feature names; transparent ocean; no 3D terrain or numeric elevation colour scale."
+    },
     "colorMeta": {
       "water": { "role": "secondary", "displayName": "Lake Water" },
       "river": { "role": "secondary", "displayName": "River Blue" },
