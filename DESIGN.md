@@ -121,15 +121,13 @@ Country labels use the same Noto Sans family. By rank, sizes are 14/11/10px at z
 
 The map fills the viewport, using dynamic viewport height with a conventional viewport fallback. Attribution sits lower left; stacked zoom and reset navigation sits lower right. The upper-left corner stays clear. These placements describe the current map surface, not a template for unrelated future screens.
 
-Horizontal navigation wraps at the date line without stopping. The starting
-overview fills both viewport dimensions and adapts to viewport size. The user
-allows two zoom-out levels below that overview; when the world is shorter than
-the viewport, keep it vertically centered. Horizontal world copies remain
-continuous at these wider views. The zoom-in
+Horizontal navigation wraps at the date line without stopping. The zoom-out
+limit fills both viewport dimensions and adapts to viewport size. The zoom-in
 cap is fixed at MapLibre zoom 21, using Google's documented close-up scale as a
 reference. This supersedes the former 2× overview limit. The viewport's top and bottom stop at the
 Mercator polar boundaries; tall screens show a narrower longitude range.
-World wrapping remains continuous navigation.
+World wrapping is continuous navigation,
+not a row of separate complete maps at the widest zoom.
 
 Navigation uses 16px right/bottom insets and an 8px gap between the zoom group and reset. Safe-area insets take precedence. At widths up to 600px, navigation moves to a 12px right inset. Attribution reserves room for navigation with a maximum width of the viewport minus 90px.
 

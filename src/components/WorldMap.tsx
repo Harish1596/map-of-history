@@ -4,21 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
-import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom, worldOverviewZoom } from "@/data/world-map-camera";
+import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
 
 type MapStatus = "loading" | "ready" | "error";
 const WORLD_BOUNDS: [[number, number], [number, number]] = [[-180, -58], [180, 84]];
-
-function resetWorldView(map: LibreMap, duration = 0) {
-  const camera = map.cameraForBounds(WORLD_BOUNDS, { padding: 24 });
-  if (!camera) return;
-  const container = map.getContainer();
-  map.easeTo({
-    ...camera,
-    zoom: Math.max(camera.zoom ?? 0, worldOverviewZoom(container.clientWidth, container.clientHeight)),
-    duration,
-  });
-}
 
 function Icon({ name }: { name: "plus" | "minus" | "reset" }) {
   return (
@@ -120,14 +109,10 @@ export function WorldMap() {
         });
         map.once("load", () => {
           if (disposed || !map) return;
-          resetWorldView(map);
+          map.fitBounds(WORLD_BOUNDS, { padding: 24, duration: 0 });
           map.once("idle", () => {
             if (!disposed && !failed) {
               window.clearTimeout(timeout);
-              setLimits({
-                min: map!.getZoom() <= map!.getMinZoom() + 0.01,
-                max: map!.getZoom() >= map!.getMaxZoom() - 0.01,
-              });
               setStatus("ready");
             }
           });
@@ -171,7 +156,7 @@ export function WorldMap() {
         </div>
         <button type="button" title="Reset world view" aria-label="Reset world view" disabled={status !== "ready"} onClick={() => {
           mapRef.current?.resize();
-          if (mapRef.current) resetWorldView(mapRef.current, 650);
+          mapRef.current?.fitBounds(WORLD_BOUNDS, { padding: 24, duration: 650 });
         }}><Icon name="reset" /></button>
       </nav>
       <footer className="map-attribution">
