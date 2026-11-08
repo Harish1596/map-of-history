@@ -186,6 +186,16 @@ numerical elevation colour scale is implied. Switching layers preserves the same
 Physical loading/error feedback sits below the mode switch, leaving navigation
 usable. Standard startup does not fetch physical datasets.
 
+Coastal features appear only in Physical Geography. Shorelines use slate at 75%
+opacity and widths 0.45px at zoom 0, 0.8px at zoom 5 and 1.2px at zoom 8.
+Coastal water labels use water ink with an ocean halo; land labels use landform
+ink with a sage halo. Both grow from 11px at zoom 2 to 14px at zoom 5 and 19px at
+zoom 8, with 4px collision padding. Cape locations use 2px island-ink dots and a
+1px ocean stroke. Labels can choose nearby anchor positions to avoid collisions.
+Named feature regions are not filled or outlined: those source polygons are
+approximate label-placement aids, not exact geographic boundaries. Source-guided
+label eligibility starts at zooms 2–10 and persists at closer zooms.
+
 ### Navigation
 
 The zoom pair uses 44px square buttons inside one bordered shell. Reset is a separately outlined 46px square. Buttons use white fill at rest, hover and pressed palette states, and disabled slate when unavailable. Hover transitions use 120ms ease-out. Keyboard focus uses a 3px teal outline offset 3px; the map canvas uses the same outline inset by 3px.

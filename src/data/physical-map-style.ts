@@ -29,6 +29,12 @@ export function physicalMapLayers(): LayerSpecification[] {
       paint: { "line-color": "#709cac", "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.5, 5, 1.1, 10, 2] },
     },
     {
+      id: "physical-coastline", type: "line", source: "physical-coasts",
+      filter: ["all", ["==", ["get", "kind"], "Coastline"], [">=", ["zoom"], ["get", "minZoom"]]],
+      layout: { visibility: "none", "line-cap": "round", "line-join": "round" },
+      paint: { "line-color": "#6b8184", "line-opacity": 0.75, "line-width": ["interpolate", ["linear"], ["zoom"], 0, 0.45, 5, 0.8, 8, 1.2] },
+    },
+    {
       id: "physical-river-labels", type: "symbol", source: "physical-rivers",
       filter: ["all", [">=", ["zoom"], ["get", "labelZoom"]], ["!=", ["get", "name"], ""]],
       layout: {
@@ -53,6 +59,24 @@ export function physicalMapLayers(): LayerSpecification[] {
         "text-halo-width": 1.5,
       },
     },
+    {
+      id: "physical-capes", type: "circle", source: "physical-coasts",
+      filter: ["all", ["==", ["geometry-type"], "Point"], ["==", ["get", "kind"], "Cape"], [">=", ["zoom"], ["get", "minZoom"]]],
+      layout: { visibility: "none" },
+      paint: { "circle-radius": 2, "circle-color": "#405c60", "circle-stroke-color": "#edf3f5", "circle-stroke-width": 1 },
+    },
+    ...(["water", "land"] as const).map((zone): LayerSpecification => ({
+      id: `physical-coastal-${zone}-labels`, type: "symbol", source: "physical-coasts",
+      filter: ["all", ["==", ["geometry-type"], "Point"], ["==", ["get", "zone"], zone], [">=", ["zoom"], ["get", "minZoom"]]],
+      layout: {
+        visibility: "none", "text-field": ["get", "name"], "text-font": ["Noto Sans"],
+        "text-size": ["interpolate", ["linear"], ["zoom"], 2, 11, 5, 14, 8, 19],
+        "text-max-width": 7, "text-padding": 4, "symbol-sort-key": ["get", "priority"],
+        "text-variable-anchor": ["center", "top", "bottom", "left", "right"],
+        "text-radial-offset": ["case", ["==", ["get", "kind"], "Cape"], 0.7, 0],
+      },
+      paint: { "text-color": zone === "water" ? "#285366" : "#5c5545", "text-halo-color": zone === "water" ? "#edf3f5" : "#d4dfd2", "text-halo-width": 1.5 },
+    })),
   ];
 }
 

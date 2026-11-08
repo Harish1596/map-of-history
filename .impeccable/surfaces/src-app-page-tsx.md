@@ -32,6 +32,9 @@ FIRST VIEWPORT: A continuous flat map edge to edge, with no title plaque (remove
 at the user's request). A compact Standard / Physical Geography switch sits upper
 left. Physical mode shows sourced shaded relief with restrained elevation/region
 colours beneath rivers, lakes, natural landform names and islands,
+plus subtle shoreline outlines, named coastal landforms and waterways, and
+small cape-location dots. Coastal labels follow source zoom guidance and
+collision placement; approximate label regions are not drawn as boundaries,
 hiding political borders and country names. It loads local layers on first use
 and preserves the camera. Relief is locally tiled and generalized for world and
 regional views, with no tilt or 3D terrain. Attribution lower left. White 44px zoom

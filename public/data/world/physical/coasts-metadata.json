@@ -1,0 +1,44 @@
+{
+  "title": "Natural Earth coastal features and shorelines",
+  "license": "Public domain",
+  "licenseUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "preparedOn": "2026-11-08",
+  "sources": [
+    {
+      "url": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_geography_regions_polys.geojson",
+      "sourceSha256": "b7b26e50ea917d3696aec87f932def2bf5f890f5770e441d59c162c6f4c92a77"
+    },
+    {
+      "url": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_geography_regions_points.geojson",
+      "sourceSha256": "25821b530966e62756faebf53699f12bf73550f8228aa4bbdf3e4132dd7cf806"
+    },
+    {
+      "url": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_geography_marine_polys.geojson",
+      "sourceSha256": "53f865e8ffa966cdd402145c82c5cd14ee7ce974cd0eb9a3f59f03a4cfd2d66c"
+    },
+    {
+      "url": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_50m_coastline.geojson",
+      "sourceSha256": "271f1c4c1908312bac6b29d158ea1356544beafc129f260005300913aa5ea283"
+    }
+  ],
+  "featureCount": 1860,
+  "coastlineCount": 1428,
+  "labelCount": 432,
+  "kinds": {
+    "Cape": 114,
+    "Coast": 37,
+    "Peninsula": 53,
+    "Coastal landform": 12,
+    "Isthmus": 4,
+    "Bay": 60,
+    "Gulf": 61,
+    "Strait": 36,
+    "Channel": 16,
+    "Sound": 21,
+    "Fjord": 8,
+    "Lagoon": 9,
+    "Inlet": 1
+  },
+  "transformations": "Retain 1:50m shoreline lines and 1:10m named coasts, peninsulas/headlands, capes, isthmuses, bays, gulfs, straits, channels, sounds, fjords, lagoons and inlets. Prefer cape location points; use interior Polylabel anchors for other approximate label regions. Deduplicate matching English names or Wikidata IDs only within approximately 55km; preserve distant namesakes. Round coordinates to five decimals. Source label zooms are rounded down and limited to 2–10; labels persist at closer zooms.",
+  "limitations": "Selected named features, not every coastal feature. Label-region polygons are approximate placement aids, not surveyed feature boundaries or navigational limits, and are not drawn. Coastline detail remains 1:50m, matching the base map scale; 1:10m cape locations and marine features may differ slightly from it. Present-day reference data, not reconstructed historical coastlines."
+}

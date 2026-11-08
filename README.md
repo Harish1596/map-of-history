@@ -129,6 +129,32 @@ Source, license, preparation details and checksum are recorded in
 node scripts/prepare-island-labels.mjs /path/to/ne_10m_geography_regions_polys.geojson
 ```
 
+### Coastal features
+
+Physical Geography adds a subtle coastline outline and 432 coastal labels:
+peninsulas/headlands, named coasts, capes, isthmuses, bays, gulfs, straits,
+channels, sounds, fjords, lagoons and inlets. Cape dots mark source locations;
+other labels use interior anchors in Natural Earth's approximate label regions.
+Water names use blue ink; coastal land names use the existing landform ink.
+Labels become eligible at source-guided zooms 2–10 and remain eligible at closer
+zooms, subject to collision avoidance. These layers are hidden in Standard.
+
+`public/data/world/physical/coasts.geojson` bundles 1,428 coastline segments
+and the coastal label points. It loads and caches alongside the other physical
+datasets. `coasts-metadata.json` records source URLs, checksums and limitations.
+Namesakes in different places are retained; matching labels are deduplicated
+only when geographically close. The 1:50m coastline matches the base map's scale;
+the 1:10m feature locations can differ slightly from its generalized shoreline.
+This is selected present-day coverage, not every coastal feature or a historical
+coast reconstruction. Label-region polygons are placement aids and are not drawn
+as surveyed feature boundaries.
+
+Regenerate from downloaded Natural Earth files with:
+
+```bash
+node scripts/prepare-coastal-data.mjs /path/to/ne_10m_geography_regions_polys.geojson /path/to/ne_10m_geography_regions_points.geojson /path/to/ne_10m_geography_marine_polys.geojson /path/to/ne_50m_coastline.geojson
+```
+
 Provenance, source checksum, preparation date and boundary limitations are in
 `public/data/world/metadata.json`. The data uses Natural Earth's default de facto
 boundaries, includes territories and disputed areas, and is a generalized snapshot

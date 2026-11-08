@@ -34,7 +34,7 @@ async function loadGeography(path: string, signal: AbortSignal): Promise<Feature
 function resetPhysicalSources(map: LibreMap | null) {
   if (!map) return;
   for (const layer of physicalMapLayers().reverse()) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
-  for (const name of ["relief", "rivers", "lakes", "labels"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
+  for (const name of ["relief", "rivers", "lakes", "labels", "coasts"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
 }
 
 export function WorldMap() {
@@ -61,7 +61,7 @@ export function WorldMap() {
         if (!physicalRequest.current) {
           const controller = new AbortController();
           const timeout = window.setTimeout(() => controller.abort(), 25_000);
-          const data = Promise.all(["rivers", "lakes", "labels"].map((name) =>
+          const data = Promise.all(["rivers", "lakes", "labels", "coasts"].map((name) =>
             loadGeography(`/data/world/physical/${name}.geojson`, controller.signal),
           )).finally(() => window.clearTimeout(timeout));
           physicalRequest.current = { controller, data };
@@ -73,7 +73,7 @@ export function WorldMap() {
         const data = await physicalRequest.current.data;
         if (cancelled || !map) return;
         if (!map.getSource("physical-relief")) map.addSource("physical-relief", reliefSource());
-        for (const [index, name] of ["rivers", "lakes", "labels"].entries()) {
+        for (const [index, name] of ["rivers", "lakes", "labels", "coasts"].entries()) {
           const id = `physical-${name}`;
           if (!map.getSource(id)) map.addSource(id, { type: "geojson", data: data[index] });
         }
@@ -259,7 +259,7 @@ export function WorldMap() {
         <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/" target="_blank" rel="noreferrer">Natural Earth</a>
         <details>
           <summary aria-label="About map data">Map data</summary>
-          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. Colours blend elevation and regional characteristics; they are not a precise elevation scale. Relief is generalized for world and regional views; zooming closer enlarges it without adding detail. Water levels are not live.</p>
+          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. These are present-day references, with approximate label placements. Colours blend elevation and regional characteristics; they are not a precise elevation scale. Close zoom enlarges relief without adding detail. Water levels are not live.</p>
         </details>
       </footer>
       <noscript><p className="map-feedback">Enable JavaScript to explore the interactive map.</p></noscript>

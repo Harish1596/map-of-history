@@ -3,6 +3,14 @@
   "generatedAt": "2026-11-08T04:58:57.832606+00:00",
   "title": "Design System: Classroom World Map",
   "extensions": {
+    "coasts": {
+      "source": "Natural Earth physical regions, points, marine regions and 1:50m coastlines",
+      "provenance": "public/data/world/physical/coasts-metadata.json",
+      "labelSizeStops": [2, 11, 5, 14, 8, 19],
+      "coastlineOpacity": 0.75,
+      "capeRadius": 2,
+      "purpose": "Physical-only shoreline outlines and coastal labels; use existing water/landform ink and halo colours; no exact region boundaries implied."
+    },
     "relief": {
       "source": "Natural Earth HYP_LR_SR",
       "provenance": "public/data/world/relief/metadata.json",
