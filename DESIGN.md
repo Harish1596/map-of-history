@@ -2,14 +2,14 @@
 name: Classroom World Map
 description: A quiet, readable geographic canvas for classroom exploration.
 colors:
-  ocean: "#edf3f5"
-  ocean-ink: "#476b7a"
+  ocean: "#9bc4dc"
+  ocean-ink: "#214458"
   land: "#d4dfd2"
   ink: "#283b42"
   island-ink: "#405c60"
-  water: "#b7d4df"
-  river: "#709cac"
-  water-ink: "#285366"
+  water: "#8bb7d1"
+  river: "#447e9b"
+  water-ink: "#214458"
   landform-ink: "#5c5545"
   line: "#6b8184"
   paper: "#ffffff"
@@ -87,12 +87,12 @@ components:
 
 **Creative North Star: "The Classroom World Map"**
 
-A light, quiet geographic canvas supports students and educators on shared classroom screens. Muted sage land, pale ocean, distinct borders and plain country names carry the visual identity. Small white controls remain subordinate to geography.
+A light, quiet geographic canvas supports students and educators on shared classroom screens. Muted sage land, deeper blue ocean, distinct borders and plain country names carry the visual identity. Small white controls remain subordinate to geography.
 
 The approved world replaces the former dark, gold, serif siege interface. The visual language favors clarity and geographic context; runtime geography and font assets are local.
 
 **Key Characteristics:**
-- Sage land against a pale blue-gray ocean.
+- Sage land against a clear blue ocean.
 - Plain sans-serif labels and distinct slate boundaries.
 - Small white rectangular controls with visible keyboard focus.
 
@@ -104,7 +104,7 @@ The palette is low saturation, with dark ink supplying readable labels and slate
 - **Sage Land** (`land`): country fills and the label halo that separates names from boundaries.
 
 ### Neutral
-- **Pale Ocean** (`ocean`): map background and attribution backing.
+- **Ocean Blue** (`ocean`): map background and attribution backing.
 - **Dark Ink** (`ink`): country names, interface text and retry button fill.
 - **Slate Boundary** (`line`): country boundaries and interface outlines.
 - **White Paper** (`paper`): controls and feedback surfaces.
@@ -144,7 +144,7 @@ land-colored halo. Minimum zoom is at least 3 and follows source guidance and si
 Country labels have collision priority. Archipelago labels disappear at closer
 zoom to make room for individual islands. Avoid duplicating existing country names.
 
-Standard ocean names use ocean ink (`#476b7a`) over an ocean-coloured 1.5px halo.
+Standard ocean names use ocean ink (`#214458`) over an ocean-coloured 1.5px halo.
 Noto Sans grows from 12px at zoom 0 to 15px at zoom 2, 22px at zoom 5 and 28px at
 zoom 8, with 0.08em letter spacing, 1.2 line height and 4px collision padding.
 Ocean names place first and always render when their anchors are in view; other

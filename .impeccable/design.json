@@ -8,13 +8,13 @@
     },
     "seaLabels": {
       "provenance": "public/data/world/sea-metadata.json",
-      "color": "#476b7a",
+      "color": "#214458",
       "sizeStops": [1, 11, 4, 14, 7, 19, 10, 24],
       "purpose": "Standard-only named seas, bays and gulfs, using source-guided zoom eligibility, fixed offshore centers with five-em wrapping and country/island collision priority; oceans retain first priority."
     },
     "oceanLabels": {
       "provenance": "public/data/world/ocean-metadata.json",
-      "color": "#476b7a",
+      "color": "#214458",
       "sizeStops": [0, 12, 2, 15, 5, 22, 8, 28],
       "purpose": "Standard-only ocean names with offshore sourced anchors, always-rendered text and first placement priority; sea and other labels yield."
     },
@@ -61,7 +61,7 @@
       },
       "ocean": {
         "role": "neutral",
-        "displayName": "Pale Ocean",
+        "displayName": "Ocean Blue",
         "tonalRamp": [
           "oklch(15% 0.012 230)",
           "oklch(27% 0.012 230)",
@@ -284,9 +284,9 @@
   ],
   "narrative": {
     "northStar": "The Classroom World Map",
-    "overview": "A light, quiet geographic canvas supports students and educators on shared classroom screens. Muted sage land, pale ocean, distinct borders and plain country names carry the visual identity. Small white controls remain subordinate to geography.\n\nThe approved world replaces the former dark, gold, serif siege interface. The visual language favors clarity and geographic context; runtime geography and font assets are local.",
+    "overview": "A light, quiet geographic canvas supports students and educators on shared classroom screens. Muted sage land, deeper blue ocean, distinct borders and plain country names carry the visual identity. Small white controls remain subordinate to geography.\n\nThe approved world replaces the former dark, gold, serif siege interface. The visual language favors clarity and geographic context; runtime geography and font assets are local.",
     "keyCharacteristics": [
-      "Sage land against a pale blue-gray ocean.",
+      "Sage land against a clear blue ocean.",
       "Plain sans-serif labels and distinct slate boundaries.",
       "Small white rectangular controls with visible keyboard focus."
     ],

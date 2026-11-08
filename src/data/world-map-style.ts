@@ -19,7 +19,7 @@ export function worldMapStyle(
       seas: { type: "geojson", data: seas },
     },
     layers: [
-      { id: "ocean", type: "background", paint: { "background-color": "#edf3f5" } },
+      { id: "ocean", type: "background", paint: { "background-color": "#9bc4dc" } },
       { id: "countries", type: "fill", source: "countries", paint: { "fill-color": "#d4dfd2" } },
       {
         id: "country-borders", type: "line", source: "countries",
@@ -38,7 +38,7 @@ export function worldMapStyle(
           "text-anchor": "center", "symbol-sort-key": ["get", "priority"],
           "text-allow-overlap": false, "text-ignore-placement": false,
         },
-        paint: { "text-color": "#476b7a", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },
+        paint: { "text-color": "#214458", "text-halo-color": "#9bc4dc", "text-halo-width": 1.5 },
       },
       {
         id: "island-labels", type: "symbol", source: "islands", minzoom: 3,
@@ -101,7 +101,7 @@ export function worldMapStyle(
           "text-anchor": "center", "text-allow-overlap": true,
           "text-ignore-placement": false,
         },
-        paint: { "text-color": "#476b7a", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },
+        paint: { "text-color": "#214458", "text-halo-color": "#9bc4dc", "text-halo-width": 1.5 },
       },
     ],
   };

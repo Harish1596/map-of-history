@@ -53,13 +53,13 @@ export function physicalMapLayers(): LayerSpecification[] {
     {
       id: "physical-lakes", type: "fill", source: "physical-lakes",
       filter: [">=", ["zoom"], ["get", "minZoom"]],
-      layout: { visibility: "none" }, paint: { "fill-color": "#b7d4df" },
+      layout: { visibility: "none" }, paint: { "fill-color": "#8bb7d1" },
     },
     {
       id: "physical-rivers", type: "line", source: "physical-rivers",
       filter: [">=", ["zoom"], ["get", "minZoom"]],
       layout: { visibility: "none", "line-cap": "round", "line-join": "round" },
-      paint: { "line-color": "#709cac", "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.5, 5, 1.1, 10, 2] },
+      paint: { "line-color": "#447e9b", "line-width": ["interpolate", ["linear"], ["zoom"], 1, 0.5, 5, 1.1, 10, 2] },
     },
     {
       id: "physical-coastline", type: "line", source: "physical-coasts",
@@ -76,7 +76,7 @@ export function physicalMapLayers(): LayerSpecification[] {
         "text-size": ["interpolate", ["linear"], ["zoom"], 2, 11, 8, 16],
         "text-padding": 4, "text-max-angle": 35,
       },
-      paint: { "text-color": "#285366", "text-halo-color": "#edf3f5", "text-halo-width": 1.5 },
+      paint: { "text-color": "#214458", "text-halo-color": "#9bc4dc", "text-halo-width": 1.5 },
     },
     {
       id: "physical-feature-labels", type: "symbol", source: "physical-labels",
@@ -87,8 +87,8 @@ export function physicalMapLayers(): LayerSpecification[] {
         "text-max-width": 8, "text-padding": 5, "symbol-sort-key": ["get", "priority"],
       },
       paint: {
-        "text-color": ["case", ["==", ["get", "kind"], "Lake"], "#285366", "#5c5545"],
-        "text-halo-color": ["case", ["==", ["get", "kind"], "Lake"], "#b7d4df", "#d4dfd2"],
+        "text-color": ["case", ["==", ["get", "kind"], "Lake"], "#214458", "#5c5545"],
+        "text-halo-color": ["case", ["==", ["get", "kind"], "Lake"], "#8bb7d1", "#d4dfd2"],
         "text-halo-width": 1.5,
       },
     },
@@ -96,7 +96,7 @@ export function physicalMapLayers(): LayerSpecification[] {
       id: "physical-capes", type: "circle", source: "physical-coasts",
       filter: ["all", ["==", ["geometry-type"], "Point"], ["==", ["get", "kind"], "Cape"], [">=", ["zoom"], ["get", "minZoom"]]],
       layout: { visibility: "none" },
-      paint: { "circle-radius": 2, "circle-color": "#405c60", "circle-stroke-color": "#edf3f5", "circle-stroke-width": 1 },
+      paint: { "circle-radius": 2, "circle-color": "#405c60", "circle-stroke-color": "#9bc4dc", "circle-stroke-width": 1 },
     },
     ...(["water", "land"] as const).map((zone): LayerSpecification => ({
       id: `physical-coastal-${zone}-labels`, type: "symbol", source: "physical-coasts",
@@ -108,7 +108,7 @@ export function physicalMapLayers(): LayerSpecification[] {
         "text-variable-anchor": ["center", "top", "bottom", "left", "right"],
         "text-radial-offset": ["case", ["==", ["get", "kind"], "Cape"], 0.7, 0],
       },
-      paint: { "text-color": zone === "water" ? "#285366" : "#5c5545", "text-halo-color": zone === "water" ? "#edf3f5" : "#d4dfd2", "text-halo-width": 1.5 },
+      paint: { "text-color": zone === "water" ? "#214458" : "#5c5545", "text-halo-color": zone === "water" ? "#9bc4dc" : "#d4dfd2", "text-halo-width": 1.5 },
     })),
   ];
 }

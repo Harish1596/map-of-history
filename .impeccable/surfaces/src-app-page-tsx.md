@@ -16,7 +16,7 @@ also confirms the scoped design in `docs/superpowers/specs/2026-11-08-world-map-
 THESIS: The map itself is the app. Give geography the entire viewport and keep
 the control surface small enough to disappear during exploration.
 
-OWN-WORLD: Pale blue-gray ocean, muted sage countries, fine but distinct slate
+OWN-WORLD: Clear blue ocean, muted sage countries, fine but distinct slate
 borders, dark sans-serif labels, white rectangular controls. Daylight classroom
 use favors a light surface that stays readable on shared screens.
 
