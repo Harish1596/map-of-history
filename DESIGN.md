@@ -122,8 +122,10 @@ Country labels use the same Noto Sans family. By rank, sizes are 14/11/10px at z
 The map fills the viewport, using dynamic viewport height with a conventional viewport fallback. Attribution sits lower left; stacked zoom and reset navigation sits lower right. The upper-left corner stays clear. These placements describe the current map surface, not a template for unrelated future screens.
 
 Horizontal navigation wraps at the date line without stopping. The zoom-out
-limit is one world-width; the zoom-in limit is twice that overview's scale.
-Both limits adapt to viewport width. World wrapping is continuous navigation,
+limit fills both viewport dimensions; the zoom-in limit is twice that overview's scale.
+Both limits adapt to viewport size. The viewport's top and bottom stop at the
+Mercator polar boundaries; tall screens show a narrower longitude range.
+World wrapping is continuous navigation,
 not a row of separate complete maps at the widest zoom.
 
 Navigation uses 16px right/bottom insets and an 8px gap between the zoom group and reset. Safe-area insets take precedence. At widths up to 600px, navigation moves to a 12px right inset. Attribution reserves room for navigation with a maximum width of the viewport minus 90px.

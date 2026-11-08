@@ -32,3 +32,19 @@ test("zoom-out limit keeps a single world-width across desktop and mobile", () =
     assert.equal(constrainWorldCamera({ lng: 540, lat: 20 }, -10, minZoom).zoom, minZoom);
   }
 });
+
+test("viewport top and bottom remain inside the polar boundaries at every zoom", () => {
+  const mercatorY = (lat) => (1 - Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360)) / Math.PI) / 2;
+  for (const [width, height] of [[1440, 1000], [390, 844], [844, 390]]) {
+    const min = minimumWorldZoom(width, height);
+    for (const zoom of [min, min + 0.5, maximumWorldZoom(min)]) {
+      for (const lat of [-100, -85, 0, 85, 100]) {
+        const camera = constrainWorldCamera({ lng: 540, lat }, zoom, min, height);
+        const half = height / (2 * 512 * 2 ** camera.zoom);
+        assert.ok(mercatorY(camera.lat) - half >= -1e-10, `north edge at ${width}x${height}, ${zoom}`);
+        assert.ok(mercatorY(camera.lat) + half <= 1 + 1e-10, `south edge at ${width}x${height}, ${zoom}`);
+        assert.equal(camera.lng, 540);
+      }
+    }
+  }
+});

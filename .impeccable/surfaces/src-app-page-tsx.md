@@ -28,7 +28,8 @@ at the user's request). Attribution lower left. White 44px zoom
 and reset buttons lower right. Signature interaction: all labels and borders
 track the same camera during every pan and zoom. Motion is map navigation only.
 The user clarified that maximum magnification is 2× the initial world view.
-Pan wraps continuously east/west; zoom-out stops at one world-width.
+Pan wraps continuously east/west. Zoom-out fills both viewport dimensions, and
+the viewport's top/bottom edges are constrained to the Mercator polar boundaries.
 
 FORM: Classroom screen, fifth grounded candidate; direction seed `3d33963b`.
 The preview's invented geometry is replaced by sourced GeoJSON. Noto Sans supplies

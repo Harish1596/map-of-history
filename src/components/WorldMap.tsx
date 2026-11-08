@@ -57,7 +57,8 @@ export function WorldMap() {
           }),
         ]);
         if (disposed || !container.current) return;
-        let minZoom = minimumWorldZoom(container.current.clientWidth);
+        let viewportHeight = container.current.clientHeight;
+        let minZoom = minimumWorldZoom(container.current.clientWidth, viewportHeight);
         maplibre.setWorkerUrl("/vendor/maplibre-gl-worker.mjs");
         map = new maplibre.Map({
           container: container.current,
@@ -66,10 +67,10 @@ export function WorldMap() {
           maxZoom: maximumWorldZoom(minZoom), minZoom,
           fadeDuration: 0,
           renderWorldCopies: true,
-          // Permit the complete world to fit a portrait viewport. The default
-          // Mercator constraint otherwise zooms in to fill the viewport height.
+          // Bound the full viewport at the poles while leaving longitude free
+          // to wrap continuously across the date line.
           transformConstrain: (center, zoom) => {
-            const camera = constrainWorldCamera(center, zoom, minZoom);
+            const camera = constrainWorldCamera(center, zoom, minZoom, viewportHeight);
             return { center: new maplibre.LngLat(camera.lng, camera.lat), zoom: camera.zoom };
           },
           dragRotate: false, pitchWithRotate: false,
@@ -79,7 +80,8 @@ export function WorldMap() {
         mapRef.current = map;
         map.on("resize", () => {
           if (!map || !container.current) return;
-          minZoom = minimumWorldZoom(container.current.clientWidth);
+          viewportHeight = container.current.clientHeight;
+          minZoom = minimumWorldZoom(container.current.clientWidth, viewportHeight);
           // Avoid an invalid intermediate range while resizing between a wide
           // and narrow viewport. The shared constraint always uses the new range.
           if (minZoom > map.getMaxZoom()) {
