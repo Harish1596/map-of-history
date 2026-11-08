@@ -3,6 +3,13 @@
   "generatedAt": "2026-11-08T04:58:57.832606+00:00",
   "title": "Design System: Classroom World Map",
   "extensions": {
+    "landCover": {
+      "provenance": "public/data/world/land-cover/metadata.json",
+      "palette": "public/data/world/land-cover/legend.json",
+      "year": 2020,
+      "nativeMaxZoom": 5,
+      "purpose": "Optional categorical cover in Physical Geography; replaces relief, retains labels/waterways; modern reference with a collapsible legend and source credit."
+    },
     "coasts": {
       "source": "Natural Earth physical regions, points, marine regions and 1:50m coastlines",
       "provenance": "public/data/world/physical/coasts-metadata.json",

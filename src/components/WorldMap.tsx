@@ -5,7 +5,8 @@ import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
 import { applyCountryLabelList } from "@/data/world-label-policy";
-import { physicalMapLayers, reliefSource, setMapMode, type MapMode } from "@/data/physical-map-style";
+import { physicalMapLayers, reliefSource, landCoverLayer, landCoverSource, setMapMode, type MapMode } from "@/data/physical-map-style";
+import landCoverLegend from "../../public/data/world/land-cover/legend.json";
 import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
 
 type MapStatus = "loading" | "ready" | "error";
@@ -33,8 +34,9 @@ async function loadGeography(path: string, signal: AbortSignal): Promise<Feature
 
 function resetPhysicalSources(map: LibreMap | null) {
   if (!map) return;
+  if (map.getLayer("physical-land-cover")) map.removeLayer("physical-land-cover");
   for (const layer of physicalMapLayers().reverse()) if (map.getLayer(layer.id)) map.removeLayer(layer.id);
-  for (const name of ["relief", "rivers", "lakes", "labels", "coasts"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
+  for (const name of ["relief", "rivers", "lakes", "labels", "coasts", "land-cover"]) if (map.getSource(`physical-${name}`)) map.removeSource(`physical-${name}`);
 }
 
 export function WorldMap() {
@@ -44,6 +46,8 @@ export function WorldMap() {
   const [attempt, setAttempt] = useState(0);
   const [limits, setLimits] = useState({ min: true, max: false });
   const [mode, setMode] = useState<MapMode>("standard");
+  const [landCover, setLandCover] = useState(false);
+  const [landCoverLoading, setLandCoverLoading] = useState(false);
   const [physicalStatus, setPhysicalStatus] = useState<MapStatus>("loading");
   const [physicalAttempt, setPhysicalAttempt] = useState(0);
   const physicalRequest = useRef<{ controller: AbortController; data: Promise<FeatureCollection[]> } | null>(null);
@@ -80,8 +84,11 @@ export function WorldMap() {
         for (const layer of physicalMapLayers()) {
           if (!map.getLayer(layer.id)) map.addLayer(layer, "island-labels");
         }
-        setMapMode(map, "physical");
+        if (landCover && !map.getSource("physical-land-cover")) map.addSource("physical-land-cover", landCoverSource());
+        if (landCover && !map.getLayer("physical-land-cover")) map.addLayer(landCoverLayer(), "physical-lakes");
+        setMapMode(map, "physical", landCover);
         setPhysicalStatus("ready");
+        if (landCover) map.once("idle", () => { if (!cancelled) setLandCoverLoading(false); });
       } catch {
         if (!cancelled && map) {
           setMapMode(map, "standard");
@@ -91,7 +98,7 @@ export function WorldMap() {
     }
     void showPhysical();
     return () => { cancelled = true; };
-  }, [mode, status, physicalAttempt]);
+  }, [mode, status, physicalAttempt, landCover]);
 
   useEffect(() => {
     let disposed = false;
@@ -163,6 +170,7 @@ export function WorldMap() {
         });
         map.on("error", (event) => {
           if ("sourceId" in event && typeof event.sourceId === "string" && event.sourceId.startsWith("physical-")) {
+            if (event.sourceId === "physical-land-cover" && (!map?.getLayer("physical-land-cover") || map.getLayoutProperty("physical-land-cover", "visibility") !== "visible")) return;
             if (!disposed) {
               if (map) setMapMode(map, "standard");
               setPhysicalStatus("error");
@@ -218,10 +226,35 @@ export function WorldMap() {
           setMode("physical");
         }}>Physical Geography</button>
       </div>
+      {mode === "physical" && status === "ready" && physicalStatus === "ready" && (
+        <label className="land-cover-toggle">
+          <input type="checkbox" checked={landCover} onChange={(event) => {
+            setLandCoverLoading(event.target.checked);
+            setLandCover(event.target.checked);
+          }} />
+          Land cover · 2020
+        </label>
+      )}
+      {mode === "physical" && landCover && landCoverLoading && physicalStatus === "ready" && status === "ready" && (
+        <p className="map-feedback map-feedback--land-cover" role="status">Loading land cover…</p>
+      )}
+      {mode === "physical" && landCover && !landCoverLoading && physicalStatus === "ready" && status === "ready" && (
+        <details className="land-cover-legend">
+          <summary>Land-cover legend · 2020</summary>
+          <div>
+            <ul aria-label="Land-cover categories">
+              {landCoverLegend.classes.map((group) => <li key={group.id}><span style={{ backgroundColor: group.color }} aria-hidden="true" />{group.name}</li>)}
+            </ul>
+            <p>{landCoverLegend.notice}</p>
+            <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">ESA CCI / Copernicus C3S · UCLouvain</a>
+          </div>
+        </details>
+      )}
       <p id="map-instructions" className="visually-hidden">
         Drag to pan. Scroll or pinch to zoom. Focus the map and use arrow keys to
         pan, or plus and minus to zoom. Use Reset world view to return to the overview.
         Switch map modes to explore countries or natural features without changing your view.
+        In Physical Geography, enable Land cover to compare modern vegetation and surface types using the legend.
       </p>
       {status === "ready" && mode === "physical" && physicalStatus === "loading" && (
         <p className="map-feedback map-feedback--physical" role="status">Loading physical geography…</p>
@@ -257,9 +290,10 @@ export function WorldMap() {
       </nav>
       <footer className="map-attribution">
         <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/" target="_blank" rel="noreferrer">Natural Earth</a>
+        {mode === "physical" && landCover && <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">ESA / C3S 2020</a>}
         <details>
           <summary aria-label="About map data">Map data</summary>
-          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. These are present-day references, with approximate label placements. Colours blend elevation and regional characteristics; they are not a precise elevation scale. Close zoom enlarges relief without adding detail. Water levels are not live.</p>
+          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
         </details>
       </footer>
       <noscript><p className="map-feedback">Enable JavaScript to explore the interactive map.</p></noscript>

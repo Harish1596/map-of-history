@@ -1,0 +1,22 @@
+{
+  "title": "Land cover · 2020",
+  "year": 2020,
+  "sourceName": "ESA CCI / Copernicus C3S · UCLouvain",
+  "sourceUrl": "https://climate.esa.int/en/projects/land-cover/data/",
+  "notice": "Modern reference, not historical vegetation. Simplified global overview; small patches may be omitted.",
+  "classes": [
+    { "id": 1, "name": "Tree cover", "color": "#44764b", "codes": [50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90] },
+    { "id": 2, "name": "Shrubland", "color": "#9aa56a", "codes": [120, 121, 122] },
+    { "id": 3, "name": "Grassland", "color": "#cad28b", "codes": [130] },
+    { "id": 4, "name": "Cropland", "color": "#e9c76c", "codes": [10, 11, 12, 20] },
+    { "id": 5, "name": "Mixed vegetation / crops", "color": "#b9bc78", "codes": [30, 40, 100, 110] },
+    { "id": 6, "name": "Wetlands / flooded cover", "color": "#6caaa3", "codes": [160, 170, 180] },
+    { "id": 7, "name": "Sparse vegetation", "color": "#d1c3a4", "codes": [150, 151, 152, 153] },
+    { "id": 8, "name": "Bare ground", "color": "#e4d5bd", "codes": [200, 201, 202] },
+    { "id": 9, "name": "Built-up areas", "color": "#b16c60", "codes": [190] },
+    { "id": 10, "name": "Snow / ice", "color": "#f4f6f7", "codes": [220] },
+    { "id": 11, "name": "Water", "color": "#87b6cf", "codes": [210] },
+    { "id": 12, "name": "Moss / lichen", "color": "#b6afa1", "codes": [140] },
+    { "id": 0, "name": "No data", "color": "#e3e7e7", "codes": [0] }
+  ]
+}

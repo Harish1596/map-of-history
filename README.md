@@ -155,6 +155,44 @@ Regenerate from downloaded Natural Earth files with:
 node scripts/prepare-coastal-data.mjs /path/to/ne_10m_geography_regions_polys.geojson /path/to/ne_10m_geography_regions_points.geojson /path/to/ne_10m_geography_marine_polys.geojson /path/to/ne_50m_coastline.geojson
 ```
 
+### Land cover
+
+In **Physical Geography**, enable **Land cover · 2020** to replace the relief
+colours with classified surface cover. The collapsible legend explains 12
+grouped categories plus no data. Coastlines, names and reference waterways
+remain above the classification. Turning it off restores shaded relief.
+Controls preserve the camera; the selection survives switching map modes.
+
+This is a **modern 2020 reference, not historical vegetation**. The source is
+the ESA CCI / Copernicus Climate Change Service land-cover product v2.1.1, led
+by UCLouvain, accessed through Stanford Natural Capital Project's GeoTIFF mirror.
+Source LCCS codes are grouped by the checked-in `legend.json` into tree cover,
+shrubs, grass, crops, mixed cover, wetlands/flooded cover, sparse vegetation,
+bare ground, built-up areas, snow/ice, water and moss/lichen.
+
+The original product is 300m; this compact global overview samples a 16200×8100
+grid (about 2.4km north/south spacing at the equator). It does not preserve native
+300m detail or small patches/individual fields and buildings. It is unsuitable
+for calculating class areas or treating close-up pixels as surveyed boundaries.
+
+`public/data/world/land-cover/` contains 1,365 lossless indexed PNG tiles at
+native Web Mercator zooms 0–5, a JSON legend and provenance metadata. Tile pixels
+use the categorical palette and nearest-neighbour resampling, without averaging
+codes or smoothing colours into invented classes. Higher zooms enlarge the same
+pixels. Ocean areas are transparent. Natural Earth water overlays are geographic
+references, not observations of 2020 cover. Tiles load only when enabled, with
+no runtime external requests. Metadata records source/product identification,
+source policy and credit, overview/legend/coastline checksums and transformations.
+
+With the same Python raster tooling as relief, regenerate in two explicit steps:
+
+```bash
+# Download an overview from the public GeoTIFF using range requests.
+python scripts/prepare-land-cover.py --download-overview /tmp/land-cover-2020.tif
+# Prepare the app assets locally, with no network requests.
+python scripts/prepare-land-cover.py /tmp/land-cover-2020.tif
+```
+
 Provenance, source checksum, preparation date and boundary limitations are in
 `public/data/world/metadata.json`. The data uses Natural Earth's default de facto
 boundaries, includes territories and disputed areas, and is a generalized snapshot

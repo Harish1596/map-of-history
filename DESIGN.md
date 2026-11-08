@@ -196,7 +196,26 @@ Named feature regions are not filled or outlined: those source polygons are
 approximate label-placement aids, not exact geographic boundaries. Source-guided
 label eligibility starts at zooms 2–10 and persists at closer zooms.
 
-### Navigation
+### Land-cover control and legend
+
+Physical Geography offers a native checkbox labelled “Land cover · 2020” below
+the mode switch, in a white outlined surface with a 44px minimum hit area.
+Selecting it replaces relief colours with opaque categorical land-cover tiles;
+switching it off restores relief. The same camera, reference water layers and
+labels remain. Use nearest-neighbour rendering and lossless palette colours
+from `public/data/world/land-cover/legend.json`, without blending categories.
+The overview is a modern 2020 classification, not historical vegetation.
+
+A collapsed native disclosure above the lower-left attribution opens the
+legend. Its 44px summary reveals labelled, outlined 14px colour swatches, a short
+modern-reference/overview notice and source credit. The panel fits within the
+viewport minus navigation space; its contents scroll on short screens. Text is
+12px dark ink on white, with 1.5 line height. No title plaque is reintroduced.
+Selection is retained across mode changes but shown only in Physical Geography.
+Land-cover loading uses a status surface below the checkbox; failed tiles use
+the existing physical-data retry path. Source credit stays visible in attribution.
+
+### Navigation controls
 
 The zoom pair uses 44px square buttons inside one bordered shell. Reset is a separately outlined 46px square. Buttons use white fill at rest, hover and pressed palette states, and disabled slate when unavailable. Hover transitions use 120ms ease-out. Keyboard focus uses a 3px teal outline offset 3px; the map canvas uses the same outline inset by 3px.
 

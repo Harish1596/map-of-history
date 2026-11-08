@@ -2,6 +2,22 @@ import type { LayerSpecification, Map as LibreMap, RasterSourceSpecification } f
 
 export type MapMode = "standard" | "physical";
 
+export function landCoverSource(): RasterSourceSpecification {
+  return {
+    type: "raster", tiles: ["/data/world/land-cover/{z}/{x}/{y}.png"],
+    tileSize: 512, minzoom: 0, maxzoom: 5,
+    attribution: "ESA CCI / Copernicus C3S · UCLouvain (2020)",
+  };
+}
+
+export function landCoverLayer(): LayerSpecification {
+  return {
+    id: "physical-land-cover", type: "raster", source: "physical-land-cover",
+    layout: { visibility: "none" },
+    paint: { "raster-opacity": 1, "raster-resampling": "nearest", "raster-fade-duration": 0 },
+  };
+}
+
 export function reliefSource(): RasterSourceSpecification {
   return {
     type: "raster", tiles: ["/data/world/relief/{z}/{x}/{y}.webp"],
@@ -81,11 +97,13 @@ export function physicalMapLayers(): LayerSpecification[] {
 }
 
 // Toggle existing layers; never replace the style or change the map's camera.
-export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">, mode: MapMode) {
+export function setMapMode(map: Pick<LibreMap, "getLayer" | "setLayoutProperty">, mode: MapMode, landCover = false) {
   for (const id of ["country-borders", "country-labels"]) {
     if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", mode === "standard" ? "visible" : "none");
   }
   for (const layer of physicalMapLayers()) {
-    if (map.getLayer(layer.id)) map.setLayoutProperty(layer.id, "visibility", mode === "physical" ? "visible" : "none");
+    const visible = mode === "physical" && !(layer.id === "physical-relief" && landCover);
+    if (map.getLayer(layer.id)) map.setLayoutProperty(layer.id, "visibility", visible ? "visible" : "none");
   }
+  if (map.getLayer("physical-land-cover")) map.setLayoutProperty("physical-land-cover", "visibility", mode === "physical" && landCover ? "visible" : "none");
 }

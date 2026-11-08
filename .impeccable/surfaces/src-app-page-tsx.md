@@ -37,8 +37,13 @@ small cape-location dots. Coastal labels follow source zoom guidance and
 collision placement; approximate label regions are not drawn as boundaries,
 hiding political borders and country names. It loads local layers on first use
 and preserves the camera. Relief is locally tiled and generalized for world and
-regional views, with no tilt or 3D terrain. Attribution lower left. White 44px zoom
-and reset buttons lower right. Signature interaction: all labels and borders
+regional views, with no tilt or 3D terrain.
+Land cover is an optional checkbox beneath the physical-mode switch. It replaces
+relief colours with grouped modern 2020 cover, using a collapsible lower-left
+legend and explicit source/year/overview limitations. It preserves the camera
+and loads local categorical tiles only when selected. Attribution lower left
+includes ESA/C3S. White 44px zoom and reset buttons sit lower right.
+Signature interaction: all labels and borders
 track the same camera during every pan and zoom. Motion is map navigation only.
 The user increased the zoom range after the earlier 2×-overview cap: maximum
 MapLibre zoom is now 21, using Google's documented zoom-22 pixel scale as reference.
