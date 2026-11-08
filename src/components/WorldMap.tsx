@@ -5,6 +5,7 @@ import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
 import { worldMapStyle } from "@/data/world-map-style";
 import { applyCountryLabelList } from "@/data/world-label-policy";
+import { physicalMapLayers, setMapMode, type MapMode } from "@/data/physical-map-style";
 import { constrainWorldCamera, maximumWorldZoom, minimumWorldZoom } from "@/data/world-map-camera";
 
 type MapStatus = "loading" | "ready" | "error";
@@ -36,6 +37,54 @@ export function WorldMap() {
   const [status, setStatus] = useState<MapStatus>("loading");
   const [attempt, setAttempt] = useState(0);
   const [limits, setLimits] = useState({ min: true, max: false });
+  const [mode, setMode] = useState<MapMode>("standard");
+  const [physicalStatus, setPhysicalStatus] = useState<MapStatus>("loading");
+  const [physicalAttempt, setPhysicalAttempt] = useState(0);
+  const physicalRequest = useRef<{ controller: AbortController; data: Promise<FeatureCollection[]> } | null>(null);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (status !== "ready" || !map) return;
+    if (mode === "standard") {
+      setMapMode(map, "standard");
+      return;
+    }
+    let cancelled = false;
+    async function showPhysical() {
+      try {
+        if (!physicalRequest.current) {
+          const controller = new AbortController();
+          const timeout = window.setTimeout(() => controller.abort(), 25_000);
+          const data = Promise.all(["rivers", "lakes", "labels"].map((name) =>
+            loadGeography(`/data/world/physical/${name}.geojson`, controller.signal),
+          )).finally(() => window.clearTimeout(timeout));
+          physicalRequest.current = { controller, data };
+          // Failed requests can be retried; successful data stays cached for toggles.
+          void data.catch(() => {
+            if (physicalRequest.current?.data === data) physicalRequest.current = null;
+          });
+        }
+        const data = await physicalRequest.current.data;
+        if (cancelled || !map) return;
+        for (const [index, name] of ["rivers", "lakes", "labels"].entries()) {
+          const id = `physical-${name}`;
+          if (!map.getSource(id)) map.addSource(id, { type: "geojson", data: data[index] });
+        }
+        for (const layer of physicalMapLayers()) {
+          if (!map.getLayer(layer.id)) map.addLayer(layer, "island-labels");
+        }
+        setMapMode(map, "physical");
+        setPhysicalStatus("ready");
+      } catch {
+        if (!cancelled && map) {
+          setMapMode(map, "standard");
+          setPhysicalStatus("error");
+        }
+      }
+    }
+    void showPhysical();
+    return () => { cancelled = true; };
+  }, [mode, status, physicalAttempt]);
 
   useEffect(() => {
     let disposed = false;
@@ -105,7 +154,11 @@ export function WorldMap() {
             max: map.getZoom() >= map.getMaxZoom() - 0.01,
           });
         });
-        map.on("error", () => {
+        map.on("error", (event) => {
+          if ("sourceId" in event && typeof event.sourceId === "string" && event.sourceId.startsWith("physical-")) {
+            if (!disposed) setPhysicalStatus("error");
+            return;
+          }
           failed = true;
           if (!disposed) setStatus("error");
         });
@@ -133,6 +186,8 @@ export function WorldMap() {
     return () => {
       disposed = true;
       controller.abort();
+      physicalRequest.current?.controller.abort();
+      physicalRequest.current = null;
       window.clearTimeout(timeout);
       observer?.disconnect();
       map?.remove();
@@ -143,10 +198,27 @@ export function WorldMap() {
   return (
     <main className="world-map" aria-label="Explore the world">
       <div className="world-map__canvas" ref={container} />
+      <div className="map-modes" role="group" aria-label="Map mode">
+        <button type="button" aria-pressed={mode === "standard"} disabled={status !== "ready"} onClick={() => setMode("standard")}>Standard</button>
+        <button type="button" aria-pressed={mode === "physical"} disabled={status !== "ready"} onClick={() => {
+          if (mode !== "physical") setPhysicalStatus("loading");
+          setMode("physical");
+        }}>Physical Geography</button>
+      </div>
       <p id="map-instructions" className="visually-hidden">
         Drag to pan. Scroll or pinch to zoom. Focus the map and use arrow keys to
         pan, or plus and minus to zoom. Use Reset world view to return to the overview.
+        Switch map modes to explore countries or natural features without changing your view.
       </p>
+      {status === "ready" && mode === "physical" && physicalStatus === "loading" && (
+        <p className="map-feedback map-feedback--physical" role="status">Loading physical geography…</p>
+      )}
+      {status === "ready" && mode === "physical" && physicalStatus === "error" && (
+        <div className="map-feedback map-feedback--physical" role="alert">
+          <p>Physical geography couldn’t load. You can retry or switch to Standard.</p>
+          <button type="button" onClick={() => { setPhysicalStatus("loading"); setPhysicalAttempt((value) => value + 1); }}>Retry physical geography</button>
+        </div>
+      )}
       {status === "loading" && <p className="map-feedback" role="status">Loading the world map…</p>}
       {status === "error" && (
         <div className="map-feedback map-feedback--error" role="alert">
@@ -168,8 +240,8 @@ export function WorldMap() {
       <footer className="map-attribution">
         <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/" target="_blank" rel="noreferrer">Natural Earth</a>
         <details>
-          <summary aria-label="About map boundaries">Map data</summary>
-          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. This generalized dataset is a geographic reference, not a live record of political changes.</p>
+          <summary aria-label="About map data">Map data</summary>
+          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography shows selected rivers, lakes, islands, mountain ranges, deserts, plateaus and plains from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/" target="_blank" rel="noreferrer">Natural Earth’s physical datasets</a>. These generalized features are a geographic reference, with no elevation shading or live water levels.</p>
         </details>
       </footer>
       <noscript><p className="map-feedback">Enable JavaScript to explore the interactive map.</p></noscript>

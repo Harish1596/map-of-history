@@ -6,6 +6,10 @@ colors:
   land: "#d4dfd2"
   ink: "#283b42"
   island-ink: "#405c60"
+  water: "#b7d4df"
+  river: "#709cac"
+  water-ink: "#285366"
+  landform-ink: "#5c5545"
   line: "#6b8184"
   paper: "#ffffff"
   focus: "#175c6f"
@@ -134,7 +138,7 @@ zoom to make room for individual islands. Avoid duplicating existing country nam
 
 ## Layout
 
-The map fills the viewport, using dynamic viewport height with a conventional viewport fallback. Attribution sits lower left; stacked zoom and reset navigation sits lower right. The upper-left corner stays clear. These placements describe the current map surface, not a template for unrelated future screens.
+The map fills the viewport, using dynamic viewport height with a conventional viewport fallback. Attribution sits lower left; stacked zoom and reset navigation sits lower right. A compact Standard / Physical Geography switch sits upper left. These placements describe the current map surface, not a template for unrelated future screens.
 
 Horizontal navigation wraps at the date line without stopping. The zoom-out
 limit fills both viewport dimensions and adapts to viewport size. The zoom-in
@@ -159,6 +163,22 @@ Surfaces have no shadows. Opaque white fill and a single slate border distinguis
 The form language is rectangular with restrained corners: controls, source disclosure and feedback use the control radius. The zoom pair shares one outlined shell with a dividing line. Navigation icons are simple 22px outline SVGs with 2px rounded strokes. Country borders scale from 0.65px at zoom 0 to 1px at zoom 4 and 1.4px at zoom 8.
 
 ## Components
+
+### Map mode switch
+
+Two native buttons share an outlined white shell at the upper-left 14px/16px
+insets, respecting safe areas. Each has a minimum height of 44px, 10px 14px
+padding, 13px medium Noto Sans text and the shared 3px focus outline. The active
+button uses dark ink with white text; hover uses focus teal. `aria-pressed`
+exposes the selected mode. No title or branding accompanies the switch.
+
+Physical Geography hides country borders and country names. Lakes use water
+fill, rivers use river blue, and water names use water ink. Landform names use
+landform ink with a sage halo. Natural-feature names grow from 12px at zoom 1
+to 16px at zoom 4 and 22px at zoom 8. Island labels remain in both modes. No
+elevation shading is implied. Switching layers preserves the same map camera.
+Physical loading/error feedback sits below the mode switch, leaving navigation
+usable. Standard startup does not fetch physical datasets.
 
 ### Navigation
 

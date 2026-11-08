@@ -4,6 +4,10 @@
   "title": "Design System: Classroom World Map",
   "extensions": {
     "colorMeta": {
+      "water": { "role": "secondary", "displayName": "Lake Water" },
+      "river": { "role": "secondary", "displayName": "River Blue" },
+      "water-ink": { "role": "secondary", "displayName": "Water Ink" },
+      "landform-ink": { "role": "secondary", "displayName": "Landform Ink" },
       "island-ink": {
         "role": "secondary",
         "displayName": "Island Ink"
@@ -176,6 +180,13 @@
     ]
   },
   "components": [
+    {
+      "name": "Map mode switch",
+      "kind": "custom",
+      "description": "Switch between country and physical geography layers while preserving the camera.",
+      "html": "<div class=\"ds-modes\" role=\"group\" aria-label=\"Map mode\"><button type=\"button\" aria-pressed=\"true\">Standard</button><button type=\"button\" aria-pressed=\"false\">Physical Geography</button></div>",
+      "css": ".ds-modes{display:inline-flex;border:1px solid #6b8184;border-radius:3px;background:#fff;font-family:'Noto Sans',sans-serif}.ds-modes button{min-height:44px;padding:10px 14px;border:0;border-radius:2px;background:#fff;color:#283b42;font:500 13px 'Noto Sans',sans-serif;cursor:pointer}.ds-modes button+button{border-left:1px solid #6b8184}.ds-modes button:hover{background:#e4eded}.ds-modes button[aria-pressed=true]{background:#283b42;color:#fff}.ds-modes button[aria-pressed=true]:hover{background:#175c6f}.ds-modes button:focus-visible{outline:3px solid #175c6f;outline-offset:3px}.ds-modes button:disabled{color:#8a979b;cursor:default}"
+    },
     {
       "name": "Zoom navigation",
       "kind": "nav",

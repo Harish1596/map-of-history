@@ -1,0 +1,27 @@
+{
+  "title": "Natural Earth 1:10m physical geography",
+  "license": "Public domain",
+  "licenseUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "preparedOn": "2026-11-08",
+  "sources": [
+    {
+      "url": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_rivers_lake_centerlines.geojson",
+      "sourceSha256": "bb854a900ecbd3b408df46d5e16e3e0f974ba55993f9d8b5c26e855273c0905a"
+    },
+    {
+      "url": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_lakes.geojson",
+      "sourceSha256": "2d036f53dedec578001c5c30c2959ee7d4eebc1306900fa4367c49929ec8f2d9"
+    },
+    {
+      "url": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_geography_regions_polys.geojson",
+      "sourceSha256": "b7b26e50ea917d3696aec87f932def2bf5f890f5770e441d59c162c6f4c92a77"
+    }
+  ],
+  "featureCounts": {
+    "rivers": 1454,
+    "lakes": 1355,
+    "labels": 1127
+  },
+  "transformations": "Keep nonempty river lines and lake polygons with English names and source zoom/rank guidance. Round geometry to five decimal places. Anchor lake, mountain-range, desert, plateau and plain names inside their largest source polygon using Polylabel. Rank-1/2 landform labels become eligible at zoom 0/1; other landforms follow source label zooms.",
+  "limitations": "Generalized physical geography, not elevation or terrain relief. Named landform footprints are approximate. Lake extents are not current water levels. Country/coast outlines remain 1:50m; slight shoreline mismatches are possible. Not every waterway or landform is included."
+}

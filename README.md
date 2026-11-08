@@ -54,7 +54,36 @@ name becomes eligible; collision detection can delay it until there is room:
 
 Text size also follows the geographic size tier and grows in screen pixels throughout
 zoom levels 0–8; the label font does not stop growing at regional zoom levels.
-The map has no title plaque covering the upper-left corner.
+The map has no title plaque. A compact mode switch occupies the upper-left corner.
+
+### Standard and Physical Geography modes
+
+**Standard** shows country borders and country names. **Physical Geography**
+shows rivers, lakes and natural-feature names, including mountain ranges,
+deserts, plateaus and plains. Island names remain available in both modes.
+Political borders and country labels are hidden in the physical view. Switching
+preserves the current location and zoom.
+
+The physical layers load only when first selected, from local GeoJSON in
+`public/data/world/physical/`, and remain cached for subsequent switches.
+Failed loads have a retry action; Standard remains usable.
+
+The bundled Natural Earth 1:10m datasets contain 1,454 river features,
+1,355 lake features and 1,127 lake/landform labels. Zoom eligibility follows
+source guidance; major rank-1/2 landforms become eligible at world-view zooms
+0/1. Collision detection determines which eligible names have space to appear.
+River names follow their lines; lake and landform names use interior anchors.
+Source URLs, checksums, licensing and preparation details are recorded in
+`public/data/world/physical/metadata.json`.
+
+These layers show generalized physical geography, without elevation shading
+or 3D terrain. They do not include every waterway or landform. Lake extents are
+not current water levels, and the finer 1:10m data may differ slightly from the
+existing 1:50m coastal outlines. Regenerate from downloaded source files with:
+
+```bash
+node scripts/prepare-physical-data.mjs /path/to/ne_10m_rivers_lake_centerlines.geojson /path/to/ne_10m_lakes.geojson /path/to/ne_10m_geography_regions_polys.geojson
+```
 
 ### Physical island names
 

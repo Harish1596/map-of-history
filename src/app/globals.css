@@ -42,6 +42,28 @@ a { color: inherit; text-underline-offset: 3px; }
   overflow: hidden;
 }
 .world-map__canvas { position: absolute; inset: 0; }
+.map-modes {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  left: max(14px, env(safe-area-inset-left));
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--paper);
+}
+.map-modes button {
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--paper);
+  font-size: 13px;
+  font-weight: 500;
+}
+.map-modes button + button { border-left: 1px solid var(--line); }
+.map-modes button:not(:disabled):hover { background: #e4eded; }
+.map-modes button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.map-modes button[aria-pressed="true"]:not(:disabled):hover { background: var(--focus); }
 .world-map__canvas .maplibregl-canvas:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: -3px;
@@ -117,6 +139,7 @@ a { color: inherit; text-underline-offset: 3px; }
   font-size: 14px;
 }
 .map-feedback--error { width: 340px; }
+.map-feedback--physical { top: max(76px, calc(env(safe-area-inset-top) + 60px)); transform: translateX(-50%); max-width: min(420px, calc(100% - 28px)); }
 .map-feedback h2 { margin: 0 0 8px; font-size: 18px; }
 .map-feedback p { margin: 0 0 16px; line-height: 1.6; }
 .map-feedback button { min-height: 44px; padding: 8px 14px; background: var(--ink); color: var(--paper); border: 0; border-radius: 3px; }
