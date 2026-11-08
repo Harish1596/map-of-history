@@ -1,0 +1,12 @@
+{
+  "title": "Natural Earth 1:10m geographic-region island names",
+  "source": "https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_geography_regions_polys.geojson",
+  "download": "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_geography_regions_polys.geojson",
+  "license": "Public domain",
+  "licenseUrl": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "preparedOn": "2026-11-08",
+  "sourceSha256": "b7b26e50ea917d3696aec87f932def2bf5f890f5770e441d59c162c6f4c92a77",
+  "featureCount": 425,
+  "transformations": "Retain Island and Island group features; use English names and interior Polylabel anchors. Omit names already covered by country labels. Minimum zoom combines area bands with source label guidance, starting at zoom 3. Group names yield to individual island names after two levels, never before zoom 6.",
+  "limitations": "Selected named physical regions, not every island. Island-group footprints include water and are not land-area measurements. Label detail is 1:10m; the underlying country outlines remain 1:50m."
+}

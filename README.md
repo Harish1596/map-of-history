@@ -56,6 +56,27 @@ Text size also follows the geographic size tier and grows in screen pixels throu
 zoom levels 0–8; the label font does not stop growing at regional zoom levels.
 The map has no title plaque covering the upper-left corner.
 
+### Physical island names
+
+Country labels do not name every island within a country. A separate local layer
+in `public/data/world/island-labels.geojson` adds 425 named islands and archipelagos
+from Natural Earth's 1:10m geographic regions. Corsica, Sardinia, Sicily and the
+Balearic Islands appear in regional views; individual Balearic island names
+appear as you zoom closer. Country labels retain collision priority.
+
+Island labels start at zoom 3 or later, using size and source label guidance.
+Archipelago names yield to individual names after two levels, never before zoom 6.
+Matching country names are omitted to avoid duplicate labels. This is a selected
+named-region dataset, not coverage of every islet. Its finer label detail does
+not change the underlying 1:50m outlines.
+
+Source, license, preparation details and checksum are recorded in
+`public/data/world/island-metadata.json`. Rebuild the local labels with:
+
+```bash
+node scripts/prepare-island-labels.mjs /path/to/ne_10m_geography_regions_polys.geojson
+```
+
 Provenance, source checksum, preparation date and boundary limitations are in
 `public/data/world/metadata.json`. The data uses Natural Earth's default de facto
 boundaries, includes territories and disputed areas, and is a generalized snapshot

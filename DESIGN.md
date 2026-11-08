@@ -5,6 +5,7 @@ colors:
   ocean: "#edf3f5"
   land: "#d4dfd2"
   ink: "#283b42"
+  island-ink: "#405c60"
   line: "#6b8184"
   paper: "#ffffff"
   focus: "#175c6f"
@@ -124,6 +125,12 @@ Labels use line height 1.15, maximum width 6 em, padding 2px, a land-colored hal
 (width 1.1px, blur 0.4px), and collision avoidance. Minimum zoom determines
 eligibility; available space determines final visibility. Center alignment uses
 offline-computed interior anchors in the largest landmass, avoiding holes.
+
+Physical island and archipelago labels form a secondary layer. They use Noto Sans
+at 11px at zoom 3, 14px at zoom 5 and 18px at zoom 8, with island ink and a 1px
+land-colored halo. Minimum zoom is at least 3 and follows source guidance and size.
+Country labels have collision priority. Archipelago labels disappear at closer
+zoom to make room for individual islands. Avoid duplicating existing country names.
 
 ## Layout
 

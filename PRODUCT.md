@@ -33,6 +33,8 @@ The proof of concept is evaluated locally in a desktop or mobile web browser.
 The current interface is a flat world map with zoom and reset controls. Country
 names become visible as space allows while zooming. The earlier timeline,
 event-detail panel, citations and event navigation remain archived in source.
+Regional zoom also shows named islands and archipelagos within countries, using
+a separate physical-name dataset rather than treating them as sovereign states.
 
 ## Capabilities and Constraints
 
@@ -60,6 +62,9 @@ event-detail panel, citations and event navigation remain archived in source.
   derived from Natural Earth 1:50m Admin-0 country data. The default boundaries
   follow Natural Earth's de facto convention; the dataset is a generalized
   snapshot, not live political data or a count of sovereign states.
+- `public/data/world/island-labels.geojson` adds selected named islands and island
+  groups from Natural Earth's 1:10m geographic regions. Source details and coverage
+  limitations are recorded in `island-metadata.json`; not every islet is named.
 - Local regional basemap data lives in `public/data/antioch/basemap/` and derives
   from public-domain Natural Earth geography. It provides modern geographic
   context rather than a reconstruction of medieval boundaries.

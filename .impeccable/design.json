@@ -4,6 +4,10 @@
   "title": "Design System: Classroom World Map",
   "extensions": {
     "colorMeta": {
+      "island-ink": {
+        "role": "secondary",
+        "displayName": "Island Ink"
+      },
       "ocean": {
         "role": "neutral",
         "displayName": "Pale Ocean",

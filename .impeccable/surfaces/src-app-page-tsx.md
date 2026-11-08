@@ -25,6 +25,8 @@ for smaller places; reset to regain geographic context.
 Country labels follow geographic-area bands and descending-area collision
 priority, sourced from the local country-labels.json list. Small islands and
 territories become eligible later than larger countries.
+Physical island names appear in a secondary regional layer. Archipelago names
+give way to individual island names at closer zoom; country labels stay dominant.
 
 FIRST VIEWPORT: A continuous flat map edge to edge, with no title plaque (removed
 at the user's request). Attribution lower left. White 44px zoom

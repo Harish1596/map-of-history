@@ -4,6 +4,7 @@ import type { StyleSpecification } from "maplibre-gl";
 export function worldMapStyle(
   countries: FeatureCollection,
   labels: FeatureCollection,
+  islands: FeatureCollection = { type: "FeatureCollection", features: [] },
 ): StyleSpecification {
   return {
     version: 8,
@@ -11,6 +12,7 @@ export function worldMapStyle(
     sources: {
       countries: { type: "geojson", data: countries },
       labels: { type: "geojson", data: labels },
+      islands: { type: "geojson", data: islands },
     },
     layers: [
       { id: "ocean", type: "background", paint: { "background-color": "#edf3f5" } },
@@ -20,6 +22,26 @@ export function worldMapStyle(
         paint: {
           "line-color": "#6b8184",
           "line-width": ["interpolate", ["linear"], ["zoom"], 0, 0.65, 4, 1, 8, 1.4],
+        },
+      },
+      {
+        id: "island-labels", type: "symbol", source: "islands", minzoom: 3,
+        filter: ["all", [">=", ["zoom"], ["get", "minZoom"]], ["<", ["zoom"], ["get", "maxZoom"]]],
+        layout: {
+          "text-field": ["get", "name"],
+          "text-font": ["Noto Sans"],
+          "text-size": ["interpolate", ["linear"], ["zoom"], 3, 11, 5, 14, 8, 18],
+          "text-max-width": 7,
+          "text-padding": 2,
+          "text-anchor": "center",
+          "symbol-sort-key": ["get", "priority"],
+          "text-allow-overlap": false,
+          "text-ignore-placement": false,
+        },
+        paint: {
+          "text-color": "#405c60",
+          "text-halo-color": "#d4dfd2",
+          "text-halo-width": 1,
         },
       },
       {
