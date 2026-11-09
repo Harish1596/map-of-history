@@ -15,8 +15,6 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - This is a static, interactive world-map proof of concept for students and
   educators. The current home screen shows present-day geography.
 - Historical events, causal links and citations remain the longer-term goal.
-  The older Antioch implementation is preserved separately; do not restore it
-  to the home screen or remove its files as incidental cleanup.
 - Read `PRODUCT.md`, `DESIGN.md`, `README.md` and the relevant
   `.impeccable/surfaces/` brief before changing the interface. The user's latest
   instructions take precedence over older design notes or plans.

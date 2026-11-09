@@ -89,7 +89,7 @@ components:
 
 A light, quiet geographic canvas supports students and educators on shared classroom screens. Muted sage land, deeper blue ocean, distinct borders and plain country names carry the visual identity. Small white controls remain subordinate to geography.
 
-The approved world replaces the former dark, gold, serif siege interface. The visual language favors clarity and geographic context; runtime geography and font assets are local.
+The visual language favors clarity and geographic context; runtime geography and font assets are local.
 
 **Key Characteristics:**
 - Sage land against a clear blue ocean.
@@ -270,7 +270,6 @@ Loading uses a short status message in a centered white outlined surface. Errors
 - **Do** retain the source and boundary-convention disclosure.
 
 ### Don't:
-- **Don't** revive the former dark, gold, serif siege visual language.
 - **Don't** add ornamental shadows or decorative display typography.
 - **Don't** treat illustrative mock geography as authoritative map geometry.
 

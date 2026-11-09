@@ -27,8 +27,7 @@ Natural Earth's de facto convention, not a claim of universally agreed borders.
 Record source, license, retrieval date and dataset limitations. The preview's
 generated geography is illustrative and must be replaced by geographic data.
 
-Keep Antioch's data and components available in the repository for later work.
-The new home screen loads no siege content. Do not add search, historical events,
+Do not add search, historical events,
 timelines, accounts, sidebars or unrelated navigation in this step.
 
 ## Acceptance
