@@ -55,7 +55,7 @@ use a collapsible lower-left legend and explain their source/overview limits.
 Rock types retain GLiM's first-level surface lithology; they do not imply rock age
 or subsurface structure. Selection preserves the camera and loads only local
 tiles for the chosen surface. Attribution includes the active dataset's credit.
-White 44px zoom and reset buttons sit lower right.
+White 22px zoom buttons and a 23px reset button sit lower right, with 11px icons.
 Signature interaction: all labels and borders
 track the same camera during every pan and zoom. Motion is map navigation only.
 The user increased the zoom range after the earlier 2×-overview cap: maximum
@@ -79,6 +79,12 @@ Physical Features disclosure has six independent checkboxes: peaks, volcanoes,
 canyons, named forests, undersea names and tectonics. All runtime data is local.
 Markers, labels and model boundary lines open a source panel when selected;
 recorded elevations are qualified by their source. Keep the pale control panels,
-44px targets, distinct authored marker shapes and explicit geographic/model
+compact rows, distinct authored marker shapes and explicit geographic/model
 limitations. Selecting a feature closes the filter disclosure; its source panel
 temporarily replaces the depth/classification legend.
+
+Map exposure takes priority: Terrain is a collapsed 188px bar; Features is a
+188px disclosure with a single column of 28px rows. The collapsed Legend bar is
+120px wide and opens to a readable 300px panel. Disclosures share an exclusive
+group and close on map clicks, camera movement or Escape. Terrain closes after
+selection. Zoom/reset dimensions are half their former size by explicit request.

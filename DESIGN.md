@@ -223,10 +223,12 @@ label eligibility starts at zooms 2–10 and persists at closer zooms.
 
 ### Physical surface control and legends
 
-Physical Geography offers a native radio group below the mode switch: “Terrain
-relief”, “Land cover · 2020” and “Rock types”. One surface is selected at a time.
-Each label has a 44px minimum hit area, 10px 12px padding, an 18px native radio
-and an 8px gap. The white outlined group wraps on narrow screens. It preserves
+Physical Geography offers a collapsed Terrain bar below the mode switch. It
+reveals a single-column native radio group: “Terrain relief”, “Land cover · 2020”
+and “Rock types”. One surface is selected at a time. Labels use 28px rows, 5px 8px
+padding, a 14px native radio and a 6px gap. The bar is 188px wide and shows the
+current selection; choosing a surface collapses it and returns focus to its summary.
+It preserves
 the camera, reference water layers and labels. Land cover and rock types replace
 relief colours with opaque categorical tiles; nearest-neighbour rendering and
 lossless palette colours avoid blending categories. Palettes and source notes
@@ -235,7 +237,9 @@ Land cover is a modern 2020 overview. Rock types describe compiled surface
 lithology, with no geological ages or subsurface interpretation implied.
 
 A collapsed native disclosure above the lower-left attribution opens the
-active legend. Its 44px summary reveals labelled, outlined 14px colour swatches,
+active legend. Its 120px-wide collapsed bar (60% narrower than before) uses a
+28px summary labelled “Legend”. When opened, its readable 300px panel reveals
+labelled, outlined 14px colour swatches,
 a short source-specific overview notice and source credit. The panel fits within the
 viewport minus navigation space; its contents scroll on short screens. Text is
 12px dark ink on white, with 1.5 line height. No title plaque is reintroduced.
@@ -245,7 +249,7 @@ the existing physical-data retry path. Source credit stays visible in attributio
 
 ### Navigation controls
 
-The zoom pair uses 44px square buttons inside one bordered shell. Reset is a separately outlined 46px square. Buttons use white fill at rest, hover and pressed palette states, and disabled slate when unavailable. Hover transitions use 120ms ease-out. Keyboard focus uses a 3px teal outline offset 3px; the map canvas uses the same outline inset by 3px.
+The zoom pair uses 22px square buttons inside one bordered shell. Reset is a separately outlined 23px square. These are half the previous dimensions, per the map-exposure request, with 11px icons and a 4px group gap. Buttons use white fill at rest, hover and pressed palette states, and disabled slate when unavailable. Hover transitions use 120ms ease-out. Keyboard focus uses a 3px teal outline offset 3px; the map canvas uses the same outline inset by 3px.
 
 Reset fits the world bounds with a 650ms navigation animation. Initial fit has no animation and label fade is disabled. CSS state transitions become instantaneous for reduced-motion preference.
 
@@ -284,10 +288,16 @@ zooms; collision avoidance stays enabled. Classified tectonic boundaries use
 rust (convergent), blue (divergent) and dashed ochre (transform) with a light
 casing; plate names have secondary visual priority.
 
-Keep six independent checkboxes in a Features disclosure below the physical
-surface controls. Preserve those choices while switching surface or mode. A
+Keep six independent checkboxes in a compact 188px Features disclosure below the
+Terrain bar, in one column with 28px rows and 14px checkboxes. Both disclosures
+start collapsed and use 12px text. Preserve choices while switching surface or mode. A
 selected feature opens a compact source panel, showing source-record elevation
 and limitations when applicable. The panel replaces the depth legend while open
 and closes with its labelled button or Escape. Regional label locations do not
 imply mapped forest/canyon/undersea boundaries. Volcano symbols do not imply
 current activity; PB2002 is a modern plate model, not a historical fault map.
+
+Terrain, Features, Legend and Map data share a native exclusive disclosure group:
+only one opens at a time. Map clicks, panning, zooming and Escape collapse open
+disclosures. Camera movement also dismisses feature information. Expanded panels
+occupy map space only while the user deliberately interacts with them.

@@ -16,6 +16,10 @@ type MapStatus = "loading" | "ready" | "error";
 const WORLD_BOUNDS: [[number, number], [number, number]] = [[-180, -58], [180, 84]];
 type SelectedLandmark = { name: string; kind: string; group: LandmarkGroup; sourceName: string; sourceUrl: string; informationUrl?: string; elevationMetres?: number; locationNote?: string; boundaryType?: string };
 
+function collapseMapPanels() {
+  document.querySelectorAll<HTMLDetailsElement>(".world-map details[open]").forEach((panel) => { panel.open = false; });
+}
+
 function Icon({ name }: { name: "plus" | "minus" | "reset" | "close" }) {
   return (
     <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -170,16 +174,16 @@ export function WorldMap() {
           attributionControl: false,
         });
         mapRef.current = map;
+        map.on("movestart", () => { collapseMapPanels(); setSelectedLandmark(null); });
         map.on("click", (event) => {
           if (!map || disposed) return;
+          collapseMapPanels();
           const layers = landmarkMapLayers().filter((layer) => !layer.id.endsWith("casing") && map?.getLayer(layer.id) && map.getLayoutProperty(layer.id, "visibility") !== "none").map((layer) => layer.id);
           if (!layers.length) return;
           const hit = map.queryRenderedFeatures(event.point, { layers })[0];
           const group = hit && landmarkGroupForLayer(hit.layer.id);
           const p = hit?.properties;
           if (!group || !p || typeof p.name !== "string" || typeof p.sourceUrl !== "string") { setSelectedLandmark(null); return; }
-          const disclosure = document.querySelector<HTMLDetailsElement>(".physical-features");
-          if (disclosure) disclosure.open = false;
           setSelectedLandmark({ name: p.name, kind: p.kind, group, sourceName: p.sourceName, sourceUrl: p.sourceUrl, informationUrl: p.informationUrl, elevationMetres: typeof p.elevationMetres === "number" ? p.elevationMetres : undefined, locationNote: p.locationNote, boundaryType: p.boundaryType });
         });
         map.on("resize", () => {
@@ -249,7 +253,7 @@ export function WorldMap() {
   }, [attempt]);
 
   return (
-    <main className="world-map" aria-label="Explore the world" onKeyDown={(event) => { if (event.key === "Escape") setSelectedLandmark(null); }}>
+    <main className="world-map" aria-label="Explore the world" onKeyDown={(event) => { if (event.key === "Escape") { setSelectedLandmark(null); collapseMapPanels(); } }}>
       <div className="world-map__canvas" ref={container} />
       <div className="map-modes" role="group" aria-label="Map mode">
         <button type="button" aria-pressed={mode === "standard"} disabled={status !== "ready"} onClick={() => { setSelectedLandmark(null); setMode("standard"); }}>Standard</button>
@@ -263,6 +267,8 @@ export function WorldMap() {
       </div>
       {mode === "physical" && status === "ready" && physicalStatus === "ready" && (
         <div className="physical-panel">
+        <details className="physical-terrain" name="map-tools">
+        <summary>Terrain · {geology ? "Rock types" : landCover ? "Land cover" : "Relief"}</summary>
         <fieldset className="physical-surfaces">
           <legend className="visually-hidden">Physical map colours</legend>
           {([
@@ -271,21 +277,24 @@ export function WorldMap() {
             ["geology", "Rock types"],
           ] as const).map(([value, label]) => (
             <label key={value}>
-              <input type="radio" name="physical-surface" value={value} checked={surface === value} onChange={() => {
+              <input type="radio" name="physical-surface" value={value} checked={surface === value} onChange={(event) => {
                 setSurfaceLoading(value !== "relief");
                 setSurface(value);
+                const panel = event.currentTarget.closest("details");
+                if (panel) { panel.open = false; panel.querySelector("summary")?.focus(); }
               }} />
               {label}
             </label>
           ))}
         </fieldset>
-        <details className="physical-features">
-          <summary>Features · {Object.values(landmarks).filter(Boolean).length} of 6</summary>
+        </details>
+        <details className="physical-features" name="map-tools">
+          <summary>Features · {Object.values(landmarks).filter(Boolean).length}/6</summary>
           <fieldset>
             <legend className="visually-hidden">Physical features</legend>
             {LANDMARK_GROUPS.map(([key, label]) => <label key={key}><input type="checkbox" checked={landmarks[key]} onChange={(event) => { setLandmarks((current) => ({ ...current, [key]: event.target.checked })); if (selectedLandmark?.group === key && !event.target.checked) setSelectedLandmark(null); }} />{label}</label>)}
           </fieldset>
-          <p>Select a symbol, name, or plate boundary for its source.</p>
+          <p>Select a map feature for details.</p>
           {landmarks.tectonics && <p className="tectonic-key"><span className="boundary-key boundary-key--convergent" />Convergent <span className="boundary-key boundary-key--divergent" />Divergent <span className="boundary-key boundary-key--transform" />Transform</p>}
         </details>
         </div>
@@ -307,9 +316,10 @@ export function WorldMap() {
         <p className="map-feedback map-feedback--surface" role="status">{geology ? "Loading rock types…" : "Loading land cover…"}</p>
       )}
       {mode === "physical" && !selectedLandmark && (surface === "relief" || !surfaceLoading) && physicalStatus === "ready" && status === "ready" && (
-        <details className="map-legend" key={surface}>
-          <summary>{geology ? "Rock-type legend · GLiM" : landCover ? "Land-cover legend · 2020" : "Ocean depth · metres"}</summary>
+        <details className="map-legend" name="map-tools" key={surface}>
+          <summary aria-label={geology ? "Rock-type legend · GLiM" : landCover ? "Land-cover legend · 2020" : "Ocean depth · metres"}>Legend</summary>
           <div>
+            <p className="map-legend__title">{geology ? "Rock types · GLiM" : landCover ? "Land cover · 2020" : "Ocean depth · metres"}</p>
             <ul aria-label={geology ? "Rock-type categories" : landCover ? "Land-cover categories" : "Ocean depth bands"}>
               {activeLegend.classes.map((group) => <li key={group.id} title={"description" in group ? group.description : undefined}><span style={{ backgroundColor: group.color }} aria-hidden="true" />{group.name}</li>)}
             </ul>
@@ -367,7 +377,7 @@ export function WorldMap() {
         <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/" target="_blank" rel="noreferrer">Natural Earth</a>
         {mode === "physical" && landCover && <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">ESA / C3S 2020</a>}
         {mode === "physical" && geology && <a href={geologyLegend.sourceUrl} target="_blank" rel="noreferrer">GLiM</a>}
-        <details>
+        <details name="map-tools">
           <summary aria-label="About map data">Map data</summary>
           <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. <a href={bathymetryLegend.sourceUrl} target="_blank" rel="noreferrer">Natural Earth bathymetry</a> adds approximate seafloor depth bands derived from SRTM Plus. Ocean and sea names appear in both modes. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {geology ? <>Rock colours show surface lithology from <a href="https://doi.org/10.1029/2012GC004370" target="_blank" rel="noreferrer">GLiM, Hartmann &amp; Moosdorf (2012)</a>, using the CCGM-CGMW 2015 GIS compilation. Source detail varies by region; this is not geological age, subsurface structure or site-level mapping.</> : landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
           <p>Peak locations and source-record elevations: <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth</a>. Volcanic systems: <a href="https://volcano.si.edu/" target="_blank" rel="noreferrer">Smithsonian Global Volcanism Program</a>. Selected forest and canyon locations: <a href="https://www.wikidata.org/wiki/Wikidata:Licensing" target="_blank" rel="noreferrer">Wikidata (CC0)</a>. Undersea names: <a href="https://www.gebco.net/data-products/undersea-feature-names" target="_blank" rel="noreferrer">IHO-IOC GEBCO Gazetteer of Undersea Feature Names</a>, IHO DCDB / NOAA NCEI. Contains information from <a href="https://doi.org/10.1029/2001GC000252" target="_blank" rel="noreferrer">PB2002, Peter Bird (2003); Hugo Ahlenius / Nordpil</a>, available under the <a href="https://opendatacommons.org/licenses/by/1-0/" target="_blank" rel="noreferrer">ODC Attribution License v1.0</a>. Region labels identify approximate locations, not surveyed boundaries or historical extents.</p>
