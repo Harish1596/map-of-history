@@ -88,3 +88,13 @@ Map exposure takes priority: Terrain is a collapsed 188px bar; Features is a
 120px wide and opens to a readable 300px panel. Disclosures share an exclusive
 group and close on map clicks, camera movement or Escape. Terrain closes after
 selection. Zoom/reset dimensions are half their former size by explicit request.
+
+Country timeline: bottom-center compact white panel, 440px maximum width and
+mobile left inset reserving navigation room. Seven native year radio controls
+cover 2000–2006 at 31 December; Present day restores Natural Earth. Local lazy
+historical loading has retry and preserves the displayed snapshot on failure.
+Political borders/labels update without moving the camera. Year notes & sources
+opens upward in the exclusive map-tools group and distinguishes encoded country
+changes from documented settlements without geometry. Physical geography and
+reference coastlines remain modern. Historical attribution is CShapes 2.0,
+CC BY-NC-SA 4.0, with Natural Earth reference supplements.

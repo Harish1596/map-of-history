@@ -113,3 +113,20 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Preserve unrelated user changes. Make focused local commits after verification;
   report the commit and remaining working-tree state. Do not push, synchronize
   remotes or deploy as part of routine implementation work.
+
+## Country timeline
+
+- Historical country coverage is currently 2000–2006, using 31 December snapshots;
+  Present day restores the existing Natural Earth map. Do not enable later years
+  without preparing and checking their historical data.
+- `scripts/prepare-country-history.mjs` prepares local CShapes 2.0-derived geometry
+  and metadata in `public/data/world/history/`. This adaptation is CC BY-NC-SA 4.0,
+  distinct from public-domain Natural Earth. Retain attribution and source/output
+  checksums. `changes.json` is the curated chronology and coverage record.
+- Country history selection lives in `src/data/country-history.ts`; the
+  `useCountryHistory` hook updates political borders and labels independently of
+  the present-day reference land fill. Preserve the camera and physical choices.
+- Several researched small border settlements are chronology only, explicitly
+  marked not-encoded. Do not claim exhaustive border reconstruction or draw
+  unsupported changes. Supplementary small-state and territory geometry remains
+  a modern reference; physical layers do not acquire historical dates.

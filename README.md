@@ -396,3 +396,57 @@ The named-landmark source directory contains the two Wikidata entity snapshots
 GEBCO GeoJSON exports (`undersea-0.geojson`, `undersea-1.geojson`,
 `undersea-2.geojson`). GEBCO service exports must be paginated to obtain all
 records. Runtime never contacts any of these preparation-time services.
+
+### Country timeline · 2000–2006
+
+The compact timeline selects a **31 December** country snapshot for each year
+from 2000 through 2006. **Present day** restores the existing Natural Earth map.
+The camera, zoom, physical surface and feature selections stay in place. Keyboard
+users can focus the year radio group and use arrow keys to change years. Year
+notes & sources explains each year's researched changes and geometry coverage.
+Historical data loads once, on demand, from local files; failed loads retain the
+previous map and offer **Retry year**. No later historical years are enabled yet.
+
+Historical political borders and labels use **CShapes 2.0**, Gleditsch–Ward coding,
+by Schvitz, Rüegger, Girardin, Cederman, Weidmann and Gleditsch (2022),
+[dataset and publication](https://icr.ethz.ch/data/cshapes/). The historical
+adaptation is distributed under **[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)**,
+including its noncommercial and share-alike conditions; this differs from the
+public-domain Natural Earth reference data. Source, attribution, source/output
+checksums, corrections and limitations live in
+`public/data/world/history/metadata.json`.
+
+This is a **selected historical reconstruction**, not a complete annual border
+atlas. CShapes does not encode every researched small boundary settlement.
+`changes.json` distinguishes changes shown on the map from source-baseline or
+chronology-only events. In particular, the Bahrain–Qatar, Eritrea–Ethiopia,
+Cameroon–Nigeria, Kazakhstan–Uzbekistan, Benin–Niger, Poland–Slovakia and
+Indonesia–Timor-Leste boundary settlements have no separate year-specific
+geometry in this milestone. Treaty dates, legal decisions and staged handovers
+are not treated as interchangeable.
+
+The snapshots show UN-administered East Timor in 2000–2001 and independent
+Timor-Leste from 2002; Yugoslavia through 2002, Serbia and Montenegro in 2003–2005,
+and separate Serbia and Montenegro in 2006. Historical Sudan, Serbia and Ukraine
+use their earlier source outlines. Names include Swaziland and Macedonia.
+Source date codes for the June 2006 state transitions differ from official
+proclamation dates; this does not affect year-end membership. Supplementary
+small-country and territory outlines use modern Natural Earth reference geometry
+and are not independently date-verified. The Netherlands Antilles uses only the
+mapped Curaçao and Sint Maarten components and omits other islands.
+
+Country border sources change independently of the base land fill. Coastlines,
+marine/island names, land cover, relief, geology and physical landmarks remain
+modern reference layers; selecting a year does not reconstruct those features.
+Differences between source coastlines and territorial conventions can be visible.
+
+Download the [official CShapes GeoJSON](https://icr.ethz.ch/data/cshapes/CShapes-2.0.geojson)
+outside the repository, then regenerate the historical geometry and metadata offline:
+
+```bash
+node scripts/prepare-country-history.mjs /path/to/CShapes-2.0.geojson
+```
+
+The curated source chronology in `changes.json` is maintained separately. The
+preparation keeps source polygons, assigns stable version identifiers, computes
+interior visual-centroid labels and uses the established label-rank policy.

@@ -3,6 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import type { FeatureCollection } from "geojson";
 import type { Map as LibreMap } from "maplibre-gl";
+import { CountryTimeline } from "@/components/CountryTimeline";
+import { useCountryHistory } from "@/components/useCountryHistory";
+import type { CountrySnapshot } from "@/data/country-history";
 import { worldMapStyle } from "@/data/world-map-style";
 import { applyCountryLabelList } from "@/data/world-label-policy";
 import { physicalMapLayers, reliefSource, bathymetrySource, landCoverLayer, landCoverSource, geologyLayer, geologySource, setMapMode, type MapMode, type PhysicalSurface } from "@/data/physical-map-style";
@@ -54,6 +57,8 @@ export function WorldMap() {
   const mapRef = useRef<LibreMap | null>(null);
   const [status, setStatus] = useState<MapStatus>("loading");
   const [attempt, setAttempt] = useState(0);
+  const presentSnapshot = useRef<CountrySnapshot | null>(null);
+  const history = useCountryHistory(mapRef, presentSnapshot, status === "ready");
   const [limits, setLimits] = useState({ min: true, max: false });
   const [mode, setMode] = useState<MapMode>("standard");
   const [surface, setSurface] = useState<PhysicalSurface>("relief");
@@ -155,10 +160,12 @@ export function WorldMap() {
         if (disposed || !container.current) return;
         let viewportHeight = container.current.clientHeight;
         let minZoom = minimumWorldZoom(container.current.clientWidth, viewportHeight);
+        const presentLabels = applyCountryLabelList(labels, labelList);
+        presentSnapshot.current = { countries, labels: presentLabels };
         maplibre.setWorkerUrl("/vendor/maplibre-gl-worker.mjs");
         map = new maplibre.Map({
           container: container.current,
-          style: worldMapStyle(countries, applyCountryLabelList(labels, labelList), islands, oceans, seas),
+          style: worldMapStyle(countries, presentLabels, islands, oceans, seas),
           center: [0, 20], zoom: 1,
           maxZoom: maximumWorldZoom(), minZoom,
           fadeDuration: 0,
@@ -337,6 +344,7 @@ export function WorldMap() {
       <p id="map-instructions" className="visually-hidden">
         Drag to pan. Scroll or pinch to zoom. Focus the map and use arrow keys to
         pan, or plus and minus to zoom. Use Reset world view to return to the overview.
+        Select a year from 2000 to 2006 for year-end countries, or Present day. Physical layers remain modern references.
         Switch map modes to explore countries or natural features without changing your view.
         In Physical Geography, choose Terrain relief, Land cover or Rock types and use the legend to identify map colours.
       </p>
@@ -373,14 +381,19 @@ export function WorldMap() {
           mapRef.current?.fitBounds(WORLD_BOUNDS, { padding: 24, duration: 650 });
         }}><Icon name="reset" /></button>
       </nav>
+      <CountryTimeline year={history.year} requestedYear={history.requestedYear} state={history.state} disabled={status !== "ready"} physical={mode === "physical"} onSelect={(year) => { collapseMapPanels(); setSelectedLandmark(null); void history.selectYear(year); }} />
       <footer className="map-attribution">
         <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/" target="_blank" rel="noreferrer">Natural Earth</a>
+        {history.year !== null && <a href="https://icr.ethz.ch/data/cshapes/" target="_blank" rel="noreferrer">CShapes 2.0</a>}
         {mode === "physical" && landCover && <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">ESA / C3S 2020</a>}
         {mode === "physical" && geology && <a href={geologyLegend.sourceUrl} target="_blank" rel="noreferrer">GLiM</a>}
         <details name="map-tools">
           <summary aria-label="About map data">Map data</summary>
-          <p>Country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. <a href={bathymetryLegend.sourceUrl} target="_blank" rel="noreferrer">Natural Earth bathymetry</a> adds approximate seafloor depth bands derived from SRTM Plus. Ocean and sea names appear in both modes. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {geology ? <>Rock colours show surface lithology from <a href="https://doi.org/10.1029/2012GC004370" target="_blank" rel="noreferrer">GLiM, Hartmann &amp; Moosdorf (2012)</a>, using the CCGM-CGMW 2015 GIS compilation. Source detail varies by region; this is not geological age, subsurface structure or site-level mapping.</> : landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
+          <div className="map-attribution__notes">
+          {history.year !== null && <p>Countries: 31 December {history.year}, using CShapes 2.0 historical outlines with supplementary Natural Earth references. Several small border settlements are not drawn; see Year notes &amp; sources. The historical derivatives use <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="noreferrer">CC BY-NC-SA 4.0</a>.</p>}
+          <p>Present-day country and territory boundaries follow Natural Earth’s de facto convention. Borders may be disputed. Physical Geography combines <a href="https://www.naturalearthdata.com/downloads/10m-raster-data/10m-cross-blend-hypso/" target="_blank" rel="noreferrer">Natural Earth shaded relief</a> with rivers, lakes and natural-feature names. <a href={bathymetryLegend.sourceUrl} target="_blank" rel="noreferrer">Natural Earth bathymetry</a> adds approximate seafloor depth bands derived from SRTM Plus. Ocean and sea names appear in both modes. Coastal names and cape locations come from <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth physical labels</a>; shorelines are generalized at 1:50m. {geology ? <>Rock colours show surface lithology from <a href="https://doi.org/10.1029/2012GC004370" target="_blank" rel="noreferrer">GLiM, Hartmann &amp; Moosdorf (2012)</a>, using the CCGM-CGMW 2015 GIS compilation. Source detail varies by region; this is not geological age, subsurface structure or site-level mapping.</> : landCover ? <>Land-cover colours show grouped <a href={landCoverLegend.sourceUrl} target="_blank" rel="noreferrer">2020 ESA CCI / Copernicus C3S cover</a>, led by UCLouvain. This global overview omits small patches and is not historical vegetation. Water overlays are geographic references, not 2020 cover observations.</> : <>Relief colours blend elevation and regional characteristics; they are not a precise elevation scale. Water levels are not live.</>} Close zoom enlarges the imagery without adding detail.</p>
           <p>Peak locations and source-record elevations: <a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/10m-physical-labels/" target="_blank" rel="noreferrer">Natural Earth</a>. Volcanic systems: <a href="https://volcano.si.edu/" target="_blank" rel="noreferrer">Smithsonian Global Volcanism Program</a>. Selected forest and canyon locations: <a href="https://www.wikidata.org/wiki/Wikidata:Licensing" target="_blank" rel="noreferrer">Wikidata (CC0)</a>. Undersea names: <a href="https://www.gebco.net/data-products/undersea-feature-names" target="_blank" rel="noreferrer">IHO-IOC GEBCO Gazetteer of Undersea Feature Names</a>, IHO DCDB / NOAA NCEI. Contains information from <a href="https://doi.org/10.1029/2001GC000252" target="_blank" rel="noreferrer">PB2002, Peter Bird (2003); Hugo Ahlenius / Nordpil</a>, available under the <a href="https://opendatacommons.org/licenses/by/1-0/" target="_blank" rel="noreferrer">ODC Attribution License v1.0</a>. Region labels identify approximate locations, not surveyed boundaries or historical extents.</p>
+          </div>
         </details>
       </footer>
       <noscript><p className="map-feedback">Enable JavaScript to explore the interactive map.</p></noscript>

@@ -13,6 +13,7 @@ export function worldMapStyle(
     // No glyph server: MapLibre rasterizes the locally loaded font in-browser.
     sources: {
       countries: { type: "geojson", data: countries },
+      "political-countries": { type: "geojson", data: countries },
       labels: { type: "geojson", data: labels },
       islands: { type: "geojson", data: islands },
       oceans: { type: "geojson", data: oceans },
@@ -22,7 +23,7 @@ export function worldMapStyle(
       { id: "ocean", type: "background", paint: { "background-color": "#9bc4dc" } },
       { id: "countries", type: "fill", source: "countries", paint: { "fill-color": "#d4dfd2" } },
       {
-        id: "country-borders", type: "line", source: "countries",
+        id: "country-borders", type: "line", source: "political-countries",
         paint: {
           "line-color": "#6b8184",
           "line-width": ["interpolate", ["linear"], ["zoom"], 0, 0.65, 4, 1, 8, 1.4],

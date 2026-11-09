@@ -71,3 +71,14 @@ a separate physical-name dataset rather than treating them as sovereign states.
 2. Make historical claims traceable to sources.
 3. Show uncertainty and source limitations alongside the relevant content.
 4. Prove the map and navigation with local data before adding infrastructure.
+
+## First historical interval
+
+The country timeline now offers 31 December snapshots for 2000–2006, alongside
+Present day. It supports the Timor-Leste and Serbia–Montenegro state transitions
+with sourced historical geometry and period names. Historical boundaries come
+from CShapes 2.0 with explicitly identified reference supplements; several small
+border settlements remain documented without separate before/after geometry.
+Later historical years and a complete boundary audit remain future work. Physical
+geography stays a modern reference. Source notes disclose the distinction and the
+historical adaptation's CC BY-NC-SA 4.0 licence.

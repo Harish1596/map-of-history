@@ -1,0 +1,248 @@
+[
+  {
+    "id": "saudi-yemen",
+    "date": "2000-07-04",
+    "year": 2000,
+    "title": "Saudi Arabia–Yemen boundary treaty",
+    "description": "Treaty entered into force after signature on 12 June. The timeline starts at year-end 2000, after this settlement.",
+    "geometry": "source-baseline",
+    "sources": [
+      {
+        "name": "UN treaty record",
+        "url": "https://www.un.org/Depts/los/LEGISLATIONANDTREATIES/STATEFILES/YEM.htm"
+      }
+    ]
+  },
+  {
+    "id": "bahrain-qatar",
+    "date": "2001-03-16",
+    "year": 2001,
+    "title": "Bahrain–Qatar territorial judgment",
+    "description": "The ICJ determined sovereignty over disputed islands and a maritime boundary. No separate pre/post-judgment geometry is bundled.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "ICJ case",
+        "url": "https://icj-web.leman.un-icc.cloud/case/87"
+      }
+    ]
+  },
+  {
+    "id": "eritrea-ethiopia",
+    "date": "2002-04-13",
+    "year": 2002,
+    "title": "Eritrea–Ethiopia boundary decision",
+    "description": "The commission delimited the boundary. The decision did not immediately settle physical control; the source does not encode a year-specific polygon change.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "UN boundary decision",
+        "url": "https://digitallibrary.un.org/record/463881?v=pdf"
+      }
+    ]
+  },
+  {
+    "id": "timor-independence",
+    "date": "2002-05-20",
+    "year": 2002,
+    "title": "Timor-Leste becomes independent",
+    "description": "East Timor is shown under UN administration in 2000–2001 and as independent Timor-Leste from 2002.",
+    "geometry": "encoded",
+    "sources": [
+      {
+        "name": "UN mission background",
+        "url": "https://peacekeeping.un.org/sites/default/files/past/unmiset/index.html"
+      }
+    ]
+  },
+  {
+    "id": "cameroon-nigeria-judgment",
+    "date": "2002-10-10",
+    "year": 2002,
+    "title": "Cameroon–Nigeria boundary judgment",
+    "description": "The ICJ settled the boundary. Subsequent handovers occurred in stages, separately from this legal decision. No year-specific transfer polygons are bundled.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "ICJ case",
+        "url": "https://icj-web.leman.un-icc.cloud/case/94"
+      }
+    ]
+  },
+  {
+    "id": "yugoslavia-name",
+    "date": "2003-02-04",
+    "year": 2003,
+    "title": "Yugoslavia renamed Serbia and Montenegro",
+    "description": "The map label changes; this was not a territorial split.",
+    "geometry": "encoded",
+    "sources": [
+      {
+        "name": "UN succession history",
+        "url": "https://www.un.org/en/about-us/member-states/yugoslavia"
+      }
+    ]
+  },
+  {
+    "id": "kazakhstan-uzbekistan",
+    "date": "2003-09-05",
+    "year": 2003,
+    "title": "Kazakhstan–Uzbekistan border treaties take effect",
+    "description": "Treaties signed in 2001 and 2002 entered into force. The source does not include distinct before/after outlines for these settlements.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "Kazakhstan Ministry of Foreign Affairs",
+        "url": "https://www.gov.kz/org/mfa/press/article/details/594?lang=en"
+      }
+    ]
+  },
+  {
+    "id": "cameroon-nigeria-lake-chad",
+    "date": "2003-12-18",
+    "year": 2003,
+    "title": "Lake Chad transfer of authority",
+    "description": "Nigeria transferred authority in the Lake Chad area to Cameroon. This stage is documented but has no separate geometry in the bundle.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "UN account of handover",
+        "url": "https://www.un.org/french/pubs/chronique/2004/numero2/0204p16.html"
+      }
+    ]
+  },
+  {
+    "id": "cameroon-nigeria-land",
+    "date": "2004",
+    "year": 2004,
+    "title": "Cameroon–Nigeria land-boundary handovers",
+    "description": "Transfers of authority along the land boundary took place in 2004. No year-specific transfer polygons are bundled.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "UN implementation history",
+        "url": "https://www.un.org/sites/un2.un.org/files/webform/unyb_2015_04_chapter_ps_ii_africa.pdf"
+      }
+    ]
+  },
+  {
+    "id": "china-russia-agreement",
+    "date": "2004-10-14",
+    "year": 2004,
+    "title": "China–Russia boundary agreement signed",
+    "description": "The agreement was ratified in 2005; remaining demarcation followed later. A signature is not encoded as an immediate transfer of control.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "Chinese Foreign Ministry joint communiqué",
+        "url": "https://www.fmprc.gov.cn/web/gjhdq_676201/gj_676203/oz_678770/1206_679110/1207_679122/200507/t20050702_9337123.shtml"
+      }
+    ]
+  },
+  {
+    "id": "indonesia-timor",
+    "date": "2005-05-08",
+    "year": 2005,
+    "title": "Indonesia–Timor-Leste provisional boundary takes effect",
+    "description": "The agreement, signed 8 April, covered approximately 96% of the land boundary. The source has no distinct 2005 boundary revision.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "UN report S/2005/310",
+        "url": "https://documents.un.org/access.nsf/get?DS=S%2F2005%2F310&Lang=E&OpenAgent="
+      }
+    ]
+  },
+  {
+    "id": "benin-niger",
+    "date": "2005-07-12",
+    "year": 2005,
+    "title": "Benin–Niger river-boundary judgment",
+    "description": "The ICJ determined the river boundary and island sovereignty, including Lété Goungou for Niger. No separate before/after island geometry is bundled.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "ICJ ruling",
+        "url": "https://icj-web.leman.un-icc.cloud/case/125/press-releases"
+      }
+    ]
+  },
+  {
+    "id": "poland-slovakia",
+    "date": "2005-07-23",
+    "year": 2005,
+    "title": "Poland–Slovakia small border exchanges",
+    "description": "An agreement signed in 2002 entered into force, adjusting three border sections. These small exchanges are not encoded in the source.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "Official effective-date notice",
+        "url": "https://eli.gov.pl/api/acts/DU/2005/1687/text.pdf"
+      },
+      {
+        "name": "Official agreement",
+        "url": "https://eli.gov.pl/eli/DU/2005/1686/ogl"
+      }
+    ]
+  },
+  {
+    "id": "kazakhstan-russia",
+    "date": "2006-01-12",
+    "year": 2006,
+    "title": "Kazakhstan–Russia border treaty takes effect",
+    "description": "The treaty signed in January 2005 entered into force. This formal delimitation is not represented as a separate polygon change.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "Kazakhstan Ministry of Foreign Affairs",
+        "url": "https://www.gov.kz/org/mfa/press/article/details/594?lang=en"
+      }
+    ]
+  },
+  {
+    "id": "montenegro-independence",
+    "date": "2006-06-03",
+    "year": 2006,
+    "title": "Montenegro becomes independent",
+    "description": "The former union is shown as separate Serbia and Montenegro in the 2006 year-end snapshot.",
+    "geometry": "encoded",
+    "sources": [
+      {
+        "name": "UN succession history",
+        "url": "https://www.un.org/en/about-us/member-states/yugoslavia"
+      }
+    ]
+  },
+  {
+    "id": "serbia-succession",
+    "date": "2006-06-05",
+    "year": 2006,
+    "title": "Serbia confirms succession to the union",
+    "description": "Serbia continues the international legal identity and UN membership of Serbia and Montenegro.",
+    "geometry": "encoded",
+    "sources": [
+      {
+        "name": "UN historical record",
+        "url": "https://digitallibrary.un.org/record/1129731?ln=en"
+      }
+    ]
+  },
+  {
+    "id": "bakassi-agreement",
+    "date": "2006-06-12",
+    "year": 2006,
+    "title": "Bakassi withdrawal and transfer agreement",
+    "description": "The Greentree Agreement set out staged withdrawal and transfer arrangements. Remaining authority was transferred in 2008; the entire peninsula is not treated as an immediate 2006 handover.",
+    "geometry": "not-encoded",
+    "sources": [
+      {
+        "name": "UN agreement",
+        "url": "https://peacemaker.un.org/en/node/9619"
+      },
+      {
+        "name": "UN implementation history",
+        "url": "https://www.un.org/sites/un2.un.org/files/webform/unyb_2015_04_chapter_ps_ii_africa.pdf"
+      }
+    ]
+  }
+]

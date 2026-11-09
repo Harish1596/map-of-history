@@ -27,6 +27,14 @@ typography:
     fontFamily: '"Noto Sans", sans-serif'
     fontSize: "13px"
     lineHeight: 1.6
+  timeline-small:
+    fontFamily: '"Noto Sans", sans-serif'
+    fontSize: "11px"
+    lineHeight: 1.5
+  timeline-notes-title:
+    fontFamily: '"Noto Sans", sans-serif'
+    fontSize: "15px"
+    fontWeight: 600
   feedback:
     fontFamily: '"Noto Sans", sans-serif'
     fontSize: "14px"
@@ -300,3 +308,19 @@ Terrain, Features, Legend and Map data share a native exclusive disclosure group
 only one opens at a time. Map clicks, panning, zooming and Escape collapse open
 disclosures. Camera movement also dismisses feature information. Expanded panels
 occupy map space only while the user deliberately interacts with them.
+
+### Country timeline
+
+A compact white, slate-bordered timeline sits above the bottom attribution,
+centered on desktop and inset left on mobile. Its maximum width is 440px; narrow
+screens reserve 72px for map navigation. A 14px semibold displayed year and
+31 December snapshot caption sit opposite a small Present day button. Seven
+28px year radio targets run from 2000–2006 along a fine top rule. The selected year
+uses dark ink with white text; keyboard focus outlines its visible label.
+
+A short status line reports local loading or retry without replacing the prior
+displayed year. Year notes & sources opens upward in the native exclusive
+map-tools group, with scrollable source explanations and explicit coverage for
+unmapped settlements. Map clicks, camera motion and Escape dismiss it. Legends
+and selected-feature panels sit above the timeline. Physical mode explains that
+the year applies to countries in Standard and physical layers remain modern.
