@@ -98,3 +98,7 @@ opens upward in the exclusive map-tools group and distinguishes encoded country
 changes from documented settlements without geometry. Physical geography and
 reference coastlines remain modern. Historical attribution is CShapes 2.0,
 CC BY-NC-SA 4.0, with Natural Earth reference supplements.
+
+Timeline label continuity: matching countries use the present-day display label
+unless their historical name differs, and a fixed anchor shared by all years
+and Present day. Source coastline mismatches use a common interior fallback.

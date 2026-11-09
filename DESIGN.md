@@ -324,3 +324,9 @@ map-tools group, with scrollable source explanations and explicit coverage for
 unmapped settlements. Map clicks, camera motion and Escape dismiss it. Legends
 and selected-feature panels sit above the timeline. Physical mode explains that
 the year applies to countries in Standard and physical layers remain modern.
+
+Country labels share a fixed geographic anchor across historical years and
+Present day. Use the existing present-day display text, retaining explicit
+period-name changes. The Gambia and Maldives use a shared interior fallback
+across all views because the two source coastlines differ; other matching
+countries retain their existing present-day visual-centroid anchors.

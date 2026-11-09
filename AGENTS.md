@@ -130,3 +130,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
   marked not-encoded. Do not claim exhaustive border reconstruction or draw
   unsupported changes. Supplementary small-state and territory geometry remains
   a modern reference; physical layers do not acquire historical dates.
+
+- Timeline country labels use present-day display text except explicit historical
+  name overrides. Keep one shared geographic anchor per country identity across
+  all years and Present day. `history/label-anchors.json` applies the few common
+  interior fallbacks needed by differing source coastlines; regenerate it with
+  the historical bundle and preserve the reference-label/anchor checksums.

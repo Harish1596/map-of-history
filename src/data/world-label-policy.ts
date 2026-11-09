@@ -30,3 +30,17 @@ export function applyCountryLabelList(labels: FeatureCollection, input: unknown)
     }),
   };
 }
+
+// Shared interior anchors for the few countries whose source coastlines differ.
+// Ordinary country labels retain their existing present-day visual centroid.
+export function applyCountryLabelAnchors(labels: FeatureCollection, anchors: Record<string, number[]>): FeatureCollection {
+  return {
+    ...labels,
+    features: labels.features.map((feature) => {
+      const coordinates = anchors[feature.properties?.countryId ?? feature.properties?.id];
+      if (!coordinates) return feature;
+      if (coordinates.length !== 2 || !coordinates.every(Number.isFinite) || Math.abs(coordinates[0]) > 180 || Math.abs(coordinates[1]) > 90) throw new Error('Invalid shared country label anchor');
+      return { ...feature, geometry: { type: 'Point', coordinates } };
+    }),
+  };
+}

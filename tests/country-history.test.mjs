@@ -102,10 +102,50 @@ test('provenance and chronology distinguish source geometry from unimplemented s
   assert.equal(metadata.snapshotDate, '31 December');
   assert.equal(metadata.outputSha256, createHash('sha256').update(readFileSync(new URL('../public/data/world/history/countries.json', import.meta.url))).digest('hex'));
   assert.ok(metadata.sourceSha256.match(/^[a-f0-9]{64}$/));
+  for (const [file, field] of [['label-anchors.json', 'labelAnchorsSha256'], ['../labels.geojson', 'referenceLabelsSha256']]) {
+    const bytes = readFileSync(new URL(`../public/data/world/history/${file}`, import.meta.url));
+    assert.equal(metadata[field], createHash('sha256').update(bytes).digest('hex'));
+  }
   const events = read('changes.json');
   assert.equal(events.find((e) => e.id === 'timor-independence').date, '2002-05-20');
   assert.equal(events.find((e) => e.id === 'montenegro-independence').date, '2006-06-03');
   assert.equal(events.find((e) => e.id === 'bakassi-agreement').geometry, 'not-encoded');
   assert.equal(events.find((e) => e.id === 'poland-slovakia').geometry, 'not-encoded');
   for (const event of events) assert.ok(event.sources.every((s) => s.url.startsWith('https://')));
+});
+
+// Catches replacing map display labels with a source's country-name field.
+test('historical labels use the present-day display convention except for period names', () => {
+  const history = bundle();
+  for (let year = 2000; year <= 2006; year++) {
+    const labels = countrySnapshot(history, year).labels.features;
+    for (const [id, text] of [['RUS', 'Russian Federation'], ['CHN', 'China'], ['USA', 'United States']]) {
+      assert.equal(labels.find((f) => f.properties.countryId === id).properties.label, text);
+    }
+    assert.equal(labels.find((f) => f.properties.countryId === 'SWZ').properties.label, 'Swaziland');
+    assert.equal(labels.find((f) => f.properties.countryId === 'MKD').properties.label, 'Macedonia');
+  }
+});
+
+// Catches recomputing anchors from different source polygons when years change.
+test('shared countries keep the same label anchor in every year and Present day', async () => {
+  const { applyCountryLabelAnchors } = await import('../src/data/world-label-policy.ts');
+  const anchors = read('label-anchors.json');
+  const modernLabels = JSON.parse(readFileSync(new URL('../public/data/world/labels.geojson', import.meta.url)));
+  const modernCountries = JSON.parse(readFileSync(new URL('../public/data/world/countries.geojson', import.meta.url)));
+  const modern = applyCountryLabelAnchors(modernLabels, anchors);
+  const expected = new Map(modern.features.map((f) => [f.id, f.geometry.coordinates]));
+  const history = bundle();
+  const firstSeen = new Map();
+  for (let year = 2000; year <= 2006; year++) {
+    const snapshot = countrySnapshot(history, year);
+    for (const label of snapshot.labels.features) {
+      const id = label.properties.countryId;
+      if (expected.has(id)) assert.deepEqual(label.geometry.coordinates, expected.get(id), `${id} in ${year}`);
+      if (firstSeen.has(id)) assert.deepEqual(label.geometry.coordinates, firstSeen.get(id), `${id} changes within historical years`);
+      firstSeen.set(id, label.geometry.coordinates);
+    }
+  }
+  for (const label of modern.features) assert.ok(contains(modernCountries.features.find((f) => f.id === label.id).geometry, label.geometry.coordinates), `Present-day ${label.id}`);
+  assert.deepEqual(expected.get('CAN'), [-104.12555577100386, 59.75213450429871]);
 });

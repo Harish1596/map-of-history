@@ -448,5 +448,11 @@ node scripts/prepare-country-history.mjs /path/to/CShapes-2.0.geojson
 ```
 
 The curated source chronology in `changes.json` is maintained separately. The
-preparation keeps source polygons, assigns stable version identifiers, computes
-interior visual-centroid labels and uses the established label-rank policy.
+preparation keeps source polygons, assigns stable version identifiers and uses
+the established label-rank policy. Matching countries use the same display labels
+and label coordinates as Present day, with explicit period-name overrides.
+Canada and other shared countries keep their existing present-day anchors across
+all years. When a source coastline excludes that point (currently The Gambia and
+Maldives), one common interior anchor is applied to every view through
+`history/label-anchors.json`. Preparation metadata includes the reference-label
+and shared-anchor checksums.

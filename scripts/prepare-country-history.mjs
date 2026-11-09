@@ -1,6 +1,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { countryLabelCenter } from './lib/country-labels.mjs';
+import { sharedCountryLabelAnchor } from './lib/country-label-alignment.mjs';
 import { createCountryLabelList } from './lib/country-label-policy.mjs';
 
 // Download CShapes-2.0.geojson separately. This transformation is offline.
@@ -10,6 +11,8 @@ const raw = readFileSync(input);
 const source = JSON.parse(raw);
 const referenceRaw = readFileSync(new URL('../public/data/world/countries.geojson', import.meta.url));
 const reference = JSON.parse(referenceRaw).features;
+const referenceLabelsRaw = readFileSync(new URL('../public/data/world/labels.geojson', import.meta.url));
+const referenceLabels = new Map(JSON.parse(referenceLabelsRaw).features.map((f) => [f.id, f]));
 const byName = new Map(reference.map((f) => [f.properties.name.toLowerCase(), f]));
 const byId = new Map(reference.map((f) => [f.id, f]));
 const aliases = {
@@ -36,9 +39,10 @@ function add(feature, year, keySuffix = '', overrides = {}) {
   const ref = byId.get(countryId);
   const id = `gw-${p.gwcode}-${date(p,'gws')}${keySuffix}`;
   const name = countryId === 'YUG' ? (year <= 2002 ? 'Federal Republic of Yugoslavia' : 'Serbia and Montenegro') : countryId === 'SWZ' ? 'Swaziland' : countryId === 'MKD' ? 'Macedonia' : ref?.properties.name || p.cntry_name;
+  const label = ['YUG','SWZ','MKD'].includes(countryId) ? name : ref?.properties.label || name;
   if (!countries.has(id)) countries.set(id, {
     type:'Feature', id,
-    properties:{ id, countryId, name, label:name, rank:countryId === 'YUG' ? 4 : ref?.properties.rank || 5,
+    properties:{ id, countryId, name, label, rank:countryId === 'YUG' ? 4 : ref?.properties.rank || 5,
       source:'CShapes 2.0', sourceCode:p.gwcode, sourceFrom:date(p,'gws'), sourceTo:date(p,'gwe'), status:'Historical source unit', ...overrides },
     geometry:feature.geometry,
   });
@@ -71,7 +75,26 @@ const countryFeatures=[...countries.values()].sort((a,b)=>a.id.localeCompare(b.i
 // Fixed collision order across versions: source rank, area, identifier.
 // Inactive versions do not render; relative priority never depends on navigation.
 const labels=[];
-for (const feature of countryFeatures) labels.push({type:'Feature',id:feature.id,properties:{...feature.properties},geometry:{type:'Point',coordinates:countryLabelCenter(feature.geometry)}});
+const groups = new Map();
+for (const feature of countryFeatures) {
+  const id = feature.properties.countryId;
+  if (!groups.has(id)) groups.set(id, []);
+  groups.get(id).push(feature);
+}
+const sharedAnchors = new Map();
+const referenceOverrides = {};
+for (const [id, versions] of groups) {
+  const referenceLabel = referenceLabels.get(id);
+  const preferred = referenceLabel?.geometry.coordinates || countryLabelCenter(versions[0].geometry);
+  const geometries = versions.map((feature) => feature.geometry);
+  if (byId.has(id)) geometries.push(byId.get(id).geometry);
+  const coordinates = sharedCountryLabelAnchor(geometries, preferred);
+  sharedAnchors.set(id, coordinates);
+  if (referenceLabel && coordinates.some((value,index) => value !== preferred[index])) referenceOverrides[id] = coordinates;
+}
+for (const feature of countryFeatures) labels.push({type:'Feature',id:feature.id,properties:{...feature.properties},geometry:{type:'Point',coordinates:sharedAnchors.get(feature.properties.countryId)}});
+const serializedAnchors = JSON.stringify(referenceOverrides, null, 2)+'\n';
+writeFileSync(new URL('label-anchors.json',output),serializedAnchors);
 const policies=createCountryLabelList(countryFeatures);
 const policyMap=new Map(policies.map((p)=>[p.id,p]));
 for (const label of labels) label.properties={...label.properties,...policyMap.get(label.id)};
@@ -81,12 +104,12 @@ writeFileSync(new URL('countries.json',output),serialized);
 const sha=(value)=>createHash('sha256').update(value).digest('hex');
 writeFileSync(new URL('metadata.json',output),JSON.stringify({
   title:'Selected year-end country snapshots, 2000–2006',version:1,snapshotDate:'31 December',years:[2000,2001,2002,2003,2004,2005,2006],
-  source:'https://icr.ethz.ch/data/cshapes/',download:'https://icr.ethz.ch/data/cshapes/CShapes-2.0.geojson',sourceSha256:sha(raw),outputSha256:sha(serialized),referenceSha256:sha(referenceRaw),
+  source:'https://icr.ethz.ch/data/cshapes/',download:'https://icr.ethz.ch/data/cshapes/CShapes-2.0.geojson',sourceSha256:sha(raw),outputSha256:sha(serialized),referenceSha256:sha(referenceRaw),referenceLabelsSha256:sha(referenceLabelsRaw),labelAnchorsSha256:sha(serializedAnchors),
   license:'CC BY-NC-SA 4.0',licenseUrl:'https://creativecommons.org/licenses/by-nc-sa/4.0/',
   attribution:'CShapes 2.0: Guy Schvitz, Seraina Rüegger, Luc Girardin, Lars-Erik Cederman, Nils Weidmann and Kristian Skrede Gleditsch (2022). Mapping the International System, 1886–2017. Journal of Conflict Resolution 66(1):144–161.',
   referenceSource:'https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/',referenceLicense:'Natural Earth reference geometries are public domain. Historical derivatives are distributed under CC BY-NC-SA 4.0.',
   boundaryConvention:'CShapes 2.0 Gleditsch–Ward source units, supplemented by Natural Earth small-country and territory reference outlines. Source conventions differ from the present-day Natural Earth de facto map; no universal recognition claim.',
-  transformations:'Select records using integer date fields at 31 December (ignore timezone-shifted date strings). Retain source geometry without simplification. Generate Mercator main-landmass centroids with interior fallback. Reuse Natural Earth label ranks where matched, assign rank 4 to Yugoslavia and rank 5 to unmatched source units; compute area/font tiers and fixed collision order. Correct Yugoslavia name from 2003. Separate UN-administered East Timor in 2000–2001 using 2002 source outlines. Group mapped Curaçao and Sint Maarten outlines as selected Netherlands Antilles islands. No minor boundary geometry is invented.',
+  transformations:'Select records using integer date fields at 31 December (ignore timezone-shifted date strings). Retain source geometry without simplification. Use present-day display labels except explicit period-name overrides. Reuse present-day label anchors for matching country identities across every year. Where a reference point is outside historical geometry, choose the nearest shared interior candidate from source visual centroids/interior fallbacks and apply it to all years and Present day through label-anchors.json. Unmatched historical identities share one interior anchor across their versions. Reuse Natural Earth label ranks where matched, assign rank 4 to Yugoslavia and rank 5 to unmatched source units; compute area/font tiers and fixed collision order. Correct Yugoslavia name from 2003. Separate UN-administered East Timor in 2000–2001 using 2002 source outlines. Group mapped Curaçao and Sint Maarten outlines as selected Netherlands Antilles islands. No minor boundary geometry is invented.',
   limitations:'Selected historical reconstruction, not an exhaustive annual border atlas. CShapes omits several minor territorial changes and some small states/dependencies. Supplementary Natural Earth geometry is a modern reference, not independently date-verified. The Netherlands Antilles representation omits islands not separately available in the bundled reference. Coastlines and territorial conventions differ from Natural Earth. Source coding dates for Serbia/Montenegro differ within June 2006 from official declarations; year-end membership is unaffected. Small border settlements in changes.json marked not-encoded are chronology only. Modern physical layers, coastline fill and marine/island labels do not become historical observations.',
   corrections:[{subject:'East Timor 2000–2001',source:'https://peacekeeping.un.org/sites/default/files/past/etimor/Untaetchrono.html'},{subject:'Serbia and Montenegro name and succession',source:'https://www.un.org/en/about-us/member-states/yugoslavia'}],
 },null,2)+'\n');

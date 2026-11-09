@@ -7,7 +7,8 @@ import { CountryTimeline } from "@/components/CountryTimeline";
 import { useCountryHistory } from "@/components/useCountryHistory";
 import type { CountrySnapshot } from "@/data/country-history";
 import { worldMapStyle } from "@/data/world-map-style";
-import { applyCountryLabelList } from "@/data/world-label-policy";
+import sharedLabelAnchors from "../../public/data/world/history/label-anchors.json";
+import { applyCountryLabelList, applyCountryLabelAnchors } from "@/data/world-label-policy";
 import { physicalMapLayers, reliefSource, bathymetrySource, landCoverLayer, landCoverSource, geologyLayer, geologySource, setMapMode, type MapMode, type PhysicalSurface } from "@/data/physical-map-style";
 import landCoverLegend from "../../public/data/world/land-cover/legend.json";
 import geologyLegend from "../../public/data/world/geology/legend.json";
@@ -160,7 +161,7 @@ export function WorldMap() {
         if (disposed || !container.current) return;
         let viewportHeight = container.current.clientHeight;
         let minZoom = minimumWorldZoom(container.current.clientWidth, viewportHeight);
-        const presentLabels = applyCountryLabelList(labels, labelList);
+        const presentLabels = applyCountryLabelAnchors(applyCountryLabelList(labels, labelList), sharedLabelAnchors);
         presentSnapshot.current = { countries, labels: presentLabels };
         maplibre.setWorkerUrl("/vendor/maplibre-gl-worker.mjs");
         map = new maplibre.Map({
